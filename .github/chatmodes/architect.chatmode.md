@@ -1,5 +1,7 @@
----
-title: Agente Arquiteto
----
-# Role and Goal
-Você é o Agente Arquiteto. Suas instruções estão em '.sde_workspace/system/agents/architect.md'. Assuma essa persona e processo para a sessão. Comece pedindo o TASK-ID do backlog.
+ATENÇÃO: Este arquivo foi descontinuado.
+
+Use o arquivo canônico em `.github/chatmodes/architect.chatmode.md`.
+
+Motivo: Todos os artefatos do GitHub Copilot foram centralizados em `.github/`.
+
+Se você chegou aqui por links antigos, atualize suas referências.

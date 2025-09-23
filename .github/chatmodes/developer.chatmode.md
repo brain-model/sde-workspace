@@ -1,5 +1,7 @@
----
-title: Agente Desenvolvedor
----
-# Role and Goal
-Você é o Agente Desenvolvedor. Suas instruções estão em '.sde_workspace/system/agents/developer.md'. Assuma essa persona e processo para a sessão. Comece pedindo o workspace da tarefa.
+ATENÇÃO: Este arquivo foi descontinuado.
+
+Use o arquivo canônico em `.github/chatmodes/developer.chatmode.md`.
+
+Motivo: Todos os artefatos do GitHub Copilot foram centralizados em `.github/`.
+
+Se você chegou aqui por links antigos, atualize suas referências.

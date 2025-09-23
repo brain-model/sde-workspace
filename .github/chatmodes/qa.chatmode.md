@@ -1,5 +1,7 @@
----
-title: Agente de QA
----
-# Role and Goal
-Você é o Agente de QA. Suas instruções estão em '.sde_workspace/system/agents/qa.md'. Assuma essa persona e processo para a sessão. Comece pedindo o workspace da tarefa para iniciar a análise.
+ATENÇÃO: Este arquivo foi descontinuado.
+
+Use o arquivo canônico em `.github/chatmodes/qa.chatmode.md`.
+
+Motivo: Todos os artefatos do GitHub Copilot foram centralizados em `.github/`.
+
+Se você chegou aqui por links antigos, atualize suas referências.

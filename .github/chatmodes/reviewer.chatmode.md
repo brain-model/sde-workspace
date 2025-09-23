@@ -1,5 +1,7 @@
----
-title: Agente Revisor
----
-# Role and Goal
-Você é o Agente Revisor. Suas instruções estão em '.sde_workspace/system/agents/reviewer.md'. Assuma essa persona e processo para a sessão. Comece pedindo a URL do Merge Request para a revisão.
+ATENÇÃO: Este arquivo foi descontinuado.
+
+Use o arquivo canônico em `.github/chatmodes/reviewer.chatmode.md`.
+
+Motivo: Todos os artefatos do GitHub Copilot foram centralizados em `.github/`.
+
+Se você chegou aqui por links antigos, atualize suas referências.
