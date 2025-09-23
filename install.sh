@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
-# Saia imediatamente se um comando falhar.
+# Exit immediately if a command exits with a non-zero status.
 set -e
-# Trate variáveis não definidas como um erro.
+# Treat unset variables as an error.
 set -u
-# Garante que pipelines falhem se algum comando falhar.
+# Make pipelines fail if any command fails.
 set -o pipefail
 
-# --- CORES PARA SAÍDA ---
+# --- COLORS ---
 COLOR_GREEN='\033[0;32m'
 COLOR_YELLOW='\033[0;33m'
 COLOR_RED='\033[0;31m'
 COLOR_NC='\033[0m' # No Color
 
-# --- FUNÇÕES AUXILIARES ---
+# --- HELPERS ---
 info() {
     printf "${COLOR_GREEN}[INFO]${COLOR_NC} %s\n" "$1"
 }
@@ -27,31 +27,31 @@ error() {
     exit 1
 }
 
-# --- LÓGICA PRINCIPAL ---
+# --- MAIN LOGIC ---
 
-# Função para verificar se os comandos necessários estão instalados.
+# Check required dependencies.
 check_dependencies() {
-    info "Verificando dependências..."
+    info "Checking dependencies..."
     local missing_deps=0
     for dep in git make; do
         if ! command -v "$dep" &> /dev/null; then
-            warn "Dependência não encontrada: $dep"
+            warn "Missing dependency: $dep"
             missing_deps=1
         fi
     done
 
     if [ "$missing_deps" -eq 1 ]; then
-        error "Por favor, instale as dependências faltantes e tente novamente."
+        error "Please install the missing dependencies and try again."
     fi
-    info "Todas as dependências foram encontradas."
+    info "All dependencies found."
 }
 
-# Função principal do script.
+# Entry point.
 main() {
     check_dependencies
 
     if [ -z "${1-}" ]; then
-        error "Uso: $0 <URL_DO_REPOSITORIO_GIT>"
+        error "Usage: $0 <GIT_REPOSITORY_URL>"
     fi
 
     local repo_url="$1"
@@ -59,25 +59,25 @@ main() {
     project_dir=$(basename "$repo_url" .git)
 
     if [ -d "$project_dir" ]; then
-        error "O diretório '$project_dir' já existe. Por favor, remova-o ou escolha outro local."
+        error "Directory '$project_dir' already exists. Please remove it or choose another location."
     fi
 
-    printf "%b" "\nSelecione a versão a instalar [default/github-copilot] (default): "
+    printf "%b" "\nSelect version to install [default/github-copilot] (default): "
     local version_choice
     read -r version_choice || version_choice="default"
     version_choice=${version_choice:-default}
 
-    printf "%b" "Selecione o idioma [en/pt-br] (en): "
+    printf "%b" "Select language [en/pt-br] (en): "
     local lang_choice
     read -r lang_choice || lang_choice="en"
     lang_choice=${lang_choice:-en}
 
-    info "Clonando o repositório de '$repo_url'..."
+    info "Cloning repository from '$repo_url'..."
     git clone "$repo_url"
     cd "$project_dir"
 
     if [ ! -f "Makefile" ]; then
-        error "Makefile não encontrado no repositório. A instalação não pode continuar."
+        error "Makefile not found in the repository. Installation cannot continue."
     fi
 
     local has_remote_branch
@@ -113,7 +113,7 @@ main() {
         elif try_checkout "feature/setup-copilot"; then
             target_branch="feature/setup-copilot"
         else
-            warn "Nenhuma branch específica de Copilot encontrada. Usando branch base."
+            warn "No Copilot-specific branch found. Falling back to base branch."
         fi
     fi
 
@@ -123,32 +123,32 @@ main() {
         elif try_checkout "master"; then
             target_branch="master"
         else
-            error "Não foi possível determinar a branch base (main/master)."
+            error "Could not determine base branch (main/master)."
         fi
     fi
 
     if [ "$lang_choice" = "pt-br" ]; then
         if try_checkout "pt-br"; then
-            info "Idioma pt-br selecionado: branch 'pt-br' ativa."
+            info "Language pt-br selected: 'pt-br' branch active."
         else
-            warn "Branch 'pt-br' não encontrada. Mantendo branch '$target_branch'."
+            warn "Branch 'pt-br' not found. Keeping branch '$target_branch'."
         fi
     fi
 
-    info "Executando 'make install' para criar a estrutura do .sde_workspace..."
+    info "Running 'make install' to create .sde_workspace structure..."
     make install
 
     if [ "$version_choice" = "github-copilot" ]; then
         if grep -Eq '^[[:space:]]*setup-copilot:' Makefile; then
-            info "Executando 'make setup-copilot' para configurar Copilot..."
+            info "Running 'make setup-copilot' to configure Copilot..."
             make setup-copilot
         else
-            warn "Target 'setup-copilot' não encontrado no Makefile. Pulando configuração do Copilot."
+            warn "Target 'setup-copilot' not found in Makefile. Skipping Copilot setup."
         fi
     fi
 
-    info "Setup concluído com sucesso!"
-    info "Agora você pode entrar no diretório do projeto com: cd $project_dir"
+    info "Setup completed successfully!"
+    info "Now you can enter the project directory with: cd $project_dir"
 }
 
 # Executa a função principal com todos os argumentos passados para o script.
