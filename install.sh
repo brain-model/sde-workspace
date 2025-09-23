@@ -50,11 +50,11 @@ check_dependencies() {
 main() {
     check_dependencies
 
-    if [ -z "${1-}" ]; then
-        error "Uso: $0 <URL_DO_REPOSITORIO_GIT>"
+    local repo_url="${1-}"
+    if [ -z "$repo_url" ]; then
+        warn "URL do repositório não fornecida. Usando padrão: https://github.com/brain-model/sde-workspace.git"
+        repo_url="https://github.com/brain-model/sde-workspace.git"
     fi
-
-    local repo_url="$1"
     local project_dir
     project_dir=$(basename "$repo_url" .git)
 
