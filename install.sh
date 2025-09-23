@@ -62,6 +62,16 @@ main() {
         error "O diretório '$project_dir' já existe. Por favor, remova-o ou escolha outro local."
     fi
 
+    printf "%b" "\nSelecione a versão a instalar [default/github-copilot] (default): "
+    local version_choice
+    read -r version_choice || version_choice="default"
+    version_choice=${version_choice:-default}
+
+    printf "%b" "Selecione o idioma [en/pt-br] (en): "
+    local lang_choice
+    read -r lang_choice || lang_choice="en"
+    lang_choice=${lang_choice:-en}
+
     info "Clonando o repositório de '$repo_url'..."
     git clone "$repo_url"
     cd "$project_dir"
@@ -70,8 +80,72 @@ main() {
         error "Makefile não encontrado no repositório. A instalação não pode continuar."
     fi
 
+    local has_remote_branch
+    has_remote_branch() {
+        git show-ref --verify --quiet "refs/remotes/origin/$1"
+    }
+
+    local try_checkout
+    try_checkout() {
+        if git rev-parse --verify --quiet "$1" >/dev/null; then
+            git checkout "$1"
+            return 0
+        elif has_remote_branch "$1"; then
+            git checkout -b "$1" "origin/$1"
+            return 0
+        else
+            return 1
+        fi
+    }
+
+    local target_branch=""
+    if [ "$version_choice" = "github-copilot" ]; then
+        if   try_checkout "copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
+            target_branch="copilot-pt-br"
+        elif try_checkout "github-copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
+            target_branch="github-copilot-pt-br"
+        elif try_checkout "feature/setup-copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
+            target_branch="feature/setup-copilot-pt-br"
+        elif try_checkout "copilot"; then
+            target_branch="copilot"
+        elif try_checkout "github-copilot"; then
+            target_branch="github-copilot"
+        elif try_checkout "feature/setup-copilot"; then
+            target_branch="feature/setup-copilot"
+        else
+            warn "Nenhuma branch específica de Copilot encontrada. Usando branch base."
+        fi
+    fi
+
+    if [ -z "$target_branch" ]; then
+        if   try_checkout "main"; then
+            target_branch="main"
+        elif try_checkout "master"; then
+            target_branch="master"
+        else
+            error "Não foi possível determinar a branch base (main/master)."
+        fi
+    fi
+
+    if [ "$lang_choice" = "pt-br" ]; then
+        if try_checkout "pt-br"; then
+            info "Idioma pt-br selecionado: branch 'pt-br' ativa."
+        else
+            warn "Branch 'pt-br' não encontrada. Mantendo branch '$target_branch'."
+        fi
+    fi
+
     info "Executando 'make install' para criar a estrutura do .sde_workspace..."
     make install
+
+    if [ "$version_choice" = "github-copilot" ]; then
+        if grep -Eq '^[[:space:]]*setup-copilot:' Makefile; then
+            info "Executando 'make setup-copilot' para configurar Copilot..."
+            make setup-copilot
+        else
+            warn "Target 'setup-copilot' não encontrado no Makefile. Pulando configuração do Copilot."
+        fi
+    fi
 
     info "Setup concluído com sucesso!"
     info "Agora você pode entrar no diretório do projeto com: cd $project_dir"
