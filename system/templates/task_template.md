@@ -1,40 +1,62 @@
+Task
+====
+
+Metadata
+--------
+
+- Task ID: "[TASK ID, e.g., TASK-123]"
+- Title: "[SHORT AND DESCRIPTIVE FEATURE TITLE]"
+- Source Card URL: "[LINK TO THE SOURCE CARD OR ISSUE]"
+- Priority: "P0 (Critical) | P1 (High) | P2 (Medium) | P3 (Low)"
+- Status: "To Do"
+
 ---
-TASK-ID: "[ID DA TAREFA, EX: TASK-123]"
-Title: "[TÍTULO CURTO E DESCRITIVO DA FEATURE]"
-SourceCardURL: "https://cursos.alura.com.br/forum/topico-por-que-no-kanban-nao-e-aconselhavel-andar-com-card-para-atras-162342"
-Priority: "P0 (Crítico) | P1 (Alto) | P2 (Médio) | P3 (Baixo)"
-Status: "A Fazer"
----
 
-## 1. Descrição
+Description
+-----------
 
-*(Descrição clara e concisa da tarefa. Qual é o problema de negócio a ser resolvido ou a funcionalidade a ser implementada?)*
+Clear and concise description of the task. What business problem is being solved, or what functionality will be implemented?
 
-## 2. Critérios de Aceitação
+Acceptance Criteria
+-------------------
 
-### 2.1. Requisitos Funcionais
-*(Liste os comportamentos que o sistema deve executar. O que o usuário deve ser capaz de fazer?)*
-- 
-- 
+- Functional Requirements
 
-### 2.2. Requisitos Não-Funcionais
-*(Liste os critérios de qualidade, como performance, segurança, usabilidade, etc.)*
-- **Segurança:** - **Performance:** - **Observabilidade:** ## 3. Solução Proposta (Opcional)
+  -
+  -
 
-*(Esboço inicial de alto nível da solução técnica, se houver. O Agente Arquiteto irá detalhar isso no `Spec Document`.)*
-- 
-- 
+- Non-Functional Requirements
 
-## 4. Riscos e Dependências
+  - Security
+  - Performance
+  - Observability
 
-- **Riscos:** *(Quais são os riscos potenciais - técnicos ou de negócio?)*
-- **Dependências:** *(Existem dependências de outras equipes, sistemas ou tarefas?)*
+Proposed Solution (Optional)
+----------------------------
 
-## 5. Cenários de Teste (Iniciais)
+Initial high-level outline of the technical solution, if any. The Architect Agent will detail this in the `Spec Document`.
 
-*(Liste alguns cenários de teste chave para validar a funcionalidade. O Agente de QA irá expandir isso.)*
-- **Cenário 1 (Caminho Feliz):** - **Cenário 2 (Caso de Borda):** - **Cenário 3 (Erro Esperado):** ## 6. Fora de Escopo
+-
+-
 
-*(Liste explicitamente o que **não** faz parte desta tarefa para evitar ambiguidades e "scope creep".)*
-- 
+Risks and Dependencies
+----------------------
+
+- Risks: What are the potential risks — technical or business?
+- Dependencies: Are there dependencies on other teams, systems, or tasks?
+
+Test Scenarios (Initial)
+------------------------
+
+List a few key test scenarios to validate the functionality. The QA Agent will expand this.
+
+- Scenario 1 (Happy Path)
+- Scenario 2 (Edge Case)
+- Scenario 3 (Expected Error)
+
+Out of Scope
+------------
+
+Explicitly list what is not part of this task to avoid ambiguities and scope creep.
+
 -

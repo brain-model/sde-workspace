@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Saia imediatamente se um comando falhar.
+# Exit immediately if a command exits with a non-zero status.
 set -e
 set -u
 set -o pipefail
 
-# --- CORES E FUNÇÕES AUXILIARES ---
+# --- COLORS AND HELPERS ---
 COLOR_GREEN='\033[0;32m'
 COLOR_YELLOW='\033[0;33m'
 COLOR_RED='\033[0;31m'
@@ -24,7 +24,7 @@ error() {
     exit 1
 }
 
-# --- AUXILIARES DE GIT ---
+# --- GIT HELPERS ---
 
 branch_exists_local() {
     git show-ref --verify --quiet "refs/heads/$1"
@@ -36,14 +36,14 @@ branch_exists_remote() {
 
 checkout_branch() {
     local target_branch="$1"
-    info "Trocando para a branch: ${target_branch}"
+    info "Switching to branch: ${target_branch}"
     if branch_exists_local "$target_branch"; then
         git checkout "$target_branch"
     elif branch_exists_remote "$target_branch"; then
         git fetch origin "$target_branch":"$target_branch"
         git checkout "$target_branch"
     else
-        error "Branch '${target_branch}' não encontrada localmente nem no remoto."
+        error "Branch '${target_branch}' not found locally or on remote."
     fi
 }
 
@@ -51,10 +51,10 @@ checkout_branch() {
 
 prompt_version() {
     local choice
-    echo ""; echo "Selecione a versão para instalar:";
-    echo "  1) default (apenas estrutura básica, sem Copilot)";
-    echo "  2) github-copilot (gera chatmodes e instruções)";
-    read -rp "Digite 1 ou 2 [2]: " choice || true
+    echo ""; echo "Select the version to install:";
+    echo "  1) default (basic structure only, no Copilot)";
+    echo "  2) github-copilot (generates chat modes and instructions)";
+    read -rp "Enter 1 or 2 [2]: " choice || true
     case "${choice:-2}" in
         1) echo "default" ;;
         2|*) echo "github-copilot" ;;
@@ -63,10 +63,10 @@ prompt_version() {
 
 prompt_language() {
     local choice
-    echo ""; echo "Selecione o idioma:";
+    echo ""; echo "Select the language:";
     echo "  1) pt-br";
     echo "  2) en";
-    read -rp "Digite 1 ou 2 [1]: " choice || true
+    read -rp "Enter 1 or 2 [1]: " choice || true
     case "${choice:-1}" in
         2) echo "en" ;;
         1|*) echo "pt-br" ;;
@@ -111,46 +111,46 @@ resolve_branch_for_selection() {
     fi
 }
 
-# Verifica dependências necessárias apenas para a variante github-copilot
+# Check dependencies required only for the github-copilot variant
 check_dependencies_copilot() {
-    info "Verificando dependências para GitHub Copilot..."
+    info "Checking dependencies for GitHub Copilot..."
     if ! command -v gh &> /dev/null; then
-        error "GitHub CLI ('gh') não encontrada. É necessária para o Copilot CLI. Instale em https://cli.github.com/ e tente novamente."
+        error "GitHub CLI ('gh') not found. It is required for the Copilot CLI. Install from https://cli.github.com/ and try again."
     fi
-    info "Dependências ok."
+    info "Dependencies OK."
 }
 
-# --- LÓGICA PRINCIPAL ---
+# --- MAIN LOGIC ---
 
 main() {
     if [ ! -f "Makefile" ]; then
-        error "Makefile não encontrado. Execute este script a partir da raiz do projeto (.sde_workspace)."
+        error "Makefile not found. Run this script from the project root (.sde_workspace)."
     fi
 
-    # Coleta de preferências
+    # Collect preferences
     local version lang target_branch
     version=$(prompt_version)
     lang=$(prompt_language)
-    info "Versão selecionada: ${version} | Idioma: ${lang}"
+    info "Selected version: ${version} | Language: ${lang}"
 
-    # Determina e troca para a branch adequada
+    # Determine and switch to the appropriate branch
     git fetch --all --prune >/dev/null 2>&1 || true
     target_branch=$(resolve_branch_for_selection "$version" "$lang")
     checkout_branch "$target_branch"
 
-    # Executa o alvo adequado
+    # Run the appropriate target
     if [ "$version" = "github-copilot" ]; then
         check_dependencies_copilot
-        info "Executando 'make setup-copilot'..."
+        info "Running 'make setup-copilot'..."
         make setup-copilot
-        info "${COLOR_GREEN}--- Configuração do Copilot concluída com sucesso! ---${COLOR_NC}"
-        info "Dicas: Recarregue o VSCode e use '@' no Copilot Chat para ver os agentes."
+        info "${COLOR_GREEN}--- Copilot setup completed successfully! ---${COLOR_NC}"
+        info "Tips: Reload VS Code and use '@' in Copilot Chat to see the agents."
     else
-        info "Executando 'make install' (estrutura básica)..."
+        info "Running 'make install' (basic structure)..."
         make install
-        info "${COLOR_GREEN}--- Estrutura básica criada/atualizada com sucesso. ---${COLOR_NC}"
+        info "${COLOR_GREEN}--- Basic structure created/updated successfully. ---${COLOR_NC}"
     fi
 }
 
-# Executa a função principal.
+# Run main function.
 main

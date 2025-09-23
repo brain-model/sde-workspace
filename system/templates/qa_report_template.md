@@ -1,47 +1,47 @@
-# Relatório de Quality Assurance: [TÍTULO DA FEATURE]
+# Quality Assurance Report: [FEATURE TITLE]
 
 ---
 
-**TASK-ID:** [ID DA TAREFA DO WORKSPACE]
-**Spec Document:** [CAMINHO/PARA/O/SPEC_DOCUMENT.MD]
-**Branch Analisada:** [NOME-DA-BRANCH-GIT]
-**Commit Analisado:** [HASH-DO-COMMIT-SQUASHED]
-**Autor(es):** Agente de QA
-**Data:** {{YYYY-MM-DD}}
+**TASK-ID:** [WORKSPACE TASK ID]
+**Spec Document:** [PATH/TO/SPEC_DOCUMENT.MD]
+**Analyzed Branch:** [GIT-BRANCH-NAME]
+**Analyzed Commit:** [SQUASHED-COMMIT-HASH]
+**Author(s):** QA Agent
+**Date:** {{YYYY-MM-DD}}
 
 ---
 
-## 1. Sumário Executivo
+## 1. Executive Summary
 
-### Descreva em 1-2 frases o resultado geral da análise. O código atende aos requisitos principais? Foram encontrados problemas críticos?
+### Describe in 1-2 sentences the overall outcome. Does the code meet main requirements? Were critical issues found?
 
-**Decisão Final:** **APROVADO_QA** | **REVISAO_QA_NECESSARIA**
+**Final Decision:** **QA_APPROVED** | **QA_REVISION_NEEDED**
 
-## 2. Checklist de Validação de Requisitos
+## 2. Requirements Validation Checklist
 
-*(Valide cada requisito funcional e não-funcional do `Spec Document`. Use esta seção como uma prova de que a especificação foi completamente coberta.)*
+*(Validate each functional and non-functional requirement from the `Spec Document`. Use this section as proof that the specification was fully covered.)*
 
-| Requisito do Spec | Status | Observações |
+| Spec Requirement | Status | Notes |
 | :--- | :--- | :--- |
-| **[Funcional 1.1]** API deve retornar `201 Created` | PASS | |
-| **[Funcional 1.2]** Validação de `nome` obrigatório | PASS | |
-| **[Não-Funcional 4.1]** Resposta da API < 200ms | PASS | Média de 150ms em testes locais. |
-| **[Não-Funcional 4.2]** Acesso requer escopo `recurso:escrever` | FAIL | Acesso está público, sem validação de escopo. |
+| **[Functional 1.1]** API must return `201 Created` | PASS | |
+| **[Functional 1.2]** `name` is required | PASS | |
+| **[Non-Functional 4.1]** API response < 200ms | PASS | Averaged 150ms locally. |
+| **[Non-Functional 4.2]** Access requires `resource:write` scope | FAIL | Endpoint is public, missing scope validation. |
 
-## 3. Análise de Casos de Borda e Cenários de Falha
+## 3. Edge Cases and Failure Scenarios
 
-### Documente aqui os testes que vão além do "caminho feliz" para garantir a robustez da aplicação
+### Document tests that go beyond the happy path to ensure robustness
 
-| Cenário de Teste | Passos para Reprodução | Resultado Esperado | Resultado Observado | Status |
+| Test Scenario | Reproduction Steps | Expected Result | Observed Result | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Corpo da requisição vazio** | Enviar `POST` para `/api/v1/novo-recurso` com `{}`. | Retornar `400 Bad Request` com mensagem clara. | Retorna `500 Internal Server Error`. | FAIL |
-| **Entrada com caracteres especiais** | Enviar `nome` com `"><script>alert(1)</script>"`. | O sistema deve sanitizar a entrada e salvá-la sem executar o script. | A entrada é salva como está, criando uma vulnerabilidade de XSS. | FAIL |
-| **Banco de dados indisponível** | Simular indisponibilidade do `DatabaseService`. | A API deve retornar `503 Service Unavailable`. | A API retorna `503 Service Unavailable` como esperado. | PASS |
+| **Empty request body** | Send `POST` to `/api/v1/resource` with `{}`. | Return `400 Bad Request` with clear message. | Returns `500 Internal Server Error`. | FAIL |
+| **Input with special characters** | Send `name` with `"><script>alert(1)</script>"`. | System sanitizes input and saves it without executing. | Input saved as-is, creating XSS vulnerability. | FAIL |
+| **Database unavailable** | Simulate `DatabaseService` outage. | API returns `503 Service Unavailable`. | API returns `503 Service Unavailable`. | PASS |
 
-## 4. Itens Acionáveis para o Desenvolvedor
+## 4. Actionable Items for the Developer
 
-*(Se a decisão for `REVISAO_QA_NECESSARIA`, liste aqui de forma clara e objetiva os problemas que precisam ser corrigidos. Cada item deve ser uma instrução direta.)*
+*(If the decision is `QA_REVISION_NEEDED`, list clear and objective issues to be fixed. Each item must be a direct instruction.)*
 
-1. **[CRÍTICO - SEGURANÇA]** Implementar a verificação do escopo de autorização (`recurso:escrever`) no endpoint da API, conforme definido no `Spec Document`. Atualmente, o endpoint está desprotegido.
-2. **[CRÍTICO - ROBUSTEZ]** Adicionar validação para o corpo da requisição. Um request vazio (`{}`) está causando uma exceção não tratada (`Internal Server Error 500`) em vez de um `Bad Request 400`.
-3. **[MÉDIO - SEGURANÇA]** Implementar sanitização na entrada do campo `nome` para prevenir vulnerabilidades de Cross-Site Scripting (XSS).
+1. **[CRITICAL - SECURITY]** Implement authorization scope check (`resource:write`) on the API endpoint, as defined in the `Spec Document`. Endpoint is currently unprotected.
+2. **[CRITICAL - ROBUSTNESS]** Add request body validation. An empty `{}` triggers an unhandled exception (`500`) instead of a `400 Bad Request`.
+3. **[MEDIUM - SECURITY]** Sanitize the `name` input to prevent Cross-Site Scripting (XSS).

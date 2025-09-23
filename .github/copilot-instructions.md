@@ -1,3 +1,9 @@
+# Deprecated: Copilot Instructions (duplicate)
+
+This file is deprecated. The canonical configuration lives at `.github/copilot-instructions.md` in the repository root.
+
+Please edit and use the file at `.github/copilot-instructions.md`. This copy under `.sde_workspace/.github/` is kept only to avoid breaking setups and will be removed in a future cleanup.
+
 # Diretrizes para o GitHub Copilot
 
 Este projeto utiliza um workflow de agentes de IA para desenvolvimento de software, com foco em Backstage e TypeScript.

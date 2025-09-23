@@ -221,10 +221,10 @@ Developer: Reload Window
 
 1. Open Copilot Chat in VS Code.
 2. Type `@` to list participants and select one of:
-    * Agente Arquiteto
-    * Agente Desenvolvedor
-    * Agente de QA
-    * Agente Revisor
+    - Architect Agent
+    - Developer Agent
+    - QA Agent
+    - Reviewer Agent
 3. Start the conversation; each mode will guide you with its role and process (spec authoring, implementation, QA, or code review).
 
 Global project guidelines are automatically applied from `.github/copilot-instructions.md`.
