@@ -1,4 +1,3 @@
----
-# Arquivo descontinuado
-Este arquivo é uma duplicata. Use o arquivo canônico em `.github/copilot-instructions.md` na raiz do repositório.
----
+Este arquivo foi descontinuado.
+
+Use o arquivo canônico em `.github/copilot-instructions.md` na raiz do repositório.

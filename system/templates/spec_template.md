@@ -37,23 +37,23 @@ graph TD
 * **Descrição:** Cria um novo recurso.
 * **Corpo da Requisição (`application/json`):**
 
-    ```json
-    {
-      "nome": "string",
-      "prioridade": "integer"
-    }
-    ```
+```json
+{
+  "nome": "string",
+  "prioridade": "integer"
+}
+```
 
 * **Resposta de Sucesso (`201 Created`):**
 
-    ```json
-    {
-      "id": "uuid",
-      "nome": "string",
-      "prioridade": "integer",
-      "criadoEm": "timestamp"
-    }
-    ```
+```json
+{
+  "id": "uuid",
+  "nome": "string",
+  "prioridade": "integer",
+  "criadoEm": "timestamp"
+}
+```
 
 ### 3.2. Modelo de Dados / Alterações no Schema
 
@@ -98,7 +98,7 @@ graph TD
 
 ## 7. Fora do Escopo
 
-*(Liste explicitamente o que **não** será incluído nesta implementação para gerenciar as expectativas.)*
+*(Liste explicitamente o que não será incluído nesta implementação para gerenciar as expectativas.)*
 
 * A funcionalidade de **edição** ou **exclusão** de recursos.
 * Uma interface de usuário para gerenciar os recursos (apenas a API será criada).
