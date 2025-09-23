@@ -1,4 +1,5 @@
-# Technical Specification Document: [FEATURE TITLE]
+Technical Specification Document: [FEATURE TITLE]
+===============================================
 
 ---
 
@@ -10,13 +11,15 @@
 
 ---
 
-## 1. Overview and Motivation
+Overview and Motivation
+-----------------------
 
-*(Describe in 1-2 paragraphs the problem this feature solves and the business objective. What is the user's pain point or technical need we are addressing?)*
+Describe in 1-2 paragraphs the problem this feature solves and the business objective. What is the user's pain point or technical need we are addressing?
 
-## 2. Solution Architecture
+Solution Architecture
+---------------------
 
-*(Describe the high-level approach. How do components fit together? If applicable, include a diagram (e.g., Mermaid.js) to illustrate data flow or interaction between services.)*
+Describe the high-level approach. How do components fit together? If applicable, include a diagram (e.g., Mermaid.js) to illustrate data flow or interaction between services.
 
 ```mermaid
 graph TD
@@ -26,79 +29,84 @@ graph TD
     C -->|No| E[Result 2];
 ```
 
-## 3. Detailed Design
+Detailed Design
+---------------
 
-### 3.1. Contratos de API (se aplicável)
+- API Contracts (if applicable)
 
-*(Detalhe aqui os novos endpoints de API ou as modificações em endpoints existentes. Especifique o método HTTP, o caminho, os parâmetros, o corpo da requisição e o formato da resposta, incluindo códigos de status.)*
+  Detail new API endpoints or modifications to existing ones. Specify HTTP method, path, parameters, request body, and response format including status codes.
 
-**Endpoint:** `POST /api/v1/novo-recurso`
-
-* **Descrição:** Cria um novo recurso.
-* **Corpo da Requisição (`application/json`):**
+  - Endpoint: `POST /api/v1/resource`
+  - Description: Creates a new resource.
+  - Request Body (`application/json`):
 
     ```json
     {
-      "nome": "string",
-      "prioridade": "integer"
+      "name": "string",
+      "priority": "integer"
     }
     ```
 
-* **Resposta de Sucesso (`201 Created`):**
+  - Success Response (`201 Created`):
 
     ```json
     {
       "id": "uuid",
-      "nome": "string",
-      "prioridade": "integer",
-      "criadoEm": "timestamp"
+      "name": "string",
+      "priority": "integer",
+      "createdAt": "timestamp"
     }
     ```
 
-### 3.2. Modelo de Dados / Alterações no Schema
+- Data Model / Schema Changes
 
-*(Descreva quaisquer novas tabelas de banco de dados, colunas, índices ou alterações em estruturas de dados existentes. Especifique tipos de dados, restrições e relacionamentos.)*
+  Describe any new database tables, columns, indexes, or changes to existing data structures. Specify data types, constraints, and relationships.
 
-**Nova Tabela: `recursos`**
+  - New Table: `resources`
 
-| Coluna | Tipo de Dado | Restrições | Descrição |
-| :--- | :--- | :--- | :--- |
-| `id` | `UUID` | PRIMARY KEY | Identificador único. |
-| `nome` | `VARCHAR(255)`| NOT NULL | Nome do recurso. |
+    | Column     | Data Type      | Constraints  | Description          |
+    | :---       | :---           | :---         | :---                 |
+    | `id`       | `UUID`         | PRIMARY KEY  | Unique identifier.   |
+    | `name`     | `VARCHAR(255)` | NOT NULL     | Resource name.       |
+    | `priority` | `INTEGER`      | NOT NULL     | Priority (0..3).     |
 
-### 3.3. Integração com Serviços Existentes
+- Integration with Existing Services
 
-*(Liste os serviços ou módulos existentes que serão consumidos por esta nova feature e descreva como a interação ocorrerá.)*
+  List existing services or modules consumed by this feature and describe how the interaction will occur.
 
-* **Serviço de Autenticação:** Será utilizado para validar o token do usuário antes de permitir a criação do recurso.
-* **Serviço de Notificações:** Após a criação bem-sucedida, uma mensagem será enviada para este serviço para notificar os administradores.
+  - Authentication Service: Validate the user's token before allowing resource creation.
+  - Notifications Service: After successful creation, send a message to notify administrators.
 
-## 4. Requisitos Não-Funcionais (NFRs)
+Non-Functional Requirements (NFRs)
+----------------------------------
 
-*(Liste os requisitos que não estão diretamente relacionados à funcionalidade, mas à qualidade do sistema.)*
+List quality requirements not directly related to functionality.
 
-* **Performance:** A API de criação de recurso deve responder em menos de 200ms (p95).
-* **Segurança:** Todas as entradas da API devem ser sanitizadas para prevenir XSS e injeção de SQL. O acesso ao endpoint requer o escopo `recurso:escrever`.
-* **Observabilidade:** Métricas (quantidade, latência, erros) para o novo endpoint devem ser exportadas para o Prometheus. Logs estruturados devem ser emitidos em cada etapa do processo.
+- Performance: The create-resource API must respond in under 200ms (p95).
+- Security: Sanitize all API inputs to prevent XSS and SQL injection. Access to the endpoint requires the `resource:write` scope.
+- Observability: Export metrics (count, latency, errors) for the new endpoint to Prometheus. Emit structured logs at each step of the process.
 
-## 5. Estratégia de Testes
+Testing Strategy
+----------------
 
-*(Descreva a abordagem geral para garantir a qualidade. Que tipo de testes são necessários?)*
+Describe the overall approach to ensure quality. What types of tests are required?
 
-* **Testes Unitários:** Cobrir toda a lógica de negócio na camada de serviço.
-* **Testes de Integração:** Validar a interação com o banco de dados e com o serviço de notificações.
-* **Testes de Contrato:** Garantir que o payload da API esteja em conformidade com a especificação.
+- Unit Tests: Cover the business logic in the service layer.
+- Integration Tests: Validate interaction with the database and notifications service.
+- Contract Tests: Ensure the API payload complies with the specification.
 
-## 6. Riscos e Mitigações
+Risks and Mitigations
+---------------------
 
-*(Identifique potenciais riscos técnicos ou de negócio e descreva um plano para mitigá-los.)*
+Identify potential technical or business risks and describe a mitigation plan.
 
-* **Risco:** A API externa de notificações pode ser instável.
-* **Mitigação:** Implementar um padrão de `retry com backoff exponencial` e uma `dead-letter queue` para mensagens que falharem persistentemente.
+- Risk: The external notifications API may be unstable.
+- Mitigation: Implement retry with exponential backoff and a dead-letter queue for persistently failing messages.
 
-## 7. Fora do Escopo
+Out of Scope
+------------
 
-*(Liste explicitamente o que **não** será incluído nesta implementação para gerenciar as expectativas.)*
+Explicitly list what will not be included in this implementation to set expectations.
 
-* A funcionalidade de **edição** ou **exclusão** de recursos.
-* Uma interface de usuário para gerenciar os recursos (apenas a API será criada).
+- Editing or deleting resources.
+- A user interface to manage resources (API only).
