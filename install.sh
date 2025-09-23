@@ -100,20 +100,69 @@ main() {
 
     local target_branch=""
     if [ "$version_choice" = "github-copilot" ]; then
-        if   try_checkout "copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
-            target_branch="copilot-pt-br"
-        elif try_checkout "github-copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
-            target_branch="github-copilot-pt-br"
-        elif try_checkout "feature/setup-copilot-pt-br" && [ "$lang_choice" = "pt-br" ]; then
-            target_branch="feature/setup-copilot-pt-br"
-        elif try_checkout "copilot"; then
-            target_branch="copilot"
-        elif try_checkout "github-copilot"; then
-            target_branch="github-copilot"
-        elif try_checkout "feature/setup-copilot"; then
-            target_branch="feature/setup-copilot"
+        if [ "$lang_choice" = "pt-br" ]; then
+            # Preferências para Copilot PT-BR
+            for b in \
+                copilot-ptbr \
+                copilot-pt-br \
+                github-copilot-ptbr \
+                github-copilot-pt-br \
+                feature/setup-copilot-ptbr \
+                feature/setup-copilot-pt-br \
+                copilot \
+                github-copilot \
+                feature/setup-copilot; do
+                if try_checkout "$b"; then
+                    target_branch="$b"
+                    break
+                fi
+            done
         else
+            # Preferências para Copilot EN-US
+            for b in \
+                copilot-enus \
+                copilot-en-us \
+                github-copilot-enus \
+                github-copilot-en-us \
+                copilot \
+                github-copilot \
+                feature/setup-copilot; do
+                if try_checkout "$b"; then
+                    target_branch="$b"
+                    break
+                fi
+            done
+        fi
+        if [ -z "$target_branch" ]; then
             warn "Nenhuma branch específica de Copilot encontrada. Usando branch base."
+        else
+            info "Branch selecionada: $target_branch"
+        fi
+    else
+        # Versão default (sem Copilot)
+        if [ "$lang_choice" = "pt-br" ]; then
+            for b in \
+                default-ptbr \
+                ptbr \
+                pt-br; do
+                if try_checkout "$b"; then
+                    target_branch="$b"
+                    break
+                fi
+            done
+        else
+            for b in \
+                default-enus \
+                default-en-us \
+                default; do
+                if try_checkout "$b"; then
+                    target_branch="$b"
+                    break
+                fi
+            done
+        fi
+        if [ -n "$target_branch" ]; then
+            info "Branch selecionada: $target_branch"
         fi
     fi
 
@@ -124,14 +173,6 @@ main() {
             target_branch="master"
         else
             error "Não foi possível determinar a branch base (main/master)."
-        fi
-    fi
-
-    if [ "$lang_choice" = "pt-br" ]; then
-        if try_checkout "pt-br"; then
-            info "Idioma pt-br selecionado: branch 'pt-br' ativa."
-        else
-            warn "Branch 'pt-br' não encontrada. Mantendo branch '$target_branch'."
         fi
     fi
 
