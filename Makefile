@@ -23,29 +23,29 @@ install:
 	@echo ">> Structure created successfully."
 
 # ---------------------------------------------
-# Setup para GitHub Copilot e VSCode Chat Modes
+# Setup for GitHub Copilot and VS Code Chat Modes
 # ---------------------------------------------
 .PHONY: setup-copilot
 
 setup-copilot:
-	@echo ">> Criando diretórios de configuração para o GitHub Copilot..."
+	@echo ">> Creating configuration directories for GitHub Copilot..."
 	@mkdir -p .github
 	@mkdir -p .github/chatmodes
 	@rm -rf .vscode/chatmodes || true
 
-	@echo ">> Gerando .github/copilot-instructions.md..."
-	@printf "%b" "# Diretrizes para o GitHub Copilot\n\nEste projeto utiliza um workflow de agentes de IA para desenvolvimento de software, com foco em Backstage e TypeScript.\n\n**Regras Gerais:**\n- Todo o código deve ser escrito em TypeScript e seguir as melhores práticas de Clean Code.\n- As mensagens de commit devem seguir estritamente as regras definidas em '.sde_workspace/system/guides/semantic_commit_guide.md'.\n- A interação com o sistema Backstage deve utilizar os serviços principais como DatabaseService e SchedulerService sempre que possível.\n" > .github/copilot-instructions.md
+	@echo ">> Generating .github/copilot-instructions.md..."
+	@printf "%b" "# GitHub Copilot Guidelines\n\nThis project uses an AI agents workflow for software development, focused on Backstage and TypeScript.\n\nGeneral Rules:\n- All code must be written in TypeScript and follow Clean Code best practices.\n- Commit messages must strictly follow the rules in \`.sde_workspace/system/guides/semantic_commit_guide.md\`.\n- Interactions with Backstage should use core services such as \`DatabaseService\` and \`SchedulerService\` whenever possible.\n" > .github/copilot-instructions.md
 
-	@echo ">> Gerando chatmodes para os agentes em .github/chatmodes/..."
-	@printf "%b" "---\ntitle: Agente Arquiteto\n---\n# Role and Goal\nVocê é o Agente Arquiteto. Suas instruções estão em '.sde_workspace/system/agents/architect.md'. Assuma essa persona e processo para a sessão. Comece pedindo o TASK-ID do backlog.\n" > .github/chatmodes/architect.chatmode.md
+	@echo ">> Generating chat modes in .github/chatmodes/..."
+	@printf "%b" "---\ntitle: Architect Agent\n---\n# Role and Goal\nYou are the Architect Agent. Your instructions are in '.sde_workspace/system/agents/architect.md'. Assume this persona and process for the session. Start by asking for the backlog TASK-ID.\n" > .github/chatmodes/architect.chatmode.md
 
-	@printf "%b" "---\ntitle: Agente Desenvolvedor\n---\n# Role and Goal\nVocê é o Agente Desenvolvedor. Suas instruções estão em '.sde_workspace/system/agents/developer.md'. Assuma essa persona e processo para a sessão. Comece pedindo o workspace da tarefa.\n" > .github/chatmodes/developer.chatmode.md
+	@printf "%b" "---\ntitle: Developer Agent\n---\n# Role and Goal\nYou are the Developer Agent. Your instructions are in '.sde_workspace/system/agents/developer.md'. Assume this persona and process for the session. Start by asking for the task workspace.\n" > .github/chatmodes/developer.chatmode.md
 
-	@printf "%b" "---\ntitle: Agente de QA\n---\n# Role and Goal\nVocê é o Agente de QA. Suas instruções estão em '.sde_workspace/system/agents/qa.md'. Assuma essa persona e processo para a sessão. Comece pedindo o workspace da tarefa para iniciar a análise.\n" > .github/chatmodes/qa.chatmode.md
+	@printf "%b" "---\ntitle: QA Agent\n---\n# Role and Goal\nYou are the QA Agent. Your instructions are in '.sde_workspace/system/agents/qa.md'. Assume this persona and process for the session. Start by asking for the task workspace to begin the analysis.\n" > .github/chatmodes/qa.chatmode.md
 
-	@printf "%b" "---\ntitle: Agente Revisor\n---\n# Role and Goal\nVocê é o Agente Revisor. Suas instruções estão em '.sde_workspace/system/agents/reviewer.md'. Assuma essa persona e processo para a sessão. Comece pedindo a URL do Merge Request para a revisão.\n" > .github/chatmodes/reviewer.chatmode.md
+	@printf "%b" "---\ntitle: Reviewer Agent\n---\n# Role and Goal\nYou are the Reviewer Agent. Your instructions are in '.sde_workspace/system/agents/reviewer.md'. Assume this persona and process for the session. Start by asking for the Merge Request URL to review.\n" > .github/chatmodes/reviewer.chatmode.md
 
-	@echo ">> Chatmodes criados com sucesso."
+	@echo ">> Chat modes generated successfully."
 
 # Target to clean the created structure.
 clean:
