@@ -1,4 +1,4 @@
-# Technical Specification Document: [FEATURE TITLE]
+# Documento de Especificação Técnica: [TÍTULO DA FEATURE]
 
 ---
 
