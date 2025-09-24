@@ -3,15 +3,32 @@
 set -e
 
 ascii_art='
-   _____ _____  ______    _    _  ____  _____  _  __ _____ _____        _____ ______
-  / ____|  __ \|  ____|  | |  | |/ __ \|  __ \| |/ // ____|  __ \ /\   / ____|  ____|
- | (___ | |  | | |__     | |  | | |  | | |__) | '"'"' /| (___ | |__) /  \ | |    | |__
-  \___ \| |  | |  __|    | |  | | |  | |  _  /|  <  \___ \|  ___/ /\ \| |    |  __|
-  ____) | |__| | |____   | |__| | |__| | | \ \| . \ ____) | |  / ____ \ |____| |____
- |_____/|_____/|______|   \____/ \____/|_|  \_\_|\_\_____/|_| /_/    \_\_____|______|
+ ███████╗██████╗ ███████╗
+ ██╔════╝██╔══██╗██╔════╝
+ ███████╗██║  ██║█████╗  
+ ╚════██║██║  ██║██╔══╝  
+ ███████║██████╔╝███████╗
+ ╚══════╝╚═════╝ ╚══════╝
 '
 
-echo -e "$ascii_art"
+# Define o gradiente verde fosforescente (do mais escuro para o mais claro)
+colors=(
+	'\033[38;5;22m'  # Verde escuro
+	'\033[38;5;28m'  # Verde médio escuro
+	'\033[38;5;34m'  # Verde médio
+	'\033[38;5;40m'  # Verde brilhante
+	'\033[38;5;46m'  # Verde claro
+	'\033[38;5;82m'  # Verde fosforescente
+)
+
+# Separar ASCII art em linhas
+IFS=$'\n' read -rd '' -a lines <<<"$ascii_art"
+
+# Imprimir cada linha com a cor correspondente
+for i in "${!lines[@]}"; do
+	color_index=$((i % ${#colors[@]}))
+	echo -e "${colors[color_index]}${lines[i]}\033[0m"
+done
 echo "=> SDE Workspace é para ambientes de desenvolvimento!"
 echo -e "\nInício da instalação (ou cancele com ctrl+c)..."
 

@@ -43,7 +43,7 @@ choose_option() {
             printf "  [%d] %s\n" "$((i+1))" "${options[$i]}"
         done
         printf "> "
-        read -r choice
+        read -r choice < /dev/tty < /dev/tty
         if [[ -z "$choice" ]]; then
             printf -v "$varname" "%s" "$default_value"
             echo "Opção escolhida (default): $default_value"
