@@ -14,183 +14,162 @@ COLOR_RED='\033[0;31m'
 COLOR_NC='\033[0m' # No Color
 
 # --- FUNÇÕES AUXILIARES ---
-info() {
-    printf "${COLOR_GREEN}[INFO]${COLOR_NC} %s\n" "$1"
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+INFO()  { printf "\033[0;32m[INFO]\033[0m %s\n" "$1"; }
+WARN()  { printf "\033[0;33m[WARN]\033[0m %s\n" "$1"; }
+ERROR() { printf "\033[0;31m[ERROR]\033[0m %s\n" "$1" >&2; exit 1; }
+
+require_cmd() {
+    command -v "$1" >/dev/null 2>&1 || ERROR "Missing dependency: $1"
 }
 
-warn() {
-    printf "${COLOR_YELLOW}[WARN]${COLOR_NC} %s\n" "$1"
-}
+choose_option() {
+    local title="$1"
+    shift
+    local -a options=("${!1}")
+    shift
+    local varname="$1"
+    shift
+    local default_value="$1"
+    local choice
 
-error() {
-    printf "${COLOR_RED}[ERROR]${COLOR_NC} %s\n" "$1" >&2
-    exit 1
-}
-
-# --- LÓGICA PRINCIPAL ---
-
-# Função para verificar se os comandos necessários estão instalados.
-check_dependencies() {
-    info "Verificando dependências..."
-    local missing_deps=0
-    for dep in git make; do
-        if ! command -v "$dep" &> /dev/null; then
-            warn "Dependência não encontrada: $dep"
-            missing_deps=1
+    while true; do
+        echo "${title} (default: ${default_value})"
+        echo "  [0] Encerrar execução"
+        for i in "${!options[@]}"; do
+            printf "  [%d] %s\n" "$((i+1))" "${options[$i]}"
+        done
+        printf "> "
+        read -r choice
+        if [[ -z "$choice" ]]; then
+            printf -v "$varname" "%s" "$default_value"
+            echo "Opção escolhida (default): $default_value"
+            return 0
+        elif [[ "$choice" == "0" ]]; then
+            ERROR "Execução encerrada pelo usuário."
+        elif [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#options[@]}" ]; then
+            local selected="${options[$((choice-1))]}"
+            printf -v "$varname" "%s" "$selected"
+            echo "Opção escolhida: $selected"
+            return 0
         fi
+        echo "Opção inválida. Tente novamente."
     done
-
-    if [ "$missing_deps" -eq 1 ]; then
-        error "Por favor, instale as dependências faltantes e tente novamente."
-    fi
-    info "Todas as dependências foram encontradas."
 }
 
-# Função principal do script.
+copy_if_missing() {
+    local src_dir="$1"; local dest_dir="$2"
+    if [ ! -d "$src_dir" ]; then
+        WARN "Source directory not found: $src_dir (skipping)"
+        return 0
+    fi
+    if [ -d "$dest_dir" ]; then
+        WARN "Destination exists, skipping: $dest_dir"
+        return 0
+    fi
+    mkdir -p "$(dirname "$dest_dir")"
+    cp -a "$src_dir" "$dest_dir"
+    INFO "Created: $dest_dir"
+}
+
+# Merge files from src into dest without overwriting existing files
+merge_dir_no_overwrite() {
+    local src_dir="$1"; local dest_dir="$2"
+    if [ ! -d "$src_dir" ]; then
+        WARN "Source directory not found: $src_dir (skipping)"
+        return 0
+    fi
+    mkdir -p "$dest_dir"
+    local copied=0
+    while IFS= read -r -d '' file; do
+        local rel="${file#"${src_dir}/"}"
+        local target="$dest_dir/$rel"
+        mkdir -p "$(dirname "$target")"
+        if [ -e "$target" ]; then
+            INFO "Keeping existing: $target"
+        else
+            cp -a "$file" "$target"
+            INFO "Added: $target"
+            copied=$((copied+1))
+        fi
+    done < <(find "$src_dir" -type f -print0)
+    if [ "$copied" -eq 0 ]; then
+        INFO "No new files to add from $src_dir"
+    fi
+}
+
 main() {
-    check_dependencies
-
-    local repo_url="${1-}"
-    if [ -z "$repo_url" ]; then
-        warn "URL do repositório não fornecida. Usando padrão: https://github.com/brain-model/sde-workspace.git"
-        repo_url="https://github.com/brain-model/sde-workspace.git"
-    fi
-    local project_dir
-    project_dir=$(basename "$repo_url" .git)
-
-    if [ -d "$project_dir" ]; then
-        error "O diretório '$project_dir' já existe. Por favor, remova-o ou escolha outro local."
+    # Verifica se está em terminal interativo
+    if [ ! -t 0 ]; then
+        ERROR "Este instalador requer um terminal interativo para exibir o menu de opções."
     fi
 
-    printf "%b" "\nSelecione a versão a instalar [default/github-copilot] (default): "
-    local version_choice
-    read -r version_choice || version_choice="default"
-    version_choice=${version_choice:-default}
+    require_cmd git
+    require_cmd curl
 
-    printf "%b" "Selecione o idioma [en/pt-br] (en): "
-    local lang_choice
-    read -r lang_choice || lang_choice="en"
-    lang_choice=${lang_choice:-en}
+    INFO "sde-workspace installer"
 
-    info "Clonando o repositório de '$repo_url'..."
-    git clone "$repo_url"
-    cd "$project_dir"
+    local branch
+    local branch_options=("default-ptbr" "default-enus" "copilot-ptbr" "copilot-enus")
+    choose_option "Selecione a configuração desejada:" branch_options[@] branch "default-ptbr"
+    INFO "Selected branch: $branch"
 
-    if [ ! -f "Makefile" ]; then
-        error "Makefile não encontrado no repositório. A instalação não pode continuar."
-    fi
+    local repo_url="${REPO_URL:-https://github.com/brain-model/sde-workspace.git}"
+    INFO "Using repository: $repo_url"
 
-    local has_remote_branch
-    has_remote_branch() {
-        git show-ref --verify --quiet "refs/remotes/origin/$1"
-    }
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    trap 'rm -rf "$tmpdir"' EXIT
 
-    local try_checkout
-    try_checkout() {
-        if git rev-parse --verify --quiet "$1" >/dev/null; then
-            git checkout "$1"
-            return 0
-        elif has_remote_branch "$1"; then
-            git checkout -b "$1" "origin/$1"
-            return 0
+    INFO "Fetching branch '$branch' (sparse shallow clone of .sde_workspace)..."
+    git clone --depth 1 --filter=blob:none --no-checkout --branch "$branch" "$repo_url" "$tmpdir/repo" >/dev/null 2>&1 || ERROR "Failed to clone branch '$branch'"
+    (
+        cd "$tmpdir/repo"
+        git sparse-checkout init --cone >/dev/null 2>&1 || true
+        git sparse-checkout set .sde_workspace >/dev/null 2>&1 || true
+        git checkout >/dev/null 2>&1 || ERROR "Failed to checkout sparse contents"
+    )
+
+    local src_ws="$tmpdir/repo/.sde_workspace"
+    local dst_ws=".sde_workspace"
+    local dst_chatmodes=".github/chatmodes"
+
+    if [ -d "$dst_ws" ]; then
+        WARN "Directory exists: $dst_ws"
+        printf "Overwrite it? [y/N]: "
+        read -r ans || true
+        if [[ "${ans:-N}" =~ ^[Yy]$ ]]; then
+            rm -rf "$dst_ws"
+            INFO "Removed: $dst_ws"
+            copy_if_missing "$src_ws" "$dst_ws"
         else
-            return 1
-        fi
-    }
-
-    local target_branch=""
-    if [ "$version_choice" = "github-copilot" ]; then
-        if [ "$lang_choice" = "pt-br" ]; then
-            # Preferências para Copilot PT-BR
-            for b in \
-                copilot-ptbr \
-                copilot-pt-br \
-                github-copilot-ptbr \
-                github-copilot-pt-br \
-                feature/setup-copilot-ptbr \
-                feature/setup-copilot-pt-br \
-                copilot \
-                github-copilot \
-                feature/setup-copilot; do
-                if try_checkout "$b"; then
-                    target_branch="$b"
-                    break
-                fi
-            done
-        else
-            # Preferências para Copilot EN-US
-            for b in \
-                copilot-enus \
-                copilot-en-us \
-                github-copilot-enus \
-                github-copilot-en-us \
-                copilot \
-                github-copilot \
-                feature/setup-copilot; do
-                if try_checkout "$b"; then
-                    target_branch="$b"
-                    break
-                fi
-            done
-        fi
-        if [ -z "$target_branch" ]; then
-            warn "Nenhuma branch específica de Copilot encontrada. Usando branch base."
-        else
-            info "Branch selecionada: $target_branch"
+            INFO "Keeping existing: $dst_ws"
         fi
     else
-        # Versão default (sem Copilot)
-        if [ "$lang_choice" = "pt-br" ]; then
-            for b in \
-                default-ptbr \
-                ptbr \
-                pt-br; do
-                if try_checkout "$b"; then
-                    target_branch="$b"
-                    break
-                fi
-            done
-        else
-            for b in \
-                default-enus \
-                default-en-us \
-                default; do
-                if try_checkout "$b"; then
-                    target_branch="$b"
-                    break
-                fi
-            done
-        fi
-        if [ -n "$target_branch" ]; then
-            info "Branch selecionada: $target_branch"
-        fi
+        copy_if_missing "$src_ws" "$dst_ws"
     fi
 
-    if [ -z "$target_branch" ]; then
-        if   try_checkout "main"; then
-            target_branch="main"
-        elif try_checkout "master"; then
-            target_branch="master"
-        else
-            error "Não foi possível determinar a branch base (main/master)."
-        fi
+    # Populate chatmodes only for GitHub Copilot version, merging into existing directory
+    if [[ "$branch" =~ ^copilot- ]]; then
+        local src_chatmodes="$src_ws/.github/chatmodes"
+        INFO "Populating chatmodes for Copilot version..."
+        merge_dir_no_overwrite "$src_chatmodes" "$dst_chatmodes"
+    else
+        INFO "Skipping chatmodes population (branch: $branch)"
     fi
 
-    info "Executando 'make install' para criar a estrutura do .sde_workspace..."
-    make install
-
-    if [ "$version_choice" = "github-copilot" ]; then
-        if grep -Eq '^[[:space:]]*setup-copilot:' Makefile; then
-            info "Executando 'make setup-copilot' para configurar Copilot..."
-            make setup-copilot
-        else
-            warn "Target 'setup-copilot' não encontrado no Makefile. Pulando configuração do Copilot."
-        fi
+    INFO "Installation finished."
+    echo "- Branch: $branch"
+    echo "- Created:  $dst_ws"
+    if [[ "$branch" =~ ^copilot- ]]; then
+        echo "- Chatmodes: merged from .sde_workspace templates into $dst_chatmodes"
     fi
-
-    info "Setup concluído com sucesso!"
-    info "Agora você pode entrar no diretório do projeto com: cd $project_dir"
 }
 
-# Executa a função principal com todos os argumentos passados para o script.
 main "$@"
+
+# Evita erro de variável não associada se o script for "source" ou rodar comandos fora do main
+unset tmpdir 2>/dev/null || true
