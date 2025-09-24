@@ -102,11 +102,6 @@ merge_dir_no_overwrite() {
 }
 
 main() {
-    # Verifica se está em terminal interativo
-    if [ ! -t 0 ]; then
-        ERROR "Este instalador requer um terminal interativo para exibir o menu de opções."
-    fi
-
     require_cmd git
     require_cmd curl
 
