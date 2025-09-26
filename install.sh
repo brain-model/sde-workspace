@@ -137,7 +137,7 @@ main() {
     if [ -d "$dst_ws" ]; then
         WARN "Directory exists: $dst_ws"
         printf "Overwrite it? [y/N]: "
-        read -r ans || true
+        read -r ans < /dev/tty
         if [[ "${ans:-N}" =~ ^[Yy]$ ]]; then
             rm -rf "$dst_ws"
             INFO "Removed: $dst_ws"
@@ -149,13 +149,29 @@ main() {
         copy_if_missing "$src_ws" "$dst_ws"
     fi
 
-    # Populate chatmodes only for GitHub Copilot version, merging into existing directory
+    # Populate chatmodes and copilot-instructions only for GitHub Copilot version
     if [[ "$branch" =~ ^copilot- ]]; then
         local src_chatmodes="$src_ws/.github/chatmodes"
+        local src_copilot_instructions="$src_ws/.github/copilot-instructions.md"
+        local dst_copilot_instructions=".github/copilot-instructions.md"
+        
         INFO "Populating chatmodes for Copilot version..."
         merge_dir_no_overwrite "$src_chatmodes" "$dst_chatmodes"
+        
+        # Copy copilot-instructions.md for Copilot versions
+        if [ -f "$src_copilot_instructions" ]; then
+            if [ -f "$dst_copilot_instructions" ]; then
+                INFO "Keeping existing: $dst_copilot_instructions"
+            else
+                mkdir -p "$(dirname "$dst_copilot_instructions")"
+                cp -a "$src_copilot_instructions" "$dst_copilot_instructions"
+                INFO "Created: $dst_copilot_instructions"
+            fi
+        else
+            WARN "Source file not found: $src_copilot_instructions (skipping)"
+        fi
     else
-        INFO "Skipping chatmodes population (branch: $branch)"
+        INFO "Skipping chatmodes and copilot-instructions population (branch: $branch)"
     fi
 
     INFO "Installation finished."
@@ -163,6 +179,7 @@ main() {
     echo "- Created:  $dst_ws"
     if [[ "$branch" =~ ^copilot- ]]; then
         echo "- Chatmodes: merged from .sde_workspace templates into $dst_chatmodes"
+        echo "- GitHub Copilot instructions: .github/copilot-instructions.md"
     fi
 }
 

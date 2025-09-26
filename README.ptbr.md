@@ -83,12 +83,26 @@ cd sde-workspace
 ./install.sh
 ```
 
+## Contribuindo
+
+Nós damos boas-vindas às contribuições da comunidade! Leia nosso [Guia de Contribuição](CONTRIBUTING.ptbr.md) para começar:
+
+- **Fluxo de Desenvolvimento**: Setup, padrões de código e procedimentos de teste
+- **Estratégia de Branches**: Como gerenciamos diferentes branches de idioma e funcionalidades
+- **Commits Semânticos**: Nossas convenções de mensagens de commit para versionamento automatizado
+- **Processo de Code Review**: Diretrizes para submissão e revisão de pull requests
+
+## Changelog
+
+Veja [CHANGELOG.ptbr.md](CHANGELOG.ptbr.md) para um histórico detalhado de mudanças, novas funcionalidades e decisões arquiteturais.
+
 ## Suporte
 
 Para problemas e dúvidas:
 
 - Abra uma issue no [GitHub Issues](https://github.com/brain-model/sde-workspace/issues)
 - Consulte nossa documentação no diretório `.sde_workspace/system/guides/`
+- Revise o [Guia de Contribuição](CONTRIBUTING.ptbr.md) para questões de desenvolvimento
 
 ## Licença
 
