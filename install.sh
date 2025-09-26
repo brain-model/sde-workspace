@@ -2,7 +2,7 @@
 
 # Saia imediatamente se um comando falhar.
 set -e
-# Trate variáveis não definidas como um erro.
+# Trate variaveis nao definidas como um erro.
 set -u
 # Garante que pipelines falhem se algum comando falhar.
 set -o pipefail
@@ -115,8 +115,10 @@ main() {
     local repo_url="${REPO_URL:-https://github.com/brain-model/sde-workspace.git}"
     INFO "Using repository: $repo_url"
 
-    local tmpdir
-    tmpdir=$(mktemp -d)
+    tmpdir="/tmp/sde-workspace-install"
+    # Remove o diretório se já existir
+    rm -rf "$tmpdir"
+    mkdir -p "$tmpdir"
     trap 'rm -rf "$tmpdir"' EXIT
 
     INFO "Fetching branch '$branch' (sparse shallow clone of .sde_workspace)..."
@@ -165,6 +167,3 @@ main() {
 }
 
 main "$@"
-
-# Evita erro de variável não associada se o script for "source" ou rodar comandos fora do main
-unset tmpdir 2>/dev/null || true
