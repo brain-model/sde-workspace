@@ -1,4 +1,4 @@
-# SDE Workspace
+# Software Development Environment (SDE) Workspace
 
 **[ [EN](README.md) | [PT](README.ptbr.md) ]**
 
@@ -41,26 +41,76 @@ The installer will present you with 4 configuration options:
 
 After installation, you'll have:
 
-```
+```bash
 .sde_workspace/
-├── system/
-│   ├── agents/         # AI agent definitions
-│   ├── guides/         # Development guides
-│   └── templates/      # Document templates
+├── system/                 # Core normative system
+│   ├── specs/             # Specifications with lifecycle management
+│   │   ├── draft/         # Draft specifications
+│   │   ├── in-review/     # Specifications under review
+│   │   ├── active/        # Active/approved specifications
+│   │   ├── deprecated/    # Deprecated specifications
+│   │   ├── archived/      # Archived specifications
+│   │   └── manifest.json  # Auto-generated specs index
+│   ├── agents/            # AI agent definitions and prompts
+│   ├── guides/            # Development guides and workflows
+│   ├── templates/         # Document and artifact templates
+│   ├── backlog/           # Structured work items and tasks
+│   └── workspaces/        # Ephemeral guided work areas
+├── knowledge/             # Classified knowledge base
+│   ├── external/          # External sources and documentation
+│   │   ├── sources/       # Raw and processed external materials
+│   │   ├── standards/     # Market standards and summaries
+│   │   ├── vendor-docs/   # Vendor documentation curation
+│   │   ├── research/      # Research papers and benchmarks
+│   │   └── transcripts/   # Meeting transcripts and events
+│   ├── internal/          # Institutional knowledge
+│   │   ├── concepts/      # Domain glossary and definitions
+│   │   ├── runbooks/      # Operational procedures
+│   │   ├── references/    # Lists, catalogs, internal indices
+│   │   ├── notes/         # Raw and consolidated notes
+│   │   ├── decisions-context/ # Decision contexts and narratives
+│   │   ├── integracao/    # Integration flows and mappings
+│   │   ├── templates/     # Internal artifact templates
+│   │   └── onboarding/    # Entry guides and learning paths
+│   └── manifest.json      # Auto-generated knowledge index
 └── .github/
     └── copilot-instructions.md  # Copilot configuration
 ```
 
 For Copilot versions, you'll also get:
 
-```
+```bash
 .github/
-└── chatmodes/
-    ├── architect.chatmode.md
-    ├── developer.chatmode.md
-    ├── qa.chatmode.md
-    └── reviewer.chatmode.md
+└── chatmodes/             # Specialized AI agent modes
+    ├── architect.chatmode.md   # Architecture-focused agent
+    ├── developer.chatmode.md   # Development-focused agent
+    ├── orchestrator.chatmode.md # Orchestration agent
+    ├── pm.chatmode.md          # Product management agent
+    ├── qa.chatmode.md          # Quality assurance agent
+    └── reviewer.chatmode.md    # Code review agent
 ```
+
+## Key Features
+
+### 🏗️ **Structured Development Environment**
+
+- **Specification Lifecycle**: Formal workflow for specs (draft → in-review → active → deprecated → archived)
+- **Multi-Agent System**: Specialized AI agents for different development roles
+- **Knowledge Management**: Organized internal and external knowledge repositories
+- **Template-Driven**: Standardized templates for consistent documentation
+
+### 🤖 **AI-Powered Workflow**
+
+- **GitHub Copilot Integration**: Enhanced with specialized chatmodes for different development contexts
+- **Intelligent Agents**: Architect, Developer, QA, Reviewer, Product Manager, and Orchestrator agents
+- **Automated Indexing**: Auto-generated manifests for efficient discovery and navigation
+
+### 📚 **Knowledge Organization**
+
+- **External Sources**: Standards, vendor docs, research papers, transcripts
+- **Internal Knowledge**: Concepts, runbooks, decision contexts, integration guides
+- **Version Control**: Full change tracking and history for all specifications
+- **Search & Discovery**: Manifest-based indexing for rapid content location
 
 ## System Requirements
 
@@ -86,6 +136,7 @@ cd sde-workspace
 ## Support
 
 For issues and questions:
+
 - Open an issue on [GitHub Issues](https://github.com/brain-model/sde-workspace/issues)
 - Check our documentation in the `.sde_workspace/system/guides/` directory
 
