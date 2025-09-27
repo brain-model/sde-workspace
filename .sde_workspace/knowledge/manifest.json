@@ -1,0 +1,58 @@
+{
+  "version": "",
+  "generatedAt": "",
+  "description": "",
+  "repositories": {
+    "internal": {
+      "type": "",
+      "governance": "",
+      "description": ""
+    },
+    "backstage": {
+      "type": "",
+      "governance": "",
+      "description": "",
+      "path": "",
+      "source": ""
+    }
+  },
+  "taxonomy": {
+    "governance": "",
+    "categories": [],
+    "tagSchema": []
+  },
+  "files": [
+    {
+      "path": "",
+      "checksum": "",
+      "size": 0,
+      "lastModified": "",
+      "metadata": {
+        "id": "",
+        "title": "",
+        "category": "",
+        "created": "",
+        "updated": "",
+        "source": "",
+        "tags": []
+      }
+    }    
+  ],
+  "statistics": {
+    "totalFiles": 0,
+    "byCategory": {
+      "meeting-notes": 0,
+      "chat-transcript": 0,
+      "note-raw": 0,
+      "decision": 0,
+      "design-document": 0,
+      "concept": 0,
+      "journey": 0
+    },
+    "byStatus": {
+      "curated": 0,
+      "needs-curation": 0
+    },
+    "totalSize": 0
+  }
+}
