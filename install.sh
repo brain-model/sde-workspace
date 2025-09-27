@@ -120,7 +120,7 @@ main() {
     local repo_url="${REPO_URL:-https://github.com/brain-model/sde-workspace.git}"
     INFO "Using repository: $repo_url"
 
-    local tmpdir
+    tmpdir
     tmpdir=$(mktemp -d)
     trap 'rm -rf "$tmpdir"' EXIT
 
@@ -170,6 +170,3 @@ main() {
 }
 
 main "$@"
-
-# Evita erro de variável não associada se o script for "source" ou rodar comandos fora do main
-unset tmpdir 2>/dev/null || true
