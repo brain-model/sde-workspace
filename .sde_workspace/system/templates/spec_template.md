@@ -4,7 +4,7 @@
 
 **TASK-ID:** [BACKLOG TASK ID]
 **Status:** Proposed | In Review | Approved
-**Author(s):** Architect Agent
+**Author(s):** Arquiteto Agent
 **Date:** {{YYYY-MM-DD}}
 **Reviewers:** [REVIEWER NAME 1], [REVIEWER NAME 2]
 

@@ -16,7 +16,7 @@ Este documento estabelece o domínio único e previsível onde especificações 
 ### 🤖 Fluxo Orientado por IA
 
 - **Integração GitHub Copilot**: Aprimorado com chatmodes especializados para diferentes contextos de desenvolvimento
-- **Agentes Inteligentes**: Architect, Developer, QA, Reviewer, Product Manager e Orchestrator
+- **Agentes Inteligentes**: Arquiteto, Developer, QA, Reviewer, Product Manager e Orchestrator
 - **Indexação Automatizada**: Manifestos auto-gerados para descoberta e navegação eficiente
 
 ### 📚 Organização do Conhecimento
@@ -74,12 +74,12 @@ Para versões Copilot, também haverá:
 
 ```bash
 .github/chatmodes/               # Modos de agente AI especializados
-├── architect.chatmode.md        # Agente focado em arquitetura
-├── developer.chatmode.md        # Agente focado em desenvolvimento
+├── arquiteto.chatmode.md        # Agente focado em arquitetura
+├── desenvolvedor.chatmode.md        # Agente focado em desenvolvimento
 ├── orchestrator.chatmode.md     # Agente de orquestração
 ├── pm.chatmode.md              # Agente de gerenciamento de produto
 ├── qa.chatmode.md              # Agente de garantia de qualidade
-└── reviewer.chatmode.md        # Agente de revisão de código
+└── revisor.chatmode.md        # Agente de revisão de código
 ```
 
 ## 2. Arquitetura da Estrutura
