@@ -1,17 +1,17 @@
 # External Knowledge
 
-Conhecimento que vem de fontes externas à organização.
+Knowledge from sources external to the organization.
 
-## Subdiretórios
+## Subdirectories
 
-- **sources/**: Materiais originais e processados
-- **standards/**: Normas e padrões de mercado
-- **vendor-docs/**: Documentação de fornecedores
-- **research/**: Pesquisas, whitepapers e benchmarks
-- **transcripts/**: Transcrições de eventos e reuniões externas
+- **sources/**: Original and processed materials
+- **standards/**: Market norms and standards
+- **vendor-docs/**: Vendor documentation
+- **research/**: Research, whitepapers and benchmarks
+- **transcripts/**: Event and external meeting transcriptions
 
-## Princípios
+## Principles
 
-- Mantenha fontes originais em `sources/raw/` como imutáveis
-- Processe e normalize conteúdo em `sources/processed/`
-- Organize por fornecedor ou fonte quando aplicável
+- Keep original sources in `sources/raw/` as immutable
+- Process and normalize content in `sources/processed/`
+- Organize by vendor or source when applicable

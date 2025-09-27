@@ -1,20 +1,20 @@
 # Internal Knowledge
 
-Conhecimento institucional e interno da organização.
+Institutional and internal organizational knowledge.
 
-## Subdiretórios
+## Subdirectories
 
-- **concepts/**: Glossário e definições de domínio
-- **runbooks/**: Procedimentos operacionais
-- **references/**: Listas, catálogos e índices internos
-- **notes/**: Notas brutas e consolidadas
-- **decisions-context/**: Contextos narrativos de decisões
-- **integracao/**: Integrações, fluxos e mapeamentos
-- **templates/**: Modelos de artefatos internos
-- **onboarding/**: Guias de entrada e trilhas de aprendizado
+- **concepts/**: Glossary and domain definitions
+- **runbooks/**: Operational procedures
+- **references/**: Lists, catalogs and internal indices
+- **notes/**: Raw and consolidated notes
+- **decisions-context/**: Decision narrative contexts
+- **integracao/**: Integrations, flows and mappings
+- **templates/**: Internal artifact models
+- **onboarding/**: Entry guides and learning paths
 
-## Princípios
+## Principles
 
-- Mantenha conteúdo atualizado e relevante
-- Use frontmatter padronizado
-- Consolide notas de `raw/` para `summary/` quando refinadas
+- Keep content updated and relevant
+- Use standardized frontmatter
+- Consolidate notes from `raw/` to `summary/` when refined

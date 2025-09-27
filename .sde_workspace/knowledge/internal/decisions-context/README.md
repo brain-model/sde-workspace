@@ -1,16 +1,16 @@
 # Decision Contexts
 
-Contextos narrativos que apoiam decisões arquiteturais e de negócio.
+Narrative contexts that support architectural and business decisions.
 
-## Estrutura
+## Structure
 
-- **raw/**: Contextos em elaboração
-- **processed/**: Contextos finalizados e estruturados
+- **raw/**: Contexts under development
+- **processed/**: Finalized and structured contexts
 
-## Conteúdo
+## Content
 
-- Background de decisões importantes
-- Análises de trade-offs
-- Justificativas técnicas
-- Contexto histórico de mudanças
-- Impactos e consequências
+- Background of important decisions
+- Trade-off analyses
+- Technical justifications
+- Historical context of changes
+- Impacts and consequences

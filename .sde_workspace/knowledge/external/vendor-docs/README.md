@@ -1,17 +1,17 @@
 # Vendor Documentation
 
-Documentação curada de fornecedores e terceiros.
+Curated documentation from vendors and third parties.
 
-## Conteúdo
+## Content
 
-- Documentação oficial de produtos/serviços
-- Melhores práticas de fornecedores
-- Guias de integração e APIs
-- Whitepapers técnicos de vendors
+- Official product/service documentation
+- Vendor best practices
+- Integration and API guides
+- Technical whitepapers from vendors
 
-## Organização
+## Organization
 
-- Crie subdiretórios por fornecedor
-- Mantenha versionamento quando relevante
-- Inclua data de obtenção nos metadados
-- Sintetize conteúdo extenso quando necessário
+- Create subdirectories by vendor
+- Maintain versioning when relevant
+- Include acquisition date in metadata
+- Synthesize extensive content when necessary

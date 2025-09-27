@@ -1,18 +1,18 @@
 # References
 
-Listas, catálogos e índices internos.
+Internal lists, catalogs, and indexes.
 
-## Conteúdo
+## Content
 
-- Catálogos de recursos
-- Listas de referência rápida
-- Índices organizacionais
-- Diretórios de contatos
-- Inventários técnicos
+- Resource catalogs
+- Quick reference lists
+- Organizational indexes
+- Contact directories
+- Technical inventories
 
-## Organização
+## Organization
 
-- Use formato tabular quando apropriado
-- Mantenha listas ordenadas logicamente
-- Inclua metadados como data de atualização
-- Facilite busca e navegação
+- Use tabular format when appropriate
+- Keep lists logically ordered
+- Include metadata like update date
+- Facilitate search and navigation

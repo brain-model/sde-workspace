@@ -1,15 +1,15 @@
 # Notes
 
-Notas de trabalho em diferentes estágios de refinamento.
+Work notes in different stages of refinement.
 
-## Estrutura
+## Structure
 
-- **raw/**: Notas brutas, captura rápida
-- **summary/**: Notas consolidadas e refinadas
+- **raw/**: Raw notes, quick capture
+- **summary/**: Consolidated and refined notes
 
-## Fluxo
+## Flow
 
-1. Capture ideias rapidamente em `raw/`
-2. Refine e organize em `summary/`
-3. Promova para outras áreas quando maduras
-4. Mantenha linking entre notas relacionadas
+1. Capture ideas quickly in `raw/`
+2. Refine and organize in `summary/`
+3. Promote to other areas when mature
+4. Maintain linking between related notes

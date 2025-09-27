@@ -1,16 +1,16 @@
 # Templates
 
-Modelos de artefatos internos não normativos.
+Non-normative internal artifact templates.
 
-## Conteúdo
+## Content
 
-- Templates de documentos internos
-- Modelos de apresentação
-- Formulários padronizados
-- Estruturas de relatórios
-- Layouts de comunicação
+- Internal document templates
+- Presentation models
+- Standardized forms
+- Report structures
+- Communication layouts
 
-## Diferença dos Templates do System
+## Difference from System Templates
 
-- System: Templates normativos para specs e processos formais
-- Internal: Templates para uso geral e documentos de trabalho
+- System: Normative templates for specs and formal processes
+- Internal: Templates for general use and working documents
