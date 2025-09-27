@@ -1,16 +1,16 @@
 # Standards
 
-Normas e padrões de mercado com resumos internos.
+Market standards and norms with internal summaries.
 
-## Conteúdo
+## Content
 
-- Resumos de padrões da indústria (ISO, ANSI, etc.)
-- Interpretações internas de normas
-- Guias de implementação de padrões
-- Comparações entre diferentes standards
+- Industry standard summaries (ISO, ANSI, etc.)
+- Internal interpretations of norms
+- Standard implementation guides
+- Comparisons between different standards
 
-## Formato
+## Format
 
-- Use Markdown para documentos processados
-- Inclua frontmatter com metadados (fonte, data, versão)
-- Organize por domínio ou categoria técnica
+- Use Markdown for processed documents
+- Include frontmatter with metadata (source, date, version)
+- Organize by domain or technical category

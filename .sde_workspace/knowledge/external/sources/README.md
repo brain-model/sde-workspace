@@ -1,16 +1,16 @@
 # Sources
 
-Materiais originais e suas versões processadas.
+Original materials and their processed versions.
 
-## Estrutura
+## Structure
 
-- **raw/**: Arquivos originais (PDFs, documentos, etc.) - **NÃO EDITAR**
-- **processed/**: Versões normalizadas em Markdown - **GERADO AUTOMATICAMENTE**
+- **raw/**: Original files (PDFs, documents, etc.) - **DO NOT EDIT**
+- **processed/**: Normalized versions in Markdown - **AUTOMATICALLY GENERATED**
 
-## Uso
+## Usage
 
-1. Adicione arquivos originais em `raw/`
-2. Use ferramentas de processamento para gerar versões em `processed/`
-3. Mantenha nomes de arquivo descritivos com data quando relevante
+1. Add original files to `raw/`
+2. Use processing tools to generate versions in `processed/`
+3. Keep descriptive filenames with date when relevant
 
-Exemplo: `fornecedor-produto-whitepaper-2025.pdf`
+Example: `vendor-product-whitepaper-2025.pdf`

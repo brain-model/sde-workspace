@@ -1,18 +1,18 @@
 # Runbooks
 
-Procedimentos operacionais para execução de tarefas.
+Operational procedures for task execution.
 
-## Conteúdo
+## Content
 
-- Procedimentos passo-a-passo
-- Guias de troubleshooting
-- Scripts de automação
-- Checklists operacionais
-- Procedimentos de emergência
+- Step-by-step procedures
+- Troubleshooting guides
+- Automation scripts
+- Operational checklists
+- Emergency procedures
 
-## Formato
+## Format
 
-- Use numeração clara para passos
-- Inclua pré-requisitos e dependências
-- Adicione comandos e exemplos práticos
-- Mantenha instruções atualizadas
+- Use clear numbering for steps
+- Include prerequisites and dependencies
+- Add commands and practical examples
+- Keep instructions updated

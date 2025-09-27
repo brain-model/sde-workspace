@@ -1,18 +1,18 @@
 # Concepts
 
-Glossário e definições de domínio.
+Glossary and domain definitions.
 
-## Conteúdo
+## Content
 
-- Definições de termos técnicos internos
-- Glossário de conceitos de negócio
-- Arquitetura de informação
-- Ontologias e taxonomias
-- Padrões de nomenclatura
+- Internal technical term definitions
+- Business concept glossary
+- Information architecture
+- Ontologies and taxonomies
+- Naming conventions
 
-## Formato
+## Format
 
-- Um conceito por arquivo quando extenso
-- Use índices para conceitos relacionados
-- Inclua exemplos práticos quando aplicável
-- Mantenha definições concisas e precisas
+- One concept per file when extensive
+- Use indexes for related concepts
+- Include practical examples when applicable
+- Keep definitions concise and precise

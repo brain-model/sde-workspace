@@ -1,18 +1,18 @@
 # Transcripts
 
-Transcrições de reuniões externas e eventos.
+Transcripts of external meetings and events.
 
-## Conteúdo
+## Content
 
-- Transcrições de eventos da indústria
-- Reuniões com clientes/parceiros
-- Conferências e apresentações
-- Workshops e treinamentos externos
-- Calls com fornecedores
+- Industry event transcripts
+- Client/partner meetings
+- Conferences and presentations
+- External workshops and training
+- Vendor calls
 
-## Formato
+## Format
 
-- Use frontmatter padronizado com data, participantes, tópicos
-- Inclua resumo executivo quando relevante
-- Mantenha estrutura consistente
-- Adicione ações ou próximos passos quando aplicável
+- Use standardized frontmatter with date, participants, topics
+- Include executive summary when relevant
+- Maintain consistent structure
+- Add actions or next steps when applicable

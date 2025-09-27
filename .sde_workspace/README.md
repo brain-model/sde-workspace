@@ -1,195 +1,196 @@
 ﻿# SDE Workspace
 
-**Software Development Environment (SDE) Workspace** é um sistema multi-agente autônomo para desenvolvimento de software que fornece um ambiente estruturado com agentes especializados para transformar requisitos de negócio em código de alta qualidade através de um ciclo de desenvolvimento automatizado.
+**Software Development Environment (SDE) Workspace** is an autonomous multi-agent system for software development that provides a structured environment with specialized agents to transform business requirements into high-quality code through an automated development cycle.
 
-Este documento estabelece o domínio único e previsível onde especificações normativas passam por um ciclo de vida formal, conhecimento institucional fica organizado e navegável, e ferramentas/agentes podem indexar rapidamente manifestos canônicos sem heurísticas frágeis.
+This document establishes a unique and predictable domain where normative specifications go through a formal lifecycle, institutional knowledge is organized and navigable, and tools/agents can quickly index canonical manifests without fragile heuristics.
 
-## 1. Visão Geral da Arquitetura
+## 1. Architecture Overview
 
-### 🏗️ Sistema de Desenvolvimento Estruturado
+### 🏗️ Structured Development System
 
-- **Ciclo de Vida de Especificações**: Fluxo formal para specs (draft → in-review → active → deprecated → archived)
-- **Sistema Multi-Agente**: Agentes AI especializados para diferentes funções de desenvolvimento
-- **Gestão de Conhecimento**: Repositórios organizados de conhecimento interno e externo
-- **Baseado em Templates**: Templates padronizados para documentação consistente
+- **Specification Lifecycle**: Formal flow for specs (draft → in-review → active → deprecated → archived)
+- **Multi-Agent System**: Specialized AI agents for different development functions
+- **Knowledge Management**: Organized repositories of internal and external knowledge
+- **Template-Based**: Standardized templates for consistent documentation
 
-### 🤖 Fluxo Orientado por IA
+### 🤖 AI-Driven Flow
 
-- **Integração GitHub Copilot**: Aprimorado com chatmodes especializados para diferentes contextos de desenvolvimento
-- **Agentes Inteligentes**: Architect, Developer, QA, Reviewer, Product Manager e Orchestrator
-- **Indexação Automatizada**: Manifestos auto-gerados para descoberta e navegação eficiente
+- **GitHub Copilot Integration**: Enhanced with specialized chatmodes for different development contexts
+- **Intelligent Agents**: Architect, Developer, QA, Reviewer, Product Manager and Orchestrator
+- **Automated Indexing**: Self-generated manifests for efficient discovery and navigation
 
-### 📚 Organização do Conhecimento
+### 📚 Knowledge Organization
 
-- **Fontes Externas**: Standards, documentação de fornecedores, papers de pesquisa, transcrições
-- **Conhecimento Interno**: Conceitos, runbooks, contextos de decisão, guias de integração
-- **Controle de Versão**: Rastreamento completo de mudanças e histórico para todas as especificações
-- **Busca & Descoberta**: Indexação baseada em manifesto para localização rápida de conteúdo
+- **External Sources**: Standards, vendor documentation, research papers, transcripts
+- **Internal Knowledge**: Concepts, runbooks, decision contexts, integration guides
+- **Version Control**: Complete change tracking and history for all specifications
+- **Search & Discovery**: Manifest-based indexing for fast content location
 
-## 1.1. Instalação e Configurações
+## 1.1. Installation and Configuration
 
-### Instalação Rápida
+### Quick Installation
 
-Para instalar o SDE Workspace, use um único comando:
+To install the SDE Workspace, use a single command:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/brain-model/sde-workspace/master/boot.sh | bash
 ```
 
-### Opções de Configuração
+### Configuration Options
 
-O instalador apresenta 4 opções de configuração:
+The installer presents 4 configuration options:
 
-1. **default-ptbr** - Português Brasil (versão padrão)
-2. **default-enus** - English US (versão padrão)  
-3. **copilot-ptbr** - Português Brasil (versão GitHub Copilot)
-4. **copilot-enus** - English US (versão GitHub Copilot)
+1. **default-ptbr** - Brazilian Portuguese (standard version)
+2. **default-enus** - English US (standard version)  
+3. **copilot-ptbr** - Brazilian Portuguese (GitHub Copilot version)
+4. **copilot-enus** - English US (GitHub Copilot version)
 
-**Diferenças:**
+**Differences:**
 
-- **Versões padrão**: Instalam apenas a estrutura core `.sde_workspace` com agentes, guias e templates
-- **Versões Copilot**: Incluem chatmodes adicionais do GitHub Copilot em `.github/chatmodes/` para assistência AI aprimorada
+- **Standard versions**: Install only the core `.sde_workspace` structure with agents, guides and templates
+- **Copilot versions**: Include additional GitHub Copilot chatmodes in `.github/chatmodes/` for enhanced AI assistance
 
-### Estrutura Instalada
+### Installed Structure
 
-Após a instalação, você terá:
+After installation, you will have:
 
 ```bash
-.sde_workspace/                    # Estrutura principal
-├── system/                       # Sistema normativo central
-│   ├── specs/                   # Especificações com gestão de ciclo de vida
-│   ├── agents/                  # Definições e prompts de agentes AI
-│   ├── guides/                  # Guias de desenvolvimento e fluxos de trabalho
-│   ├── templates/               # Templates de documentos e artefatos
-│   ├── backlog/                 # Itens de trabalho estruturados
-│   └── workspaces/              # Áreas de trabalho guiado temporárias
-├── knowledge/                    # Base de conhecimento classificada
-│   ├── external/                # Fontes e documentação externa
-│   └── internal/                # Conhecimento institucional
+.sde_workspace/                    # Main structure
+├── system/                       # Central normative system
+│   ├── specs/                   # Specifications with lifecycle management
+│   ├── agents/                  # AI agent definitions and prompts
+│   ├── guides/                  # Development guides and workflows
+│   ├── templates/               # Document and artifact templates
+│   ├── backlog/                 # Structured work items
+│   └── workspaces/              # Temporary guided work areas
+├── knowledge/                    # Classified knowledge base
+│   ├── external/                # External sources and documentation
+│   └── internal/                # Institutional knowledge
 └── .github/
-    └── copilot-instructions.md  # Configuração do Copilot
+    └── copilot-instructions.md  # Copilot configuration
 ```
 
-Para versões Copilot, também haverá:
+For Copilot versions, there will also be:
 
 ```bash
-.github/chatmodes/               # Modos de agente AI especializados
-├── architect.chatmode.md        # Agente focado em arquitetura
-├── developer.chatmode.md        # Agente focado em desenvolvimento
-├── orchestrator.chatmode.md     # Agente de orquestração
-├── pm.chatmode.md              # Agente de gerenciamento de produto
-├── qa.chatmode.md              # Agente de garantia de qualidade
-└── reviewer.chatmode.md        # Agente de revisão de código
+.github/chatmodes/               # Specialized AI agent modes
+├── architect.chatmode.md        # Architecture-focused agent
+├── developer.chatmode.md        # Development-focused agent
+├── orchestrator.chatmode.md     # Orchestration agent
+├── pm.chatmode.md              # Product management agent
+├── qa.chatmode.md              # Quality assurance agent
+└── reviewer.chatmode.md        # Code review agent
 ```
 
-## 2. Arquitetura da Estrutura
+## 2. Structure Architecture
 
 ```bash
 .sde_workspace/
-  README.md                  ← Este documento
-  system/                    ← Núcleo normativo e automações
-    specs/                   ← Specs com lifecycle
+  README.md                  ← This document
+  system/                    ← Normative core and automations
+    specs/                   ← Specs with lifecycle
       draft/
       in-review/
       active/
       deprecated/
       archived/
-    agents/                  ← Config/prompts de agentes (curado)
-    backlog/                 ← Itens de trabalho estruturados (curado)
-    guides/                  ← Guias meta (como usar a estrutura / fluxos)
-    templates/               ← Modelos de criação de specs/artefatos
-    workspaces/              ← Áreas efêmeras de trabalho guiado (pode ser regenerado)
-  knowledge/                 ← Base de conhecimento classificada
-    external/                ← Fontes que vêm de fora da organização
+    agents/                  ← Agent config/prompts (curated)
+    backlog/                 ← Structured work items (curated)
+    guides/                  ← Meta guides (how to use the structure / flows)
+    templates/               ← Templates for creating specs/artifacts
+    workspaces/              ← Ephemeral guided work areas (can be regenerated)
+  knowledge/                 ← Classified knowledge base
+    external/                ← Sources that come from outside the organization
       sources/
-        raw/                 ← Artefatos originais (PDF, txt) — imutáveis
-        processed/           ← Normalizações (markdown derivado) — gerado
-      standards/             ← Normas de mercado (resumos internos)
-      vendor-docs/           ← Materiais de fornecedores (curadoria)
-      research/              ← Pesquisas, whitepapers, benchmarks externos
-      transcripts/           ← Transcrições de reuniões externas / eventos
-    internal/                ← Conhecimento institucional
-      concepts/              ← Glossário e definições de domínio
-      runbooks/              ← Procedimentos operacionais (execução)
-      references/            ← Listas, catálogos, índices internos
+        raw/                 ← Original artifacts (PDF, txt) — immutable
+        processed/           ← Normalizations (derived markdown) — generated
+      standards/             ← Market standards (internal summaries)
+      vendor-docs/           ← Vendor materials (curation)
+      research/              ← Research, whitepapers, external benchmarks
+      transcripts/           ← Transcripts from external meetings / events
+    internal/                ← Institutional knowledge
+      concepts/              ← Glossary and domain definitions
+      runbooks/              ← Operational procedures (execution)
+      references/            ← Internal lists, catalogs, indexes
       notes/
-        raw/                 ← Notas brutas (captura rápida)
-        summary/             ← Notas consolidadas/refinadas
-      decisions-context/     ← Contextos narrativos de decisões (apoio às specs)
-      integracao/            ← Integrações (fluxos, mapeamentos)
-      templates/             ← Modelos de artefatos internos não normativos
-      onboarding/            ← Guias de entrada e trilhas de aprendizado
+        raw/                 ← Raw notes (quick capture)
+        summary/             ← Consolidated/refined notes
+      decisions-context/     ← Decision narrative contexts (support for specs)
+      integration/           ← Integrations (flows, mappings)
+      templates/             ← Non-normative internal artifact templates
+```bash
+      onboarding/            ← Entry guides and learning paths
 ```
 
-Observações:
+Notes:
 
-- Diretórios raiz `archive/` e `backlog/` NÃO existem nesta versão; qualquer alias externo só será criado quando a automação exigir.
-- Conteúdo obsoleto permanece dentro de `system/specs/archived/` ou é movido para pastas históricas específicas definidas caso a caso.
-- `system/guides/` diferencia-se de `runbooks/`: guides explicam COMO contribuir / navegar; runbooks explicam COMO operar/processar atividades de runtime.
+- Root directories `archive/` and `backlog/` do NOT exist in this version; any external alias will only be created when automation requires it.
+- Obsolete content remains within `system/specs/archived/` or is moved to specific historical folders defined case by case.
+- `system/guides/` differs from `runbooks/`: guides explain HOW to contribute / navigate; runbooks explain HOW to operate/process runtime activities.
 
-## 3. Ciclo de Vida de Specs
+## 3. Specs Lifecycle
 
-Estados possíveis em `system/specs/`:
+Possible states in `system/specs/`:
 
-| Estado      | Objetivo | Critérios de Transição |
+| State      | Objective | Transition Criteria |
 |-------------|----------|------------------------|
-| draft       | Ideação inicial | Estrutura mínima + escopo claro |
-| in-review   | Avaliação colaborativa | Revisores designados + feedback tratado |
-| active      | Norma vigente | Aprovada e referenciada em implementações |
-| deprecated  | Substituída / fase-out | Nova versão ou abordagem ativa publicada |
-| archived    | Histórico congelado | Não deve mais ser referenciada operacionalmente |
+| draft       | Initial ideation | Minimal structure + clear scope |
+| in-review   | Collaborative evaluation | Designated reviewers + feedback addressed |
+| active      | Current norm | Approved and referenced in implementations |
+| deprecated  | Replaced / phase-out | New version or active approach published |
+| archived    | Frozen history | Should no longer be referenced operationally |
 
-Arquivamento move o arquivo para `archived/` preservando frontmatter e checksum.
+Archiving moves the file to `archived/` preserving frontmatter and checksum.
 
-## 4. Frontmatter Padrão
+## 4. Standard Frontmatter
 
-### Para Specs (system/specs/)
+### For Specs (system/specs/)
 
-Cada spec deve iniciar with bloco YAML:
+Each spec must start with YAML block:
 
 ```markdown
 ---
 id: spec-<slug>
-title: <Título Descritivo>
+title: <Descriptive Title>
 type: (design-doc|adr|arch-analysis|process-spec|test-spec)
 status: (draft|in-review|active|deprecated|archived)
 version: 1.0.0
-topics: [dominio, arquitetura, ...]
+topics: [domain, architecture, ...]
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-supersedes: <id-anterior|null>
-supersededBy: <id-posterior|null>
-relations: [ids correlatos]
+supersedes: <previous-id|null>
+supersededBy: <posterior-id|null>
+relations: [correlated ids]
 ---
 ```
 
-### Para Knowledge (knowledge/internal/)
+### For Knowledge (knowledge/internal/)
 
-Cada arquivo de knowledge deve usar esquema padronizado de 7 campos:
+Each knowledge file should use standardized 7-field schema:
 
 ```markdown
 ---
-id: <identificador-estavel>
-title: <Título Legível>
+id: <stable-identifier>
+title: <Readable Title>
 category: (concept|meeting-notes|decision|design-document|chat-transcript|journey|note-raw)
 created: YYYY-MM-DDTHH:MM:SS-03:00
 updated: YYYY-MM-DDTHH:MM:SS-03:00
-source: <origem-ou-url>
-tags: ["tema1", "tema2", "curated|needs-curation"]
+source: <origin-or-url>
+tags: ["topic1", "topic2", "curated|needs-curation"]
 ---
 ```
 
-**Restrições**:
+**Restrictions**:
 
-- `id` imutável (derivado do slug inicial).
-- Atualize `updated` a cada modificação substantiva.
-- Versionamento semântico incrementado em mudanças incompatíveis (specs apenas).
+- `id` immutable (derived from initial slug).
+- Update `updated` with each substantive modification.
+- Semantic versioning incremented on incompatible changes (specs only).
 
-## 5. Manifesto de Indexação
+## 5. Indexing Manifest
 
 ### Specs Manifest
 
-Arquivo: `system/specs/manifest.json` (gerado automaticamente). Contém lista de objetos:
+File: `system/specs/manifest.json` (automatically generated). Contains list of objects:
 
 ```json
 {
@@ -197,8 +198,8 @@ Arquivo: `system/specs/manifest.json` (gerado automaticamente). Contém lista de
   "generatedAt": "2025-09-25T12:00:00Z",
   "specs": [
     {
-      "id": "spec-nome",
-      "path": "system/specs/active/spec-nome.md",
+      "id": "spec-name",
+      "path": "system/specs/active/spec-name.md",
       "checksum": "sha256:...",
       "status": "active",
       "type": "design-doc",
@@ -212,7 +213,7 @@ Arquivo: `system/specs/manifest.json` (gerado automaticamente). Contém lista de
 
 ### Knowledge Manifest
 
-Arquivo: `knowledge/manifest.json` (gerado automaticamente). Indexa base de conhecimento:
+File: `knowledge/manifest.json` (automatically generated). Indexes knowledge base:
 
 ```json
 {
@@ -236,58 +237,58 @@ Arquivo: `knowledge/manifest.json` (gerado automaticamente). Indexa base de conh
 }
 ```
 
-**Importante**: Não editar manifestos manualmente. Ferramenta regeneradora fará validações (unicidade de id, estado coerente, checksum atualizado).
+**Important**: Do not manually edit manifests. Regeneration tool will perform validations (id uniqueness, coherent state, updated checksum).
 
-## 6. Operação & Fluxo de Contribuição
+## 6. Operation & Contribution Flow
 
-1. Criar nova spec em `system/specs/draft/` utilizando um modelo de `system/templates/`.
-2. Preencher frontmatter completo (exceto campos gerados).
-3. Submeter PR para revisão → mover para `in-review/` quando existir revisão ativa.
-4. A aprovação promove para `active/` (atualizar status + mover diretório + regenerar manifesto).
-5. Obsolescência: mover para `deprecated/` (adicionar `supersededBy`).
-6. Encerramento definitivo: mover para `archived/` mantendo vínculos.
+1. Create new spec in `system/specs/draft/` using a template from `system/templates/`.
+2. Fill complete frontmatter (except generated fields).
+3. Submit PR for review → move to `in-review/` when active review exists.
+4. Approval promotes to `active/` (update status + move directory + regenerate manifest).
+5. Obsolescence: move to `deprecated/` (add `supersededBy`).
+6. Final closure: move to `archived/` maintaining links.
 
-Automação (futuro / planejado): validação de frontmatter, geração de manifesto e cálculo de checksums via script CI.
+Automation (future / planned): frontmatter validation, manifest generation and checksum calculation via CI script.
 
-## 7. Base de Conhecimento (Knowledge)
+## 7. Knowledge Base
 
-Princípios:
+Principles:
 
-- Separar origem externa vs institucional.
-- Normalizar apenas o necessário (markdown em `processed/`).
-- Não editar arquivos em `external/sources/raw/`.
-- Consolidar notas: mover de `notes/raw` para `notes/summary` quando refinadas.
+- Separate external vs institutional origin.
+- Normalize only what's necessary (markdown in `processed/`).
+- Don't edit files in `external/sources/raw/`.
+- Consolidate notes: move from `notes/raw` to `notes/summary` when refined.
 
-## 8. O Que Você Pode Editar
+## 8. What You Can Edit
 
-Editável (criar/alterar/remover via PR):
+Editable (create/modify/remove via PR):
 
-- `system/specs/*/*.md` (exceto manifesto)
+- `system/specs/*/*.md` (except manifest)
 - `system/guides/*`
 - `system/backlog/*`
 - `system/templates/*`
 - `system/agents/*` (prompts / configs)
 - `knowledge/internal/**/*`
-- `knowledge/external/standards`, `vendor-docs`, `research`, `transcripts` (conteúdo sintetizado)
+- `knowledge/external/standards`, `vendor-docs`, `research`, `transcripts` (synthesized content)
 
-Não Editar Diretamente:
+Don't Edit Directly:
 
 - `system/specs/manifest.json`
 - `knowledge/manifest.json`
-- Arquivos em `knowledge/external/sources/raw/`
-- Artefatos derivados em `knowledge/external/sources/processed/` (regen automatizada)
-- Checksums ou campos gerados nos manifestos
+- Files in `knowledge/external/sources/raw/`
+- Derived artifacts in `knowledge/external/sources/processed/` (automated regen)
+- Checksums or generated fields in manifests
 
-## 9. Convenções de Nomenclatura
+## 9. Naming Conventions
 
-- Slug: lowercase, separador `-`, sem acentos. Ex: `observability-pipeline-design`.
-- Arquivo de spec: `spec-<slug>.md` (id interno reutiliza slug).
-- Documentos knowledge: `<slug>.md` (ou formato original em `raw/`).
-- PDFs mantêm nome fonte + data opcional: `fornecedor-produto-whitepaper-2025.pdf`.
+- Slug: lowercase, `-` separator, no accents. Ex: `observability-pipeline-design`.
+- Spec file: `spec-<slug>.md` (internal id reuses slug).
+- Knowledge documents: `<slug>.md` (or original format in `raw/`).
+- PDFs keep source name + optional date: `vendor-product-whitepaper-2025.pdf`.
 
-## 10. Estrutura de Templates
+## 10. Templates Structure
 
-`system/templates/` deve conter pelo menos:
+`system/templates/` should contain at least:
 
 - `spec-design-doc.md`
 - `spec-adr.md`
@@ -297,37 +298,37 @@ Não Editar Diretamente:
 - `knowledge-note.md`
 - `knowledge-runbook.md`
 
-Cada template inclui frontmatter mínimo e seções obrigatórias com comentários guia.
+Each template includes minimal frontmatter and mandatory sections with guide comments.
 
-## 11. Roadmap (Resumo)
+## 11. Roadmap (Summary)
 
-- [x] ✅ **Script de geração de manifesto v2** - `dev/scripts/generate_knowledge_manifest.py`
-- [x] ✅ **Frontmatter knowledge normalizado** - Schema 7 campos implementado
-- [x] ✅ **Manifest knowledge funcional** - `knowledge/manifest.json` com repositórios  
-- [x] ✅ **Agentes atualizados** - Product Manager + 4 agentes com novos manifests
-- [ ] Validação automática de frontmatter (schema)
-- [ ] CI para calcular checksums diffs
-- [ ] Symlink/alias de backlog consolidado
-- [ ] Indexação incremental para agentes
+- [x] ✅ **Manifest generation script v2** - `dev/scripts/generate_knowledge_manifest.py`
+- [x] ✅ **Normalized knowledge frontmatter** - 7-field schema implemented
+- [x] ✅ **Functional knowledge manifest** - `knowledge/manifest.json` with repositories  
+- [x] ✅ **Updated agents** - Product Manager + 4 agents with new manifests
+- [ ] Automatic frontmatter validation (schema)
+- [ ] CI for calculating checksum diffs
+- [ ] Consolidated backlog symlink/alias
+- [ ] Incremental indexing for agents
 
-## 12. Boas Práticas
+## 12. Best Practices
 
-- Pequenas PRs por spec ou conjunto lógico.
-- Atualize `topics` para melhorar busca semântica.
-- Relacione specs correlatas via `relations` para navegação contextual.
-- Promova deprecated rapidamente quando existir substituto aprovado.
+- Small PRs per spec or logical set.
+- Update `topics` to improve semantic search.
+- Relate correlated specs via `relations` for contextual navigation.
+- Promote deprecated quickly when approved substitute exists.
 
-## 13. FAQ Rápido
+## 13. Quick FAQ
 
-| Pergunta | Resposta |
+| Question | Answer |
 |----------|----------|
-| Posso editar os manifestos? | Não. Regenerados automaticamente pelos scripts. |
-| Onde coloco transcript bruto? | `knowledge/external/transcripts/` ou `sources/raw/` se for arquivo original. |
-| Onde entra um diagrama exportado? | Na mesma pasta do markdown correspondente ou `knowledge/internal/references/` se for genérico. |
-| Como lido com PDF externo? | Coloque em `sources/raw/` e gere markdown em `processed/`. |
-| Quando mover para archived? | Quando for somente histórico, sem uso operacional. |
-| Qual a diferença entre os manifestos? | `specs/manifest.json` = documentos normativos; `knowledge/manifest.json` = conhecimento contextual. |
+| Can I edit manifests? | No. Automatically regenerated by scripts. |
+| Where do I put raw transcript? | `knowledge/external/transcripts/` or `sources/raw/` if original file. |
+| Where does an exported diagram go? | Same folder as corresponding markdown or `knowledge/internal/references/` if generic. |
+| How do I handle external PDF? | Place in `sources/raw/` and generate markdown in `processed/`. |
+| When to move to archived? | When it's only historical, no operational use. |
+| What's the difference between manifests? | `specs/manifest.json` = normative documents; `knowledge/manifest.json` = contextual knowledge. |
 
-## 14. Contato & Governança
+## 14. Contact & Governance
 
-Revisores padrão definidos em `CODEOWNERS` (futuro). Enquanto ausente, use PR com pelo menos 1 aprovação de arquitetura + 1 de operação.
+Default reviewers defined in `CODEOWNERS` (future). While absent, use PR with at least 1 architecture approval + 1 operations approval.

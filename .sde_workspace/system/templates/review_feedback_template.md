@@ -1,44 +1,44 @@
-# Comentários de Feedback de Code Review
+# Code Review Feedback Comments
 
-## **Estrutura para o Comentário Geral do MR**
+## **Structure for General MR Comment**
 
-### Análise Técnica Automatizada
+### Automated Technical Analysis
 
-**Status:** [APROVADO_TECNICAMENTE | REVISAO_TECNICA_NECESSARIA]
-**Commit Analisado:** [HASH-DO-COMMIT-SQUASHED]
+**Status:** [TECHNICALLY_APPROVED | TECHNICAL_REVISION_NEEDED]
+**Analyzed Commit:** [SQUASHED-COMMIT-HASH]
 
-### Sumário da Revisão
+### Review Summary
 
-[SUMÁRIO GERAL DA ANÁLISE. EX: O CÓDIGO ATENDE À ESPECIFICAÇÃO, MAS FORAM IDENTIFICADOS PONTOS DE MELHORIA RELACIONADOS A PERFORMANCE E MANUTENIBILIDADE.]
+[GENERAL ANALYSIS SUMMARY. EX: THE CODE MEETS THE SPECIFICATION, BUT IMPROVEMENT POINTS RELATED TO PERFORMANCE AND MAINTAINABILITY WERE IDENTIFIED.]
 
-### Pontos Positivos
+### Positive Points
 
-* :heavy_check_mark: [PONTO POSITIVO 1]
-* :heavy_check_mark: [PONTO POSITIVO 2]
+* :heavy_check_mark: [POSITIVE POINT 1]
+* :heavy_check_mark: [POSITIVE POINT 2]
 
-### Pontos para Melhoria
+### Points for Improvement
 
-* :warning: [PONTO DE MELHORIA 1. EX: FORAM ADICIONADOS COMENTÁRIOS ESPECÍFICOS NAS LINHAS DE CÓDIGO RELACIONADAS À COMPLEXIDADE DO MÉTODO X.]
-* :bulb: [PONTO DE MELHORIA 2. EX: SUGESTÃO PARA ADICIONAR MAIS LOGS ESTRUTURADOS.]
-
----
-*Este é um code review gerado por um agente de IA. O status `APROVADO_TECNICAMENTE` indica que o MR está pronto para a revisão humana final.*
+* :warning: [IMPROVEMENT POINT 1. EX: SPECIFIC COMMENTS WERE ADDED ON CODE LINES RELATED TO METHOD X COMPLEXITY.]
+* :bulb: [IMPROVEMENT POINT 2. EX: SUGGESTION TO ADD MORE STRUCTURED LOGS.]
 
 ---
+*This is an AI-generated code review. The `TECHNICALLY_APPROVED` status indicates that the MR is ready for final human review.*
 
-### **Estrutura para Comentários Específicos por Linha**
+---
 
-**[CATEGORIA]** `(BUG | MELHORIA | SUGESTÃO | QUESTÃO)`
+### **Structure for Specific Line Comments**
 
-**Observação:**
-[DESCRIÇÃO CLARA E CONCISA DO PROBLEMA OU SUGESTÃO PARA ESTA LINHA/BLOCO DE CÓDIGO.]
+**[CATEGORY]** `(BUG | IMPROVEMENT | SUGGESTION | QUESTION)`
 
-**Sugestão (opcional):**
+**Observation:**
+[CLEAR AND CONCISE DESCRIPTION OF THE PROBLEM OR SUGGESTION FOR THIS LINE/CODE BLOCK.]
+
+**Suggestion (optional):**
 
 ```diff
-- codigo_antigo()
-+ codigo_sugerido_com_melhoria()
-````
+- old_code()
++ suggested_code_with_improvement()
+```
 
-**Justificativa:**
-[BREVE EXPLICAÇÃO DO PORQUÊ A MUDANÇA É SUGERIDA, REFERENCIANDO PRINCÍPIOS DE CLEAN CODE, SEGURANÇA, OU UMA DIRETRIZ DA BASE DE CONHECIMENTO.]
+**Justification:**
+[BRIEF EXPLANATION OF WHY THE CHANGE IS SUGGESTED, REFERENCING CLEAN CODE PRINCIPLES, SECURITY, OR A KNOWLEDGE BASE GUIDELINE.]

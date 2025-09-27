@@ -1,18 +1,18 @@
-# Integração
+# Integration
 
-Integrações, fluxos e mapeamentos entre sistemas.
+Integrations, flows, and mappings between systems.
 
-## Conteúdo
+## Content
 
-- Diagramas de integração
-- Mapeamentos de dados
-- Fluxos de processo
-- APIs e contratos
-- Configurações de conectores
+- Integration diagrams
+- Data mappings
+- Process flows
+- APIs and contracts
+- Connector configurations
 
-## Organização
+## Organization
 
-- Organize por sistema ou domínio
-- Inclua versões e datas de atualização
-- Mantenha diagramas atualizados
-- Documente dependências críticas
+- Organize by system or domain
+- Include versions and update dates
+- Keep diagrams updated
+- Document critical dependencies

@@ -1,18 +1,18 @@
 # Onboarding
 
-Guias de entrada e trilhas de aprendizado.
+Entry guides and learning paths.
 
-## Conteúdo
+## Content
 
-- Guias de boas-vindas
-- Trilhas de aprendizado por função
-- Recursos para novos colaboradores
-- Checklists de onboarding
-- Materiais de treinamento interno
+- Welcome guides
+- Learning paths by role
+- Resources for new collaborators
+- Onboarding checklists
+- Internal training materials
 
-## Organização
+## Organization
 
-- Separe por função ou nível
-- Inclua pré-requisitos e durações estimadas
-- Mantenha conteúdo atualizado
-- Facilite progressão gradual
+- Separate by role or level
+- Include prerequisites and estimated durations
+- Keep content updated
+- Facilitate gradual progression

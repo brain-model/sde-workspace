@@ -1,18 +1,18 @@
 # Research
 
-Pesquisas, whitepapers e benchmarks externos.
+Research, whitepapers and external benchmarks.
 
-## Conteúdo
+## Content
 
-- Papers acadêmicos relevantes
-- Relatórios de pesquisa da indústria
-- Benchmarks e comparativos
-- Tendências tecnológicas
-- Análises de mercado
+- Relevant academic papers
+- Industry research reports
+- Benchmarks and comparisons
+- Technology trends
+- Market analysis
 
-## Organização
+## Organization
 
-- Organize por tópico ou área de conhecimento
-- Inclua resumos executivos quando aplicável
-- Mantenha links para fontes originais
-- Use tags para facilitar descoberta
+- Organize by topic or knowledge area
+- Include executive summaries when applicable
+- Maintain links to original sources
+- Use tags to facilitate discovery
