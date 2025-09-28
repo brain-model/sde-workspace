@@ -14,13 +14,13 @@ SDE Workspace is an autonomous multi-agent system for software development. It p
 Install SDE Workspace with a single command:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/brain-model/sde-workspace/master/boot.sh | bash
+curl -sSL https://raw.githubusercontent.com/brain-model/sde-workspace/0.1.0/boot.sh | bash
 ```
 
 Or using wget:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/brain-model/sde-workspace/master/boot.sh | bash
+wget -qO- https://raw.githubusercontent.com/brain-model/sde-workspace/0.1.0/boot.sh | bash
 ```
 
 ### Installation Options
