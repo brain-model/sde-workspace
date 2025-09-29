@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/sde/agent_phases.schema.json",
+  "title": "AgentPhases",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["phases"],
+  "properties": {
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "role_owner", "allowed_next", "description", "exit_criteria"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[A-Z_]+$",
+            "description": "Identificador único da fase"
+          },
+          "role_owner": {
+            "type": "string",
+            "enum": [
+              "architect",
+              "developer",
+              "qa",
+              "reviewer",
+              "pm",
+              "documentation",
+              "devops"
+            ],
+            "description": "Agente principal responsável pela fase"
+          },
+          "allowed_next": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z_]+$"
+            },
+            "uniqueItems": true,
+            "description": "Fases permitidas para transição"
+          },
+          "description": { "type": "string" },
+          "exit_criteria": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "supporting_roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "architect",
+                "developer",
+                "qa",
+                "reviewer",
+                "pm",
+                "documentation",
+                "devops"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "supporting_entry_conditions": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

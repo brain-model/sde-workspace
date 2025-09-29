@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "handoff_id": "handoff-<ISO8601>-<from_agent>",
+    "timestamp_utc": "YYYY-MM-DDTHH:MM:SSZ",
+    "from_agent": "architect",
+    "to_agent": "developer",
+    "phase_current": "DESIGN",
+    "phase_next": "IMPLEMENTATION",
+    "previous_handoff_id": "handoff-<anterior>",
+    "workspace_id": "WKS-<YYYYMMDD>-<seq>",
+    "version": 2
+  },
+  "context_core": {
+    "business_goal": "<objetivo central curto>",
+    "scope_included": ["..."],
+    "scope_excluded": ["..."],
+    "non_functional_priorities": ["performance", "observability"]
+  },
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "title": "Formato de armazenamento de manifests",
+      "status": "approved",
+      "rationale": "<justificativa>",
+      "implications": ["..."],
+      "references": ["knowledge/internal/decisions/..."],
+      "changed_in_this_phase": true
+    }
+  ],
+  "artifacts_produced": [
+    {
+      "path": "system/specs/manifest.json",
+      "hash": "sha256:<computed>",
+      "type": "spec",
+      "purpose": "canonical_index"
+    }
+  ],
+  "pending_items": [
+    { "id": "PEND-01", "description": "Definir métricas de rollback", "blocking": false }
+  ],
+  "risks": [
+    { "id": "RISK-01", "description": "Acoplamento excessivo no orquestrador", "mitigation": "extrair interface" }
+  ],
+  "knowledge_references": {
+    "internal": ["knowledge/internal/concepts/..."],
+    "external": ["knowledge/external/standards/..."],
+    "gaps": ["Observability runbook inexistente"]
+  },
+  "delta_summary": {
+    "since_previous_handoff": {
+      "decisions_added": 0,
+      "decisions_updated": 0,
+      "artifacts_new": 0,
+      "artifacts_modified": 0
+    },
+    "reason": null
+  },
+  "next_phase_objectives": [
+    "Implementar camada de orquestração",
+    "Gerar testes de contrato iniciais"
+  ],
+  "acceptance_criteria_next_phase": [
+    "Orquestrador com handlers registrados",
+    "Tests de smoke rodando em CI local"
+  ],
+  "checklists_completed": [
+    "design.reviewed",
+    "handoff.saved",
+    "manifest.updated"
+  ],
+  "quality_signals": {
+    "context_completeness_score": 0.0,
+    "artifact_hash_mismatch": false,
+    "open_questions": 0,
+    "clarification_requests": 0
+  },
+  "agents_progress": {
+    "architect": { "completed": true },
+    "developer": { "completed": false },
+    "qa": { "completed": false },
+    "reviewer": { "completed": false },
+    "pm": { "completed": false },
+    "documentation": { "completed": false },
+    "devops": { "completed": false }
+  },
+  "notes": [
+    {
+      "type": "info",
+      "message": "Template versão expandida (Wave 2). Ajuste meta.version=1 e defina delta_summary=null quando este for o primeiro handoff da cadeia."
+    }
+  ]
+}

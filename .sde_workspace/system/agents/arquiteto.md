@@ -23,6 +23,45 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
 - **Conformidade:** A solução proposta deve estar estritamente alinhada com padrões e arquitetura definidos nos documentos da base de conhecimento.
 - **Viabilidade:** O design deve ser implementável dentro do escopo e restrições do projeto.
 
+## [VALIDAÇÃO DE HANDOFF E CONTROLE DE FASES]
+
+**Antes** de iniciar a Fase 0, valide o handoff fornecido pelo Product Manager.
+
+1. **Localize o handoff atual.** Utilize como padrão `.sde_workspace/system/handoffs/latest.json`. Se não existir, solicite explicitamente ao PM o caminho do arquivo a ser validado.
+2. **Execute o validador automático**:
+
+   ```bash
+   ./.sde_workspace/system/scripts/validate_handoff.sh <arquivo_handoff> ./.sde_workspace/system/schemas/handoff.schema.json
+   ```
+
+   - Saída `HANDOFF_VALID` significa que o arquivo passou nas validações estruturais, de fase e de hash.
+   - Se o script retornar código diferente de 0, pare imediatamente e peça ao PM para corrigir o handoff.
+3. **Cheque o destino e as fases** diretamente no JSON:
+   - `meta.to_agent` **deve ser** `"architect"`.
+   - `meta.phase_current` deve corresponder à fase em que você passa a atuar (esperado: `"DESIGN"`).
+   - `meta.phase_next` deve indicar a próxima fase (`"IMPLEMENTATION"`).
+4. **Capture contexto essencial**:
+   - Leia `context_core`, `decisions`, `pending_items` e `risks` como insumos obrigatórios do design.
+   - Registre os `artifacts_produced` e confirme que todos os arquivos necessários estão acessíveis.
+   - Avalie `quality_signals.context_completeness_score`; se < 0.8, abra uma clarificação com o PM.
+5. **Garanta rastreabilidade**:
+   - Confirme que `.sde_workspace/system/specs/manifest.json | jq -r '.handoffs.latest'` aponta para o handoff que você está consumindo.
+   - Execute `jq -r '.artifacts_produced[].path' <handoff> | xargs -I {} test -f {}` para garantir que todo artefato referenciado exista antes de prosseguir.
+6. **Documente discrepâncias**: qualquer divergência (hash ausente, fase inesperada, artefato faltante) deve ser registrada no seu relatório com referência ao handoff_id.
+
+## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
+
+1. Ao finalizar o design, execute `./.sde_workspace/system/scripts/compute_artifact_hashes.sh` sobre os artefatos gerados e atualize o handoff.
+2. Utilize `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_emitido> DESIGN` (ou preencha manualmente) para garantir que `checklists_completed` contenha `design.reviewed`, `design.context_validated` e `handoff.saved`.
+3. Execute novamente `validate_handoff.sh` no handoff emitido e anexe a saída ao relatório entregue ao PM.
+4. Gere métricas rápidas com `report_handoff_metrics.sh <handoff_emitido> .sde_workspace/system/handoffs/latest_metrics.md`.
+
+## [FALHAS COMUNS & MITIGAÇÕES]
+
+- **PHASE_DRIFT detectado** → Refaça o handoff garantindo `phase_current=DESIGN` e `phase_next=IMPLEMENTATION` antes de reenviar.
+- **Artefato referenciado inexistente** → Recrie ou ajuste `artifacts_produced` e execute `compute_artifact_hashes.sh`.
+- **Manifest não aponta para o handoff recém-emitido** → Atualize `handoffs.latest` no manifest e rode `validate_handoff.sh` novamente.
+
 ## [PIPELINE DE EXECUÇÃO: Design de Sistemas com Graph-of-Thought (GoT)]
 
 **Execute o seguinte pipeline de raciocínio rigorosamente para gerar a especificação técnica.**

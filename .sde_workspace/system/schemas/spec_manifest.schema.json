@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/sde/spec_manifest.schema.json",
+  "title": "SpecManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "generatedAt", "handoffs", "specs"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Versão do manifesto de especificações"
+    },
+    "generatedAt": {
+      "type": "string",
+      "description": "Timestamp UTC da última geração do manifesto",
+      "oneOf": [
+        { "format": "date-time" },
+        { "maxLength": 0 }
+      ]
+    },
+    "handoffs": {
+      "type": "object",
+      "required": ["latest", "history"],
+      "additionalProperties": false,
+      "properties": {
+        "latest": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Caminho para o handoff ativo"
+        },
+        "history": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Diretório com o histórico de handoffs"
+        }
+      }
+    },
+    "specs": {
+      "type": "array",
+      "description": "Lista de especificações catalogadas",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "path",
+          "status",
+          "type",
+          "version",
+          "topics",
+          "updated",
+          "checksum"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string" },
+          "status": { "type": "string" },
+          "type": { "type": "string" },
+          "version": { "type": "string" },
+          "topics": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "updated": {
+            "type": "string",
+            "oneOf": [
+              { "format": "date-time" },
+              { "maxLength": 0 }
+            ]
+          },
+          "checksum": { "type": "string" },
+          "owner": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    }
+  }
+}

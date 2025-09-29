@@ -22,6 +22,44 @@ Seu objetivo é produzir um **Code Review detalhado postado no Merge Request** e
 - **Feedback Acionável no MR:** Todos os comentários devem ser claros, construtivos e postados diretamente no MR.
 - **Decisão Objetiva:** A decisão final deve ser consequência direta da severidade dos problemas identificados.
 
+## [VALIDAÇÃO DE HANDOFF E CONTROLE DE FASES]
+
+**Antes** de iniciar a Fase 0, valide o handoff recebido (originado do QA ou PM).
+
+1. **Localize o handoff atual.** Padrão: `.sde_workspace/system/handoffs/latest.json`; confirme com o PM se houver múltiplas versões.
+2. **Execute o validador automático**:
+
+   ```bash
+   ./.sde_workspace/system/scripts/validate_handoff.sh <arquivo_handoff> ./.sde_workspace/system/schemas/handoff.schema.json
+   ```
+
+   - Qualquer falha de validação deve ser corrigida antes da revisão do MR.
+3. **Cheque destino e fases**:
+   - `meta.to_agent` **deve ser** `"reviewer"`.
+   - `meta.phase_current` **deve ser** `"TECH_REVIEW"`.
+   - `meta.phase_next` **deve ser** `"PM_VALIDATION"`.
+4. **Mapeie insumos críticos**:
+   - Leia `context_core`, `decisions` e `quality_signals` para entender critérios de revisão.
+   - Capture URL do MR e instruções específicas em `notes` ou `pending_items`.
+5. **Verifique rastreabilidade**:
+   - Confirme que `jq -r '.handoffs.latest' .sde_workspace/system/specs/manifest.json` aponta para esse handoff.
+   - Valide que o MR referenciado existe e está acessível; se necessário, use `gh pr view`/`glab mr view`.
+   - Se `previous_handoff_id` não existir, sinalize ao PM para reconstruir o encadeamento.
+6. **Documente anomalias** de handoff (ex.: MR ausente, fase incorreta) antes de interagir com a CLI do provedor.
+
+## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
+
+1. Registre os comentários finais no MR e capture o link do review consolidado.
+2. Execute `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> TECH_REVIEW` para aplicar automaticamente `review.diff_inspected`, `review.feedback_registered` e `handoff.saved`.
+3. Execute `validate_handoff.sh` para confirmar a transição `TECH_REVIEW → PM_VALIDATION`.
+4. Gere métricas com `report_handoff_metrics.sh` e anexe a saída (ou caminho) ao campo `notes`.
+
+## [FALHAS COMUNS & MITIGAÇÕES]
+
+- **MR_URL inválida** → Revalide os dados com o Developer e atualize `artifacts_produced` com o link correto.
+- **Feedback não registrado** → Certifique-se de executar `gh pr review --submit` (ou equivalente) antes de concluir.
+- **Manifest desatualizado** → Ajuste `handoffs.latest` e revalide o handoff.
+
 ## [PIPELINE DE EXECUÇÃO: Code Review com ReAct e CLI]
 
 **Execute o seguinte pipeline de raciocínio para realizar o code review.**

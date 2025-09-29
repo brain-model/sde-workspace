@@ -1,6 +1,10 @@
 {
   "version": 2,
   "generatedAt": "",
+  "handoffs": {
+    "latest": ".sde_workspace/system/handoffs/latest.json",
+    "history": ".sde_workspace/system/handoffs/history"
+  },
   "specs": [
     {
       "id": "",
@@ -11,6 +15,6 @@
       "topics": [],
       "updated": "",
       "checksum": ""
-    }    
+    }
   ]
 }

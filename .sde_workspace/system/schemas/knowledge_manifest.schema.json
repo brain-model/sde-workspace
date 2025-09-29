@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/sde/knowledge_manifest.schema.json",
+  "title": "KnowledgeManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "generatedAt",
+    "description",
+    "repositories",
+    "taxonomy",
+    "files",
+    "statistics"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Versão do manifesto de conhecimento",
+      "pattern": "^$|^v?[0-9]+(\\.[0-9]+){0,2}(-[0-9A-Za-z.-]+)?$"
+    },
+    "generatedAt": {
+      "type": "string",
+      "description": "Timestamp UTC da geração do manifesto",
+      "oneOf": [
+        { "format": "date-time" },
+        { "maxLength": 0 }
+      ]
+    },
+    "description": { "type": "string" },
+    "repositories": {
+      "type": "object",
+      "description": "Catálogo dos repositórios de conhecimento",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "governance", "description"],
+        "properties": {
+          "type": { "type": "string" },
+          "governance": { "type": "string" },
+          "description": { "type": "string" },
+          "path": { "type": "string" },
+          "source": { "type": "string" }
+        }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "description": "Definição de taxonomia e governação",
+      "additionalProperties": false,
+      "required": ["governance", "categories", "tagSchema"],
+      "properties": {
+        "governance": { "type": "string" },
+        "categories": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "tagSchema": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "additionalProperties": true,
+                "required": ["name"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "values": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "description": "Lista de arquivos catalogados",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "checksum", "size", "lastModified", "metadata"],
+        "properties": {
+          "path": { "type": "string" },
+          "checksum": { "type": "string" },
+          "size": { "type": "integer", "minimum": 0 },
+          "lastModified": {
+            "type": "string",
+            "oneOf": [
+              { "format": "date-time" },
+              { "maxLength": 0 }
+            ]
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "category", "created", "updated", "source", "tags"],
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "category": { "type": "string" },
+              "created": {
+                "type": "string",
+                "oneOf": [
+                  { "format": "date-time" },
+                  { "maxLength": 0 }
+                ]
+              },
+              "updated": {
+                "type": "string",
+                "oneOf": [
+                  { "format": "date-time" },
+                  { "maxLength": 0 }
+                ]
+              },
+              "source": { "type": "string" },
+              "tags": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["totalFiles", "byCategory", "byStatus", "totalSize"],
+      "properties": {
+        "totalFiles": { "type": "integer", "minimum": 0 },
+        "byCategory": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "byStatus": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "totalSize": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

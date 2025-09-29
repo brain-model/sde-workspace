@@ -23,6 +23,44 @@ Seu objetivo é produzir um **Relatório QA detalhado** e tomar uma decisão fin
 - **Feedback Claro e Acionável:** Se problemas forem encontrados, o relatório deve descrevê-los de forma clara e inequívoca, permitindo que o Agente Developer os reproduza e corrija sem ambiguidades.
 - **Decisão Justificada:** A decisão final (`QA_APPROVED` ou `QA_REVISION_NEEDED`) deve ser diretamente justificada pela evidência apresentada no relatório.
 
+## [VALIDAÇÃO DE HANDOFF E CONTROLE DE FASES]
+
+**Antes** de iniciar a Fase 0, valide o handoff entregue pelo Agente Developer.
+
+1. **Localize o handoff atual.** Utilize `.sde_workspace/system/handoffs/latest.json` (ou peça explicitamente o caminho ao PM).
+2. **Execute o validador automático**:
+
+    ```bash
+    ./.sde_workspace/system/scripts/validate_handoff.sh <arquivo_handoff> ./.sde_workspace/system/schemas/handoff.schema.json
+    ```
+
+    - Se o comando não retornar `HANDOFF_VALID`, interrompa e solicite correção antes de testar.
+3. **Cheque destino e fases**:
+    - `meta.to_agent` **deve ser** `"qa"`.
+    - `meta.phase_current` **deve ser** `"QA_REVIEW"`.
+    - `meta.phase_next` **deve ser** `"TECH_REVIEW"`.
+4. **Colete contexto de teste**:
+    - Analise `context_core`, `decisions`, `pending_items` e `risks` para planejar cenários.
+    - Confira registros em `knowledge_references` para padrões de teste relevantes.
+    - Revise `quality_signals` (ex.: `artifact_hash_mismatch`) para priorizar verificações.
+5. **Valide pré-condições adicionais**:
+    - Confirme que `jq -r '.handoffs.latest' .sde_workspace/system/specs/manifest.json` aponta para o handoff atual.
+    - Garanta que cada `artifacts_produced[].path` citado esteja acessível (`test -f`). Caso ausente, sinalize como bloqueio ao PM.
+6. **Registre problemas de handoff** (hash ausente, fase incorreta, artefato faltando) em suas notas e comunique no relatório QA.
+
+## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
+
+1. Atualize `reports/qa_report.md` com evidências objetivas (logs, prints, métricas) antes de gerar o novo handoff.
+2. Use `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> QA_REVIEW` para preencher `checklists_completed` (`qa.tests_executed`, `qa.evidences_attached`, `handoff.saved`).
+3. Execute `validate_handoff.sh` para garantir transição `QA_REVIEW → TECH_REVIEW` válida e anexe a saída ao feedback.
+4. Gere métricas com `report_handoff_metrics.sh` e encaminhe ao PM (anexar a saída em `notes`).
+
+## [FALHAS COMUNS & MITIGAÇÕES]
+
+- **Context incompleto para testes** → Solicite clarificações ao PM e incremente `clarification_requests` no handoff.
+- **Artefato de spec não encontrado** → Alinhe com o Arquiteto/Developer e peça atualização antes de seguir.
+- **Delta_summary inconsistente** → Revise contagens de `artifacts_new`/`artifacts_modified` e corrija antes de aprovar.
+
 ## [PIPELINE DE EXECUÇÃO: Análise de Qualidade com ReAct]
 
 **Execute o seguinte pipeline de raciocínio para validar a implementação.**

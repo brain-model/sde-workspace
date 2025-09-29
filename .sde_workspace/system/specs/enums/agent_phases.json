@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentPhasesEnum",
+  "type": "object",
+  "description": "Enumeração e metadados das fases governadas pelo PM para handoffs multi-agente. Inclui papéis de suporte (documentacao, devops) que podem atuar em janelas específicas sem alterar a fase primária.",
+  "properties": {
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": { "type": "string" },
+          "role_owner": { "type": "string", "description": "Agente principal responsável pela execução nesta fase" },
+          "allowed_next": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "string" },
+          "exit_criteria": { "type": "array", "items": { "type": "string" } },
+          "supporting_roles": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Papéis auxiliares que podem ser acionados durante a fase (ex: documentacao, devops) sem tomar posse do estado da máquina."
+          },
+          "supporting_entry_conditions": { "type": "array", "items": { "type": "string" }, "description": "Condições para acionar papéis de suporte na fase." }
+        },
+        "required": ["key", "role_owner", "allowed_next", "description", "exit_criteria"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["phases"],
+  "additionalProperties": false,
+  "example": {
+    "phases": [
+      {
+        "key": "INITIALIZING",
+        "role_owner": "pm",
+        "allowed_next": ["DESIGN"],
+        "description": "Criação do contexto inicial e bootstrap do ciclo.",
+        "exit_criteria": ["handoff inicial criado", "objetivo de negócio definido"],
+        "supporting_roles": ["documentacao"],
+        "supporting_entry_conditions": ["Necessidade de material executivo inicial"]
+      }
+    ]
+  }
+}

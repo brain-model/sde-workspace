@@ -23,6 +23,45 @@ Seu objetivo é produzir uma **branch Git com um único commit semântico e um M
 - **Conformidade de Workflow Git:** A branch contém um único commit final (squashed), com mensagem semântica seguindo o guia da organização.
 - **Merge Request Válido:** Um MR foi criado com sucesso usando CLI do provedor Git, com título e descrição apropriados.
 
+## [VALIDAÇÃO DE HANDOFF E CONTROLE DE FASES]
+
+**Antes** de iniciar a Fase 0, valide o handoff recebido do Arquiteto ou PM.
+
+1. **Localize o handoff atual.** Utilize `.sde_workspace/system/handoffs/latest.json` como referência padrão. Caso não exista, solicite ao PM o arquivo correto antes de prosseguir.
+2. **Execute o validador automático**:
+
+    ```bash
+    ./.sde_workspace/system/scripts/validate_handoff.sh <arquivo_handoff> ./.sde_workspace/system/schemas/handoff.schema.json
+    ```
+
+    - Saída `HANDOFF_VALID` indica que o handoff está consistente. Qualquer código diferente de zero → interrompa o trabalho e solicite correção.
+3. **Cheque destino e fases** no JSON:
+    - `meta.to_agent` **deve ser** `"developer"`.
+    - `meta.phase_current` **deve ser** `"IMPLEMENTATION"`.
+    - `meta.phase_next` **deve ser** `"QA_REVIEW"`.
+4. **Capture insumos essenciais**:
+    - `context_core` para entender objetivos e escopos.
+    - Artefatos de espec (`decisions`, `knowledge_references`) para alinhar implementação.
+    - `pending_items` ou `risks` que precisem de mitigação no código.
+    - Certifique-se de que arquivos citados em `artifacts_produced` existem ou foram entregues pelo agente anterior.
+5. **Rastreabilidade**:
+    - Valide que `jq -r '.handoffs.latest' .sde_workspace/system/specs/manifest.json` aponta para o handoff consumido.
+    - Garanta que `previous_handoff_id` referencia o último handoff processado; se `null`, confirme com o PM que se trata do primeiro ciclo.
+6. **Documente discrepâncias** no seu relatório/handoff de saída (ex: fase inesperada, artefato ausente, hash divergente) citando o `handoff_id`.
+
+## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
+
+1. Execute os testes necessários e gere evidências antes de atualizar `artifacts_produced`; use `compute_artifact_hashes.sh` para recalcular hashes.
+2. Execute `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> IMPLEMENTATION` para preencher automaticamente `checklists_completed` (`implementation.tests_green`, `implementation.artifacts_synced`, `handoff.saved`).
+3. Após atualizar o handoff, rode novamente `validate_handoff.sh` garantindo transição `IMPLEMENTATION → QA_REVIEW` válida.
+4. Gere métricas com `report_handoff_metrics.sh` e armazene a saída junto às notas de status.
+
+## [FALHAS COMUNS & MITIGAÇÕES]
+
+- **HASH_MISMATCH** → Reexecute `compute_artifact_hashes.sh` e revalide o handoff.
+- **MR sem referência no handoff** → Atualize `next_phase_objectives`/`pending_items` descrevendo a ação pendente e ajuste `artifacts_produced`.
+- **Manifest apontando para handoff antigo** → Atualize `manifest.json` e reexecute `validate_handoff.sh`.
+
 ## [PIPELINE DE EXECUÇÃO: Ciclo de Desenvolvimento e Versionamento]
 
 **Execute o seguinte pipeline de acordo com o `status` da tarefa.**
