@@ -2,7 +2,7 @@
 
 - **Setup Inteligente**: Detecção automática de tecnologias e configuração personalizada na primeira execução
 - **Integração GitHub Copilot**: Aprimorado with chatmodes especializados para diferentes contextos de desenvolvimento
-- **Agentes Inteligentes**: Setup, Arquiteto, Developer, QA, Reviewer, Product Manager e Orchestrator
+- **Agentes Inteligentes**: Arquiteto, Desenvolvedor, QA, Revisor, Product Manager com prompts de configuração automática
 - **Indexação Automatizada**: Manifestos auto-gerado## 17. Contato & Governança para descoberta e navegação eficienteoftware Development Environment (SDE) Workspace** é um sistema multi-agente autônomo para desenvolvimento de software que fornece um ambiente estruturado com agentes especializados para transformar requisitos de negócio em código de alta qualidade através de um ciclo de desenvolvimento automatizado.
 
 Este documento estabelece o domínio único e previsível onde especificações normativas passam por um ciclo de vida formal, conhecimento institucional fica organizado e navegável, e ferramentas/agentes podem indexar rapidamente manifestos canônicos sem heurísticas frágeis.
@@ -77,7 +77,7 @@ Para versões Copilot, também haverá:
 
 ```bash
 .github/chatmodes/               # Modos de agente AI especializados
-├── setup.chatmode.md           # Agente de configuração inicial automática
+├── arquiteto.chatmode.md        # Agente focado em arquitetura
 ├── arquiteto.chatmode.md        # Agente focado em arquitetura
 ├── desenvolvedor.chatmode.md        # Agente focado em desenvolvimento
 ├── orchestrator.chatmode.md     # Agente de orquestração
@@ -88,7 +88,7 @@ Para versões Copilot, também haverá:
 
 ### 🚀 Primeira Execução - Setup Automático
 
-Na primeira execução de qualquer agente, o SDE detectará automaticamente que precisa ser configurado e solicitará que você execute o **Agente Setup**. Este agente:
+Na primeira execução de qualquer agente, o SDE detectará automaticamente que precisa ser configurado e executará o **Prompt de Setup**. Este processo:
 
 1. **Analisa seu projeto** detectando:
    - Linguagens de programação utilizadas
@@ -355,17 +355,18 @@ Cada template inclui frontmatter mínimo e seções obrigatórias com comentári
 
 ### 🤖 Agentes Disponíveis
 
-#### Agente Setup (Primeira Execução)
+#### Prompt de Setup (Execução Automática)
 
-- **Função**: Configuração inicial automática do SDE
-- **Quando usar**: Primeira execução ou ao detectar que `project-analysis.md` não existe
+- **Função**: Configuração inicial automática do SDE  
+- **Quando executado**: Automaticamente na primeira execução quando `project-analysis.md` não existe
 - **Características**:
   - Detecta tecnologias e padrões do projeto
   - Gera configuração personalizada
-  - Recomenda recursos de documentação
+  - Recomenda recursos de documentação  
   - Configura estrutura de knowledge adaptada
   - **Gera/atualiza `.github/copilot-instructions.md` automaticamente**
   - Preserva instruções existentes mesclando com novas descobertas
+- **Localização**: `.sde_workspace/system/prompts/setup.md`
 
 #### Agente Arquiteto
 
@@ -414,11 +415,11 @@ Cada template inclui frontmatter mínimo e seções obrigatórias com comentári
 
 ### ⚡ Verificação Automática de Setup
 
-Todos os agentes (exceto Setup) verificam automaticamente se existe o arquivo `project-analysis.md`. Se não existir:
+Todos os agentes verificam automaticamente se existe o arquivo `project-analysis.md`. Se não existir:
 
-1. Interrompem a execução atual
-2. Instruem o usuário a executar o Agente Setup primeiro
-3. Garantem que o SDE está configurado antes de prosseguir
+1. Executam automaticamente o prompt de configuração inicial
+2. Redirecionam para `#file:setup.md` para análise do projeto
+3. Garantem que o SDE está configurado antes de prosseguir com as tarefas
 
 Esta verificação garante que o ambiente está sempre otimizado para o projeto específico.
 

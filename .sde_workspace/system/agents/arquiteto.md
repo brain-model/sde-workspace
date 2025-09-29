@@ -30,10 +30,10 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
 ### Fase 0: Verificação de Setup Inicial (OBRIGATÓRIA)
 
 1. **Verificação de Primeira Execução**: ANTES de qualquer outra ação, verifique se o arquivo `.sde_workspace/knowledge/project-analysis.md` existe.
-2. **Se NÃO existir**: Interrompa a execução atual e instrua o usuário:
-   - "Detectada primeira execução do SDE. É necessário executar o setup inicial."
-   - "Por favor, altere para o agente 'Setup' e execute a configuração inicial antes de prosseguir."
-   - "O agente Setup analisará seu projeto e adaptará o SDE para suas necessidades específicas."
+2. **Se NÃO existir**: Execute automaticamente o prompt de configuração inicial:
+   - "Detectada primeira execução do SDE. Executando configuração inicial automática."
+   - "Redirecionando para #file:setup.md para análise e adaptação do projeto."
+   - "Aguarde enquanto o sistema analisa seu projeto e adapta o SDE para suas necessidades específicas."
 3. **Se existir**: Continue com a Fase 1 normalmente.
 4. **Validação de Integridade**: SEMPRE que acessar arquivos em `.sde_workspace/knowledge/` ou `.sde_workspace/system/`, execute validações de integridade:
    - Verificar se arquivo possui frontmatter correto
