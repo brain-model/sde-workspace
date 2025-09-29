@@ -2,15 +2,15 @@
 
 ## [PROFILE]
 
-**Automatic Integrity Validation System**, responsible for ensuring consistency, integrity and reliability of SDE's knowledge base and specifications. Executes automatic checks whenever agents access files in `/knowledge` or `/system`.
+**Automatic Integrity Validation System**, responsible for ensuring consistency, integrity and reliability of the SDE knowledge base and specifications. Executes automatic checks whenever agents access files in `/knowledge` or `/system`.
 
 ## [CONTEXT]
 
-> This system is executed automatically by all agents when accessing files in critical SDE areas. Ensures that the knowledge base is always consistent, with correct frontmatter and updated manifests.
+> This system is automatically executed by all agents when accessing files in critical SDE areas. It ensures that the knowledge base is always consistent, with correct frontmatter and updated manifests.
 
 ## [FINAL OBJECTIVE]
 
-Ensure **100% integrity and consistency** of knowledge base and specifications, validating:
+Ensure **100% integrity and consistency** of the knowledge base and specifications, validating:
 
 - **Complete Frontmatter**: All files have correct metadata
 - **Updated Manifests**: All files are correctly indexed
@@ -23,7 +23,7 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
 
 #### For files in `knowledge/internal/`
 
-1. **Required frontmatter (7 fields)**:
+1. **Mandatory frontmatter (7 fields)**:
 
    ```yaml
    title: string
@@ -36,8 +36,8 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
    ```
 
 2. **Specific validations**:
-   - ✅ `id` unique and immutable
-   - ✅ `category` valid (enum)
+   - ✅ Unique and immutable `id`
+   - ✅ Valid `category` (enum)
    - ✅ `created` in ISO-8601 format
    - ✅ `updated` >= `created`
    - ✅ `tags` contains at least one status (curated|needs-curation)
@@ -48,108 +48,108 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
    - `concepts/` → `category: concept`
    - `decisions-context/` → `category: decision`
 
-#### For files in `knowledge/external/`
+#### Para arquivos em `knowledge/external/`
 
-1. **Files in `sources/raw/`**:
+1. **Arquivos em `sources/raw/`**:
 
-   - ✅ Original files (PDF, TXT, etc.) - IMMUTABLE
-   - ✅ Should not have YAML frontmatter
-   - ✅ Descriptive name with optional date
+   - ✅ Arquivos originais (PDF, TXT, etc.) - IMUTÁVEIS
+   - ✅ Não devem ter frontmatter YAML
+   - ✅ Nome descritivo com data opcional
 
-2. **Files in `sources/processed/`**:
+2. **Arquivos em `sources/processed/`**:
 
-   - ✅ Derived from `raw/` with frontmatter
-   - ✅ Reference to original file in `source`
-   - ✅ Tag `processed` required
+   - ✅ Derivados de `raw/` com frontmatter
+   - ✅ Referência ao arquivo original em `source`
+   - ✅ Tag `processed` obrigatória
 
-3. **Processed files must reference sources**
+3. **Arquivos processed devem referenciar sources**
 
-### 📋 Specs Files Validation
+### 📋 Validação de Specs Files
 
-#### For files in `system/specs/`
+#### Para arquivos em `system/specs/`
 
-1. **Required frontmatter**:
+1. **Frontmatter obrigatório**:
 
    ```yaml
    ---
    id: spec-<slug>
-   title: <Descriptive Title>
+   title: <Título Descritivo>
    type: (design-doc|adr|arch-analysis|process-spec|test-spec)
    status: (draft|in-review|active|deprecated|archived)
    version: 1.0.0
-   topics: [domain, architecture, ...]
+   topics: [dominio, arquitetura, ...]
    created: YYYY-MM-DD
    updated: YYYY-MM-DD
-   supersedes: <previous-id|null>
-   supersededBy: <next-id|null>
-   relations: [related ids]
+   supersedes: <id-anterior|null>
+   supersededBy: <id-posterior|null>
+   relations: [ids correlatos]
    ---
    ```
 
-2. **State validations**:
-   - ✅ `status` corresponds to folder (draft/ → status: draft)
-   - ✅ `version` follows semantic (MAJOR.MINOR.PATCH)
-   - ✅ `supersedes`/`supersededBy` reference existing specs
-   - ✅ `relations` point to valid IDs
+2. **Validações de estado**:
+   - ✅ `status` corresponde à pasta (draft/ → status: draft)
+   - ✅ `version` segue semântico (MAJOR.MINOR.PATCH)
+   - ✅ `supersedes`/`supersededBy` referenciam specs existentes
+   - ✅ `relations` apontam para IDs válidos
 
-### 📋 Manifests Validation
+### 📋 Validação de Manifestos
 
 #### `knowledge/manifest.json`
 
-1. **Valid structure**:
+1. **Estrutura válida**:
 
-   - ✅ All files in `internal/` are listed
-   - ✅ Correct SHA256 checksums
-   - ✅ Updated `generatedAt` timestamps
-   - ✅ Unique `ids` without duplicates
+   - ✅ Todos os arquivos em `internal/` estão listados
+   - ✅ Checksums SHA256 corretos
+   - ✅ Timestamps de `generatedAt` atualizados
+   - ✅ `ids` únicos sem duplicatas
 
 #### `system/specs/manifest.json`
 
-1. **Specs consistency**:
+1. **Consistência de specs**:
 
-   - ✅ All active specs are listed
-   - ✅ Correct paths for files
-   - ✅ Status corresponds to physical location
-   - ✅ Updated checksums
+   - ✅ Todas as specs ativas estão listadas
+   - ✅ Paths corretos para arquivos
+   - ✅ Status corresponde à localização física
+   - ✅ Checksums atualizados
 
-## [AUTO-CORRECTION ACTIONS]
+## [AÇÕES DE AUTO-CORREÇÃO]
 
-### 🔧 Detected Problems and Solutions
+### 🔧 Problemas Detectados e Soluções
 
-#### Missing/Incomplete Frontmatter
+#### Frontmatter Ausente/Incompleto
 
-- **Detect**: File without initial `---` or missing fields
-- **Fix**: Add frontmatter based on templates
+- **Detectar**: Arquivo sem `---` inicial ou campos faltando
+- **Corrigir**: Adicionar frontmatter baseado em templates
 
-#### File Not Listed in Manifest
+#### Arquivo Não Listado no Manifesto
 
-- **Detect**: File exists but not in `manifest.json`
-- **Fix**: Add entry to manifest
+- **Detectar**: Arquivo existe mas não está em `manifest.json`
+- **Corrigir**: Adicionar entrada ao manifesto
 
-#### Incorrect Location
+#### Localização Incorreta
 
-- **Detect**: `category` doesn't correspond to directory
-- **Fix**: Update `category` or move file
+- **Detectar**: `category` não corresponde ao diretório
+- **Corrigir**: Atualizar `category` ou mover arquivo
 
-#### Outdated Checksum
+#### Checksum Desatualizado
 
-- **Detect**: SHA256 hash doesn't match current content
-- **Fix**: Recalculate and update checksum
+- **Detectar**: Hash SHA256 não confere com conteúdo atual
+- **Corrigir**: Recalcular e atualizar checksum
 
-#### Broken Links
+#### Links Quebrados
 
-- **Detect**: Invalid `supersedes`/`relations` references
-- **Fix**: Remove references or correct IDs
+- **Detectar**: Referências `supersedes`/`relations` inválidas
+- **Corrigir**: Remover referências ou corrigir IDs
 
-### 🛠️ Auto-Correction Templates
+### 🛠️ Templates de Auto-Correção
 
-#### For Knowledge/Internal
+#### Para Knowledge/Internal
 
    ```yaml
    ---
-   title: "[FILE] - Needs Title"
-   category: "raw"  # based on directory
-   type: "note"     # inferred from content
+   title: "[ARQUIVO] - Precisa de Title"
+   category: "raw"  # baseado no diretório
+   type: "note"     # inferido do conteúdo
    tags: ["needs-curation"]
    last_updated: "2024-01-XX"
    referenced_by: []
@@ -157,12 +157,12 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
    ---
    ```
 
-#### For System/Specs
+#### Para System/Specs
 
    ```yaml
    ---
    id: "spec-auto-generated-XXXX"
-   title: "[SPEC] - Needs Title"
+   title: "[SPEC] - Precisa de Title"
    type: "design-doc"
    status: "draft"
    version: "0.1.0"
@@ -175,82 +175,86 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
    ---
    ```
 
-#### For Manifest.json
+#### Para Manifest.json
 
    ```json
    {
      "id": "auto-generated-XXXX",
      "path": "knowledge/internal/path/file.md",
-     "title": "[INFERRED FROM FRONTMATTER]",
-     "category": "[INFERRED FROM FOLDER]",
-     "checksum": "[CALCULATED SHA256]",
-     "created": "[FILE DATE]",
-     "updated": "[LAST MODIFICATION]"
+     "title": "[INFERIDO DO FRONTMATTER]",
+     "category": "[INFERIDO DA PASTA]",
+     "checksum": "[SHA256 CALCULADO]",
+     "created": "[DATA ARQUIVO]",
+     "updated": "[ÚLTIMA MODIFICAÇÃO]"
    }
    ```
 
-## [VALIDATION TRIGGERS]
+## [TRIGGERS DE VALIDAÇÃO]
 
-### 📋 Validation Commands
+### 📋 Comandos de Validação
 
-#### Complete Validation
+#### Validação Completa
 
 ```bash
-# Validate everything
+# Validar tudo
 ./scripts/validate-knowledge.sh --full
 ./scripts/validate-specs.sh --full
 ```
 
-#### Specific Validations
+#### Validações Específicas
 
 ```bash
-# Frontmatter only
+# Apenas frontmatter
 ./scripts/validate-knowledge.sh --frontmatter-only
 
-# Manifests only
+# Apenas manifestos
 ./scripts/validate-knowledge.sh --manifest-only
 
-# Specific file
+# Arquivo específico
 ./scripts/validate-knowledge.sh --file="path/to/file.md"
 
-# Auto-correction
+# Auto-correção
 ./scripts/validate-knowledge.sh --auto-fix
 ```
 
-### ⚙️ Agent Integration
+### ⚙️ Integração com Agentes
 
-**ALL agents execute these checks automatically:**
+**TODOS os agentes executam estas verificações automaticamente:**
 
-1. **Before reading any file** in `/knowledge` or `/system`:
-   - Verify if file has valid frontmatter
-   - Verify if it's listed in manifest
-   - Report found problems
+1. **Antes de ler qualquer arquivo** em `/knowledge` ou `/system`:
+   - Verificar se arquivo tem frontmatter válido
+   - Verificar se está listado no manifesto
+   - Reportar problemas encontrados
 
-2. **After creating/editing files**:
-   - Update frontmatter with `last_updated`
-   - Recalculate checksums
-   - Update manifests
+2. **Depois de criar/editar arquivos**:
+   - Atualizar frontmatter com `last_updated`
+   - Recalcular checksums
+   - Atualizar manifestos
 
-3. **Before finishing any task**:
-   - Execute complete validation
-   - Apply auto-corrections when possible
-   - Report final integrity status
+3. **Antes de finalizar qualquer tarefa**:
+   - Executar validação completa
+   - Aplicar auto-correções quando possível
+   - Reportar status de integridade final
 
-### ⚠️ When Problems Detected
+### ⚠️ Quando Problemas Detectados
 
 ```text
-🔍 INTEGRITY PROBLEMS DETECTED:
+🔍 PROBLEMAS DE INTEGRIDADE DETECTADOS:
 
-❌ /knowledge/internal/notes/raw/example.md
-   - Incomplete frontmatter (missing: title, tags)
-   - Not listed in manifest.json
+❌ /knowledge/internal/notes/raw/exemplo.md
+   - Frontmatter incompleto (faltando: title, tags)
+   - Não listado em manifest.json
    
-❌ /system/specs/draft/example-spec.md
-   - Inconsistent 'status' field (file in draft/ but status: active)
+❌ /system/specs/draft/exemplo-spec.md
+   - Campo 'status' inconsistente (arquivo em draft/ mas status: active)
+   - Checksum desatualizado no manifesto
+
+   - Outdated checksum in manifest
+
    - Outdated checksum in manifest
 
 🔧 APPLYING AUTO-CORRECTIONS...
-✅ Frontmatter added with required fields
+✅ Frontmatter added with mandatory fields
 ✅ File added to manifest
 ✅ Status corrected to 'draft'
 ✅ Checksum recalculated
@@ -258,7 +262,7 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
 ✅ INTEGRITY RESTORED
 ```
 
-### ✅ When Everything OK
+### ✅ When Everything is OK
 
 ```text
 ✅ COMPLETE INTEGRITY VALIDATION
@@ -278,4 +282,50 @@ Ensure **100% integrity and consistency** of knowledge base and specifications, 
 
 ---
 
-> 💡 **Meta-Development**: This system was created to ensure reliability of SDE's own knowledge base, applying rigorous validations and intelligent auto-corrections.
+> 💡 **Meta-Development**: This system was created to ensure the reliability of the SDE's own knowledge base, applying rigorous validations and intelligent auto-corrections.
+```
+
+### ✅ When Everything is OK
+
+```text
+✅ COMPLETE INTEGRITY VALIDATION
+
+📄 STATISTICS:
+- Knowledge Files: 45 ✅
+- Specs Files: 12 ✅  
+- Manifests: 2 ✅
+- Internal Links: 23 ✅
+
+🔐 SYSTEM 100% INTEGRAL
+```
+
+## [AUTOMATIC EXECUTION]
+
+**This system is transparent to the end user - executes automatically when agents access critical files, ensuring that the knowledge base is always integral and reliable.**
+
+---
+
+> 💡 **Meta-Development**: This system was created to ensure the reliability of the SDE's own knowledge base, applying rigorous validations and intelligent auto-corrections.
+```
+
+### ✅ Quando Tudo OK
+
+```text
+✅ VALIDAÇÃO DE INTEGRIDADE COMPLETA
+
+📊 ESTATÍSTICAS:
+- Knowledge Files: 45 ✅
+- Specs Files: 12 ✅  
+- Manifestos: 2 ✅
+- Links Internos: 23 ✅
+
+🔐 SISTEMA 100% ÍNTEGRO
+```
+
+## [EXECUÇÃO AUTOMÁTICA]
+
+**Este sistema é transparente para o usuário final - executa automaticamente quando agentes acessam arquivos críticos, garantindo que a base de conhecimento esteja sempre íntegra e confiável.**
+
+---
+
+> 💡 **Meta-Desenvolvimento**: Este sistema foi criado para garantir a confiabilidade da própria base de conhecimento do SDE, aplicando validações rigorosas e auto-correções inteligentes.
