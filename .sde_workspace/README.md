@@ -1,6 +1,9 @@
-﻿# SDE Workspace
+﻿# SDE Workspace### 🤖 Fluxo Orientado por IA
 
-**Software Development Environment (SDE) Workspace** é um sistema multi-agente autônomo para desenvolvimento de software que fornece um ambiente estruturado com agentes especializados para transformar requisitos de negócio em código de alta qualidade através de um ciclo de desenvolvimento automatizado.
+- **Setup Inteligente**: Detecção automática de tecnologias e configuração personalizada na primeira execução
+- **Integração GitHub Copilot**: Aprimorado with chatmodes especializados para diferentes contextos de desenvolvimento
+- **Agentes Inteligentes**: Setup, Arquiteto, Developer, QA, Reviewer, Product Manager e Orchestrator
+- **Indexação Automatizada**: Manifestos auto-gerado## 17. Contato & Governança para descoberta e navegação eficienteoftware Development Environment (SDE) Workspace** é um sistema multi-agente autônomo para desenvolvimento de software que fornece um ambiente estruturado com agentes especializados para transformar requisitos de negócio em código de alta qualidade através de um ciclo de desenvolvimento automatizado.
 
 Este documento estabelece o domínio único e previsível onde especificações normativas passam por um ciclo de vida formal, conhecimento institucional fica organizado e navegável, e ferramentas/agentes podem indexar rapidamente manifestos canônicos sem heurísticas frágeis.
 
@@ -74,6 +77,7 @@ Para versões Copilot, também haverá:
 
 ```bash
 .github/chatmodes/               # Modos de agente AI especializados
+├── setup.chatmode.md           # Agente de configuração inicial automática
 ├── arquiteto.chatmode.md        # Agente focado em arquitetura
 ├── desenvolvedor.chatmode.md        # Agente focado em desenvolvimento
 ├── orchestrator.chatmode.md     # Agente de orquestração
@@ -81,6 +85,36 @@ Para versões Copilot, também haverá:
 ├── qa.chatmode.md              # Agente de garantia de qualidade
 └── revisor.chatmode.md        # Agente de revisão de código
 ```
+
+### 🚀 Primeira Execução - Setup Automático
+
+Na primeira execução de qualquer agente, o SDE detectará automaticamente que precisa ser configurado e solicitará que você execute o **Agente Setup**. Este agente:
+
+1. **Analisa seu projeto** detectando:
+   - Linguagens de programação utilizadas
+   - Frameworks e bibliotecas principais
+   - Ferramentas de build e deployment
+   - Padrões arquiteturais
+   - Estrutura de diretórios
+
+2. **Gera recomendações personalizadas** para:
+   - Templates de documentação específicos
+   - Base de conhecimento externa relevante
+   - Padrões e guias de estilo apropriados
+   - Recursos de aprendizado gratuitos
+
+3. **Configura o ambiente SDE** com:
+   - Estrutura de conhecimento adaptada
+   - Templates especializados
+   - Referências de documentação oficial
+   - Guias específicos da tecnologia detectada
+   - **Instruções otimizadas para GitHub Copilot**
+
+4. **Produz artefatos de knowledge**:
+   - `.github/copilot-instructions.md` - Instruções otimizadas para AI coding agents
+   - `project-analysis.md` - Análise completa do projeto
+   - `technology-stack.md` - Resumo das tecnologias detectadas  
+   - `external-resources.md` - Lista curada de recursos recomendados
 
 ## 2. Arquitetura da Estrutura
 
@@ -218,18 +252,18 @@ Arquivo: `knowledge/manifest.json` (gerado automaticamente). Indexa base de conh
 {
   "version": "2.0",
   "generatedAt": "2025-09-26T17:06:46.411497",
-  "description": "Knowledge base manifest for Backstage platform documentation and internal notes",
+  "description": "Knowledge base manifest for project platform documentation and internal notes",
   "repositories": {
     "internal": {
       "type": "knowledge-base",
       "governance": "contextual-information",
       "description": "Internal curated knowledge and meeting notes"
     },
-    "backstage": {
+    "project-docs": {
       "type": "official-documentation", 
       "governance": "reference-documentation",
-      "description": "Official Backstage documentation from upstream repository",
-      "path": ".sde_workspace/knowledge/external/vendor-docs/backstage"
+      "description": "Official project documentation from upstream repository",
+      "path": ".sde_workspace/knowledge/external/vendor-docs/project"
     }
   },
   "files": [...]
@@ -317,7 +351,105 @@ Cada template inclui frontmatter mínimo e seções obrigatórias com comentári
 - Relacione specs correlatas via `relations` para navegação contextual.
 - Promova deprecated rapidamente quando existir substituto aprovado.
 
-## 13. FAQ Rápido
+## 16. FAQ Rápido
+
+### 🤖 Agentes Disponíveis
+
+#### Agente Setup (Primeira Execução)
+
+- **Função**: Configuração inicial automática do SDE
+- **Quando usar**: Primeira execução ou ao detectar que `project-analysis.md` não existe
+- **Características**:
+  - Detecta tecnologias e padrões do projeto
+  - Gera configuração personalizada
+  - Recomenda recursos de documentação
+  - Configura estrutura de knowledge adaptada
+  - **Gera/atualiza `.github/copilot-instructions.md` automaticamente**
+  - Preserva instruções existentes mesclando com novas descobertas
+
+#### Agente Arquiteto
+
+- **Função**: Design de sistemas e especificações técnicas
+- **Entrada**: Requisitos de produto ou itens de backlog
+- **Saída**: Documentos de especificação técnica detalhados
+- **Processo**: Graph-of-Thought (GoT) para design de arquitetura
+
+#### Agente Developer
+
+- **Função**: Implementação de código e versionamento
+- **Entrada**: Documentos de especificação aprovados
+- **Saída**: Código implementado, branches Git, Merge Requests
+- **Processo**: Ciclo de desenvolvimento com Git workflows avançados
+
+#### Agente QA
+
+- **Função**: Garantia de qualidade e testes
+- **Entrada**: Código implementado em branches
+- **Saída**: Relatórios de QA e validação de qualidade
+- **Processo**: Análise adversarial e testes abrangentes
+
+#### Agente Reviewer
+
+- **Função**: Revisão técnica de código
+- **Entrada**: Merge Requests prontos para review
+- **Saída**: Code review detalhado e feedback técnico
+- **Processo**: Análise de Clean Code, arquitetura e segurança
+
+#### Agente PM (Product Manager)
+
+- **Função**: Orquestração do fluxo de trabalho
+- **Entrada**: Estado das tarefas em desenvolvimento
+- **Saída**: Roteamento e coordenação entre agentes
+- **Processo**: Máquina de estados para gestão de workflow
+
+### 🔄 Fluxo de Trabalho dos Agentes
+
+1. **Setup** → Configuração inicial (apenas primeira vez)
+2. **PM** → Orquestração e priorização
+3. **Arquiteto** → Design e especificações
+4. **Developer** → Implementação
+5. **QA** → Validação e testes
+6. **Reviewer** → Code review
+7. **PM** → Arquivamento e próxima tarefa
+
+### ⚡ Verificação Automática de Setup
+
+Todos os agentes (exceto Setup) verificam automaticamente se existe o arquivo `project-analysis.md`. Se não existir:
+
+1. Interrompem a execução atual
+2. Instruem o usuário a executar o Agente Setup primeiro
+3. Garantem que o SDE está configurado antes de prosseguir
+
+Esta verificação garante que o ambiente está sempre otimizado para o projeto específico.
+
+### 🛡️ Sistema de Validação de Integridade
+
+Todos os agentes executam validações automáticas de integridade sempre que acessam arquivos em `/knowledge` ou `/system`:
+
+#### Validações Automáticas
+
+- **Frontmatter Completo**: Verifica se todos os campos obrigatórios estão presentes
+- **Manifestos Sincronizados**: Confirma que arquivos estão listados nos manifestos
+- **Localização Consistente**: Valida se arquivos estão nas pastas corretas
+- **Referências Válidas**: Verifica links e referências internas
+
+#### Auto-Correção Inteligente
+
+- **Frontmatter Ausente**: Gera automaticamente baseado em heurísticas
+- **Manifestos Desatualizados**: Adiciona/atualiza entradas automaticamente  
+- **Checksums Incorretos**: Recalcula e atualiza automaticamente
+- **Inconsistências**: Sugere correções com confirmação do usuário
+
+#### Mensagens de Validação
+
+```bash
+🔍 VALIDAÇÃO DE INTEGRIDADE DETECTOU PROBLEMAS:
+- Arquivo sem frontmatter: AUTO-CORRIGIDO
+- Manifesto desatualizado: AUTO-CORRIGIDO  
+- Referência quebrada: MARCADO PARA REVISÃO
+
+✅ Base de conhecimento íntegra e confiável!
+```
 
 | Pergunta | Resposta |
 |----------|----------|

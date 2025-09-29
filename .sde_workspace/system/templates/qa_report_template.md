@@ -36,7 +36,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Corpo da requisição vazio** | Enviar `POST` para `/api/v1/novo-recurso` com `{}`. | Retornar `400 Bad Request` com mensagem clara. | Retorna `500 Internal Server Error`. | FAIL |
 | **Entrada com caracteres especiais** | Enviar `nome` com `"><script>alert(1)</script>"`. | O sistema deve sanitizar a entrada e salvá-la sem executar o script. | A entrada é salva como está, criando uma vulnerabilidade de XSS. | FAIL |
-| **Banco de dados indisponível** | Simular indisponibilidade do `DatabaseService`. | A API deve retornar `503 Service Unavailable`. | A API retorna `503 Service Unavailable` como esperado. | PASS |
+| **Banco de dados indisponível** | Simular indisponibilidade do serviço de banco de dados. | A API deve retornar `503 Service Unavailable`. | A API retorna `503 Service Unavailable` como esperado. | PASS |
 
 ## 4. Itens Acionáveis para o Desenvolvedor
 

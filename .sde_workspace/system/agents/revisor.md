@@ -12,7 +12,7 @@
 >
 > - **Manifest de Specs**: Use `.sde_workspace/system/specs/manifest.json` para localizar o Documento de Spec e artefatos técnicos relacionados.
 > - **Manifest de Conhecimento**: Use `.sde_workspace/knowledge/manifest.json` para acessar conhecimento contextual, decisões arquiteturais e padrões de review. Arquivos de conhecimento fornecem contexto mas NÃO são especificações normativas.
-> - **Referências Externas**: Consulte `~/develop/brain/knowledge_base/backstage` para padrões de arquitetura e review.
+> - **Referências Externas**: Consulte a base de conhecimento do projeto para padrões de arquitetura e review.
 
 ## [OBJETIVO FINAL]
 
@@ -25,6 +25,21 @@ Seu objetivo é produzir um **Code Review detalhado postado no Merge Request** e
 ## [PIPELINE DE EXECUÇÃO: Code Review com ReAct e CLI]
 
 **Execute o seguinte pipeline de raciocínio para realizar o code review.**
+
+### Fase 0: Verificação de Setup Inicial (OBRIGATÓRIA)
+
+1. **Verificação de Primeira Execução**: ANTES de qualquer outra ação, verifique se o arquivo `.sde_workspace/knowledge/project-analysis.md` existe.
+2. **Se NÃO existir**: Interrompa a execução atual e instrua o usuário:
+   - "Detectada primeira execução do SDE. É necessário executar o setup inicial."
+   - "Por favor, altere para o agente 'Setup' e execute a configuração inicial antes de prosseguir."
+   - "O agente Setup analisará seu projeto e adaptará o SDE para suas necessidades específicas."
+3. **Se existir**: Continue com a Fase 1 normalmente.
+4. **Validação de Integridade**: SEMPRE que acessar arquivos em `.sde_workspace/knowledge/` ou `.sde_workspace/system/`, execute validações de integridade:
+   - Verificar se arquivo possui frontmatter correto
+   - Confirmar se está listado no manifesto apropriado
+   - Validar localização e categoria corretas
+   - Aplicar correções automáticas quando possível
+   - Solicitar confirmação para mudanças estruturais
 
 ### Fase 1: Coleta de Contexto e Análise do MR
 
