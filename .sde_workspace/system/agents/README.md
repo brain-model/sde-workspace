@@ -82,3 +82,68 @@ Todos os agentes devem invocar `resolve_knowledge.sh` antes de recorrer a fontes
 7. **Justificativas obrigatórias**: personalize `--justification` quando precisar subir para fontes externas; caso contrário, `EXTERNAL_JUSTIFICATION_REQUIRED` será registrado.
 
 8. **Métricas e relatórios**: gere indicadores com `./.sde_workspace/system/scripts/report_knowledge_metrics.sh --days 7 --raw` e consolide um resumo em Markdown com `./.sde_workspace/system/scripts/report_knowledge_weekly.sh`. Publique os resultados no handoff atual em `quality_signals.knowledge.reports`.
+
+## Indexação de Conhecimento
+
+Todos os agentes devem garantir que artefatos de conhecimento criados estejam indexados no manifest antes de referenciá-los.
+
+### Workflow de Indexação
+
+1. **Criar artefato com header YAML** seguindo template em `.sde_workspace/knowledge/internal/templates/metadata_header.md`
+2. **Campos obrigatórios**:
+   - `id`: identificador único
+   - `type`: tipo do artefato (concept, decision, runbook, reference, etc.)
+   - `maturity`: draft, review, stable ou deprecated
+   - `tags`: pelo menos uma tag de `tags_registry.json`
+   - `linked_gaps` OU `linked_decisions`: rastreabilidade obrigatória
+   - `created_by`: agente responsável
+   - `source_origin`: internal, external_curated ou external_raw
+   - `created_utc` / `updated_utc`: timestamps ISO8601
+
+3. **Executar scanner** para indexar:
+
+   ```bash
+   ./.sde_workspace/system/scripts/scan_knowledge.sh
+   ```
+
+4. **Validar integridade**:
+
+   ```bash
+   ./.sde_workspace/system/scripts/validate_manifest.sh
+   ```
+
+### Scripts de Gerenciamento
+
+- **scan_knowledge.sh**: scanner incremental que atualiza manifest com novos/modificados artefatos
+- **validate_manifest.sh**: valida schema, órfãos, drift, tags, rastreabilidade, hashes
+- **promote_artifact.sh**: promove maturidade de artefatos (draft → review → stable → deprecated)
+- **supersede_artifact.sh**: marca artefato como deprecated e registra substituto
+- **archive_deprecated.sh**: arquiva artefatos deprecated > 90 dias
+- **report_knowledge_health.sh**: gera relatório de saúde do manifest (órfãos, drift, maturidade)
+
+### Códigos de Erro
+
+- `KNOWLEDGE_UNINDEXED_ARTIFACT`: tentativa de usar artefato não indexado
+- `KNOWLEDGE_METADATA_DRIFT`: divergência entre YAML e manifest
+- `KNOWLEDGE_ORPHAN_GAP`: gap referenciado inexistente
+- `KNOWLEDGE_STALE_HASH`: hash desatualizado
+- `KNOWLEDGE_SUPERSEDE_MISSING`: supersede aponta para arquivo ausente
+
+### Checklist de Validação Pré-Entrega
+
+Antes de finalizar qualquer handoff, execute:
+
+```bash
+# Validar manifest
+./.sde_workspace/system/scripts/validate_manifest.sh
+
+# Gerar relatório de saúde
+./.sde_workspace/system/scripts/report_knowledge_health.sh
+```
+
+Critérios de aceitação:
+
+- Zero órfãos
+- Zero drift incidents
+- Todos artefatos com rastreabilidade (gaps ou decisions)
+- Hash match rate = 100%

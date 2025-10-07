@@ -83,11 +83,47 @@ Seu objetivo é produzir uma **branch Git com um único commit semântico e um M
 2. Execute `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> IMPLEMENTATION` para preencher automaticamente `checklists_completed` (`implementation.tests_green`, `implementation.artifacts_synced`, `handoff.saved`).
 3. Após atualizar o handoff, rode novamente `validate_handoff.sh` garantindo transição `IMPLEMENTATION → QA_REVIEW` válida.
 4. Gere métricas com `report_handoff_metrics.sh` e armazene a saída junto às notas de status.
+5. **Valide indexação de conhecimento**: execute `validate_manifest.sh` e confirme zero órfãos/drift antes de entregar.
+
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+**Antes de citar qualquer artefato**, verifique se ele está indexado no `knowledge/manifest.json`:
+
+```bash
+jq -e --arg path "<caminho_artefato>" '.knowledge_index.artifacts[] | select(.path==$path)' .sde_workspace/knowledge/manifest.json
+```
+
+**Ao criar novos artefatos de conhecimento**:
+
+1. Inicie o arquivo com header YAML conforme template em `.sde_workspace/knowledge/internal/templates/metadata_header.md`
+2. Preencha campos obrigatórios: `id`, `type`, `maturity`, `tags`, `linked_gaps` ou `linked_decisions`, `created_by`, `source_origin`, timestamps
+3. Execute o scanner para indexar:
+
+   ```bash
+   ./.sde_workspace/system/scripts/scan_knowledge.sh
+   ```
+
+4. Valide integridade:
+
+   ```bash
+   ./.sde_workspace/system/scripts/validate_manifest.sh
+   ```
+
+**Códigos de erro de indexação**:
+
+- `KNOWLEDGE_UNINDEXED_ARTIFACT`: tentativa de usar artefato não indexado
+- `KNOWLEDGE_METADATA_DRIFT`: divergência entre YAML e manifest
+- `KNOWLEDGE_ORPHAN_GAP`: gap referenciado inexistente
+- `KNOWLEDGE_STALE_HASH`: hash desatualizado
+- `KNOWLEDGE_SUPERSEDE_MISSING`: supersede aponta para arquivo ausente
 
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
 - **HASH_MISMATCH** → Reexecute `compute_artifact_hashes.sh` e revalide o handoff.
 - **MR sem referência no handoff** → Atualize `next_phase_objectives`/`pending_items` descrevendo a ação pendente e ajuste `artifacts_produced`.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Execute `scan_knowledge.sh` imediatamente após criar o artefato e antes de referenciá-lo.
+- **KNOWLEDGE_METADATA_DRIFT** → Corrija o header YAML do arquivo para corresponder ao manifest, depois rode `scan_knowledge.sh --update`.
+- **KNOWLEDGE_STALE_HASH** → Recalcule hashes com `scan_knowledge.sh` ou `compute_artifact_hashes.sh` conforme aplicável.
 - **Manifest apontando para handoff antigo** → Atualize `manifest.json` e reexecute `validate_handoff.sh`.
 - **KNOWLEDGE_PRIORITY_VIOLATION** → Refaça `resolve_knowledge.sh` garantindo busca em fontes internas antes de externas e atualize os contadores de `quality_signals.knowledge`.
 - **EXTERNAL_JUSTIFICATION_REQUIRED** → Ajuste `--justification` com motivação concreta (ex.: referência ao requisito) e reprocesse o script antes de consumir material externo.

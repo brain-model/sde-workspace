@@ -1,0 +1,30 @@
+{
+  "registry_version": 1,
+  "updated_utc": "",
+  "tags": [
+    {
+      "tag": "architecture",
+      "description": "Padrões e decisões arquiteturais centrais",
+      "status": "active",
+      "aliases": ["arch", "arquitetura"]
+    },
+    {
+      "tag": "runbook",
+      "description": "Procedimentos operacionais padronizados",
+      "status": "active",
+      "aliases": ["operacao", "procedimento"]
+    },
+    {
+      "tag": "decision",
+      "description": "Registros de decisões técnicas",
+      "status": "active",
+      "aliases": ["adr", "decisao"]
+    },
+    {
+      "tag": "concept",
+      "description": "Definições conceituais de domínio",
+      "status": "active",
+      "aliases": ["conceito"]
+    }
+  ]
+}

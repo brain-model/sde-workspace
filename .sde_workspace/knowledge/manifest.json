@@ -1,58 +1,33 @@
 {
-  "version": "",
+  "version": "v0.0.0",
   "generatedAt": "",
-  "description": "",
+  "description": "Manifesto canônico da base de conhecimento do SDE Workspace",
   "repositories": {
     "internal": {
-      "type": "",
-      "governance": "",
-      "description": ""
+      "type": "git",
+      "governance": "SDE Knowledge Core",
+      "description": "Conhecimento interno, decisões oficiais e runbooks",
+      "path": ".sde_workspace/knowledge/internal",
+      "source": "workspace"
     },
-    "project-docs": {
-      "type": "",
-      "governance": "",
-      "description": "",
-      "path": "",
-      "source": ""
+    "external": {
+      "type": "mirror",
+      "governance": "SDE Knowledge Mirror",
+      "description": "Fontes externas curadas que o time acompanha",
+      "path": ".sde_workspace/knowledge/external",
+      "source": "external"
     }
   },
   "taxonomy": {
-    "governance": "",
+    "governance": "Tags e categorias alinhadas ao registry oficial do SDE",
     "categories": [],
     "tagSchema": []
   },
-  "files": [
-    {
-      "path": "",
-      "checksum": "",
-      "size": 0,
-      "lastModified": "",
-      "metadata": {
-        "id": "",
-        "title": "",
-        "category": "",
-        "created": "",
-        "updated": "",
-        "source": "",
-        "tags": []
-      }
-    }    
-  ],
+  "files": [],
   "statistics": {
     "totalFiles": 0,
-    "byCategory": {
-      "meeting-notes": 0,
-      "chat-transcript": 0,
-      "note-raw": 0,
-      "decision": 0,
-      "design-document": 0,
-      "concept": 0,
-      "journey": 0
-    },
-    "byStatus": {
-      "curated": 0,
-      "needs-curation": 0
-    },
+    "byCategory": {},
+    "byStatus": {},
     "totalSize": 0
   },
   "knowledge_index": {
@@ -61,7 +36,28 @@
     "stats": {
       "internal": 0,
       "external_curated": 0,
-      "external_raw": 0
+      "external_raw": 0,
+      "maturity": {
+        "draft": 0,
+        "review": 0,
+        "stable": 0,
+        "deprecated": 0
+      },
+      "archived": 0
     }
+  },
+  "metrics": {
+    "index_latency_avg": 0,
+    "orphan_artifacts": 0,
+    "drift_incidents": 0,
+    "hash_mismatch_rate": 0,
+    "maturity_distribution": {
+      "draft": 0,
+      "review": 0,
+      "stable": 0,
+      "deprecated": 0
+    },
+    "scan_runs": 0,
+    "last_scan_utc": ""
   }
 }

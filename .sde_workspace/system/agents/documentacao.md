@@ -137,6 +137,16 @@ Produzir ou promover artefatos documentais normativos (runbooks, conceitos, deci
 - Não promover documentação de baixa qualidade sem refinamento mínimo.
 - Sempre manter rastreabilidade (source_spec ou origem no summary do handoff).
 
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+Como agente de Documentação, você é responsável por manter a base de conhecimento atualizada:
+
+- Todo documento criado deve ter header YAML completo
+- Execute `scan_knowledge.sh` após criar/atualizar documentos
+- Use `promote_artifact.sh` para evoluir maturidade (draft → review → stable)
+- Valide integridade com `validate_manifest.sh`
+- Consulte `tags_registry.json` para usar tags padronizadas
+
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
 - **Hashes ausentes** → Execute `compute_artifact_hashes.sh` antes de atualizar o handoff.
@@ -145,6 +155,9 @@ Produzir ou promover artefatos documentais normativos (runbooks, conceitos, deci
 - **KNOWLEDGE_PRIORITY_VIOLATION** → Refaça a consulta garantindo consumo de fontes internas antes de promover conteúdos externos para documentação.
 - **EXTERNAL_JUSTIFICATION_REQUIRED** → Atualize `--justification` com motivação explícita, referencie a fonte no handoff e repita `resolve_knowledge.sh` antes de publicar.
 - **GAP_NOT_REGISTERED** → Certifique-se de que o gap foi criado em `knowledge/gaps/` e listado no manifest; caso contrário, use `--existing-gap` com o ID correto ou promova o artefato faltante.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Execute `scan_knowledge.sh` imediatamente após criar documentação.
+- **KNOWLEDGE_METADATA_DRIFT** → Corrija o header YAML para corresponder ao manifest.
+- **KNOWLEDGE_STALE_HASH** → Recalcule hashes com `scan_knowledge.sh`.
 
 ## [TRANSIÇÃO]
 

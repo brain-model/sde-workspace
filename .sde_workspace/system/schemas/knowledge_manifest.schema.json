@@ -156,22 +156,102 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["path", "type", "tags", "authoritative"],
+            "required": [
+              "path",
+              "type",
+              "tags",
+              "maturity",
+              "hash",
+              "size",
+              "created_utc",
+              "updated_utc",
+              "created_by",
+              "source_origin",
+              "authoritative",
+              "linked"
+            ],
             "properties": {
               "path": { "type": "string" },
               "type": { "type": "string" },
               "tags": {
                 "type": "array",
                 "items": { "type": "string" },
+                "minItems": 1,
                 "uniqueItems": true
               },
-              "authoritative": { "type": "boolean" },
-              "last_hash": { "type": "string" },
-              "last_review": {
+              "maturity": {
                 "type": "string",
+                "enum": ["draft", "review", "stable", "deprecated"]
+              },
+              "hash": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "size": { "type": "integer", "minimum": 0 },
+              "created_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "created_by": {
+                "type": "string",
+                "enum": [
+                  "architect",
+                  "developer",
+                  "qa",
+                  "reviewer",
+                  "pm",
+                  "documentation",
+                  "devops"
+                ]
+              },
+              "source_origin": {
+                "type": "string",
+                "enum": ["internal", "external_curated", "external_raw"]
+              },
+              "authoritative": { "type": "boolean" },
+              "linked": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["gaps", "decisions"],
+                "properties": {
+                  "gaps": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "uniqueItems": true
+                  },
+                  "decisions": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "supersedes": {
                 "oneOf": [
-                  { "format": "date" },
-                  { "maxLength": 0 }
+                  { "type": "string", "minLength": 1 },
+                  { "type": "null" }
+                ]
+              },
+              "superseded_by": {
+                "oneOf": [
+                  { "type": "string", "minLength": 1 },
+                  { "type": "null" }
+                ]
+              },
+              "archived_at": {
+                "oneOf": [
+                  { "type": "string", "format": "date-time" },
+                  { "type": "null" }
+                ]
+              },
+              "removed_at": {
+                "oneOf": [
+                  { "type": "string", "format": "date-time" },
+                  { "type": "null" }
                 ]
               }
             }
@@ -185,12 +265,68 @@
         "stats": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["internal", "external_curated", "external_raw"],
+          "required": [
+            "internal",
+            "external_curated",
+            "external_raw",
+            "maturity",
+            "archived"
+          ],
           "properties": {
             "internal": { "type": "integer", "minimum": 0 },
             "external_curated": { "type": "integer", "minimum": 0 },
-            "external_raw": { "type": "integer", "minimum": 0 }
+            "external_raw": { "type": "integer", "minimum": 0 },
+            "maturity": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["draft", "review", "stable", "deprecated"],
+              "properties": {
+                "draft": { "type": "integer", "minimum": 0 },
+                "review": { "type": "integer", "minimum": 0 },
+                "stable": { "type": "integer", "minimum": 0 },
+                "deprecated": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "archived": { "type": "integer", "minimum": 0 }
           }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index_latency_avg",
+        "orphan_artifacts",
+        "drift_incidents",
+        "hash_mismatch_rate",
+        "maturity_distribution",
+        "scan_runs",
+        "last_scan_utc"
+      ],
+      "properties": {
+        "index_latency_avg": { "type": "number", "minimum": 0 },
+        "orphan_artifacts": { "type": "integer", "minimum": 0 },
+        "drift_incidents": { "type": "integer", "minimum": 0 },
+        "hash_mismatch_rate": { "type": "number", "minimum": 0 },
+        "maturity_distribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["draft", "review", "stable", "deprecated"],
+          "properties": {
+            "draft": { "type": "integer", "minimum": 0 },
+            "review": { "type": "integer", "minimum": 0 },
+            "stable": { "type": "integer", "minimum": 0 },
+            "deprecated": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "scan_runs": { "type": "integer", "minimum": 0 },
+        "last_scan_utc": {
+          "type": "string",
+          "oneOf": [
+            { "format": "date-time" },
+            { "maxLength": 0 }
+          ]
         }
       }
     }
@@ -203,6 +339,7 @@
     "taxonomy",
     "files",
     "statistics",
-    "knowledge_index"
+    "knowledge_index",
+    "metrics"
   ]
 }

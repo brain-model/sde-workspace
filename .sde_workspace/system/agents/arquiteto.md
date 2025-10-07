@@ -77,12 +77,45 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
 
    6. Adicione ao handoff (em `notes` ou `reports/`) o extrato relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria.
 
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+**Antes de citar qualquer artefato**, verifique se ele está indexado no `knowledge/manifest.json`:
+
+```bash
+jq -e --arg path "<caminho_artefato>" '.knowledge_index.artifacts[] | select(.path==$path)' .sde_workspace/knowledge/manifest.json
+```
+
+**Ao criar novos artefatos de conhecimento**:
+
+1. Inicie o arquivo com header YAML conforme template em `.sde_workspace/knowledge/internal/templates/metadata_header.md`
+2. Preencha campos obrigatórios: `id`, `type`, `maturity`, `tags`, `linked_gaps` ou `linked_decisions`, `created_by`, `source_origin`, timestamps
+3. Execute o scanner para indexar:
+
+   ```bash
+   ./.sde_workspace/system/scripts/scan_knowledge.sh
+   ```
+
+4. Valide integridade:
+
+   ```bash
+   ./.sde_workspace/system/scripts/validate_manifest.sh
+   ```
+
+**Códigos de erro de indexação**:
+
+- `KNOWLEDGE_UNINDEXED_ARTIFACT`: tentativa de usar artefato não indexado
+- `KNOWLEDGE_METADATA_DRIFT`: divergência entre YAML e manifest
+- `KNOWLEDGE_ORPHAN_GAP`: gap referenciado inexistente
+- `KNOWLEDGE_STALE_HASH`: hash desatualizado
+- `KNOWLEDGE_SUPERSEDE_MISSING`: supersede aponta para arquivo ausente
+
 ## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
 
 1. Ao finalizar o design, execute `./.sde_workspace/system/scripts/compute_artifact_hashes.sh` sobre os artefatos gerados e atualize o handoff.
 2. Utilize `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_emitido> DESIGN` (ou preencha manualmente) para garantir que `checklists_completed` contenha `design.reviewed`, `design.context_validated` e `handoff.saved`.
 3. Execute novamente `validate_handoff.sh` no handoff emitido e anexe a saída ao relatório entregue ao PM.
 4. Gere métricas rápidas com `report_handoff_metrics.sh <handoff_emitido> .sde_workspace/system/handoffs/latest_metrics.md`.
+5. **Valide indexação de conhecimento**: execute `validate_manifest.sh` e confirme zero órfãos/drift antes de entregar.
 
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
@@ -92,6 +125,9 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
 - **KNOWLEDGE_PRIORITY_VIOLATION** → Revisite a consulta com `resolve_knowledge.sh`, assegure que fontes internas foram esgotadas antes de recorrer às demais e corrija os contadores de `quality_signals.knowledge`.
 - **EXTERNAL_JUSTIFICATION_REQUIRED** → Personalize `--justification` com o motivo específico da pesquisa externa, cite a fonte em `knowledge_references` e reaplique o script antes de prosseguir.
 - **GAP_NOT_REGISTERED** → Se citar lacunas, garanta que o arquivo correspondente exista em `knowledge/gaps/` e esteja listado em `knowledge_index.gaps`.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Execute `scan_knowledge.sh` imediatamente após criar o artefato e antes de referenciá-lo.
+- **KNOWLEDGE_METADATA_DRIFT** → Corrija o header YAML do arquivo para corresponder ao manifest, depois rode `scan_knowledge.sh --update`.
+- **KNOWLEDGE_STALE_HASH** → Recalcule hashes com `scan_knowledge.sh` ou `compute_artifact_hashes.sh` conforme aplicável.
 
 ## [PIPELINE DE EXECUÇÃO: Design de Sistemas com Graph-of-Thought (GoT)]
 

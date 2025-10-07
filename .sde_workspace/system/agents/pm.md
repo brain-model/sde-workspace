@@ -86,6 +86,17 @@ Como guardião da máquina de estados, quaisquer transições de fase começam e
 - Executar `compute_artifact_hashes.sh` e `validate_handoff.sh` sempre que gerar novo handoff.
 - Rodar `report_handoff_metrics.sh` e anexar a saída ao histórico antes de arquivar.
 - Atualizar `.sde_workspace/system/specs/manifest.json` garantindo que `handoffs.latest` referencia o arquivo correto e registrar snapshot em `handoffs/history/`.
+- **Valide indexação de conhecimento**: execute `validate_manifest.sh` e `report_knowledge_health.sh` periodicamente para garantir saúde da base.
+
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+Como PM, você supervisiona a governança de conhecimento:
+
+- Execute `scan_knowledge.sh` periodicamente para atualizar o manifest
+- Rode `report_knowledge_health.sh` para métricas de saúde
+- Use `promote_artifact.sh` para promover artefatos maduros (draft → review → stable)
+- Execute `archive_deprecated.sh --dry-run` para identificar candidatos a arquivamento
+- Valide que artefatos críticos tenham rastreabilidade (gaps ou decisions linkados)
 
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
@@ -95,6 +106,8 @@ Como guardião da máquina de estados, quaisquer transições de fase começam e
 - **KNOWLEDGE_PRIORITY_VIOLATION** → Bloqueie a transição, revise a consulta no `resolve_knowledge.sh` começando por fontes internas e só avance após nova execução válida.
 - **EXTERNAL_JUSTIFICATION_REQUIRED** → Exija justificativa específica no `--justification`, registre o racional em `notes` e reexecute o resolvedor antes de aprovar novo handoff.
 - **GAP_NOT_REGISTERED** → Verifique se o `gap_id` referenciado existe em `knowledge/gaps/` e no manifest; caso contrário, oriente o agente responsável a promover o artefato ou manter o gap recém-criado.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Oriente agente responsável a executar `scan_knowledge.sh`.
+- **Órfãos detectados** → Execute `validate_manifest.sh` e corrija artefatos não indexados ou remova referências fantasmas.
 
 ## [PIPELINE DE EXECUÇÃO: Máquina de Estados de Desenvolvimento]
 

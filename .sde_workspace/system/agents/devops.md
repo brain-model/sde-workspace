@@ -166,6 +166,16 @@ Garantir que o repositório tenha: pipeline mínimo funcional, artefatos constru
 | scripts base | `install.sh` presente | Sugerir criação mínima |
 | controle versão | Repositório git | Bloquear (fora de escopo) |
 
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+Como agente DevOps, você gerencia runbooks operacionais e documentação de infraestrutura:
+
+- Crie runbooks com header YAML completo seguindo o template
+- Execute `scan_knowledge.sh` após criar/atualizar runbooks
+- Use `promote_artifact.sh` para maturar runbooks testados (draft → stable)
+- Valide integridade com `validate_manifest.sh` antes de entregar
+- Mantenha rastreabilidade linkando gaps ou decisions operacionais
+
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
 | Erro | Causa | Mitigação |
@@ -178,6 +188,8 @@ Garantir que o repositório tenha: pipeline mínimo funcional, artefatos constru
 | KNOWLEDGE_PRIORITY_VIOLATION | Tentativa de pular fontes internas | Reexecutar `resolve_knowledge.sh` iniciando em conteúdo interno e registrar justificativa das consultas externas |
 | EXTERNAL_JUSTIFICATION_REQUIRED | Justificativa padrão mantida ao usar fontes externas | Customizar `--justification`, anexar referência aos artefatos consultados e repetir a resolução |
 | GAP_NOT_REGISTERED | Gap mencionado sem arquivo correspondente | Utilize `--existing-gap` com id válido ou aceite o gap gerado, garantindo entrada em `knowledge/gaps/` e `knowledge_index.gaps` |
+| KNOWLEDGE_UNINDEXED_ARTIFACT | Runbook não indexado | Execute `scan_knowledge.sh` imediatamente |
+| KNOWLEDGE_STALE_HASH | Hash desatualizado após edição | Recalcule com `scan_knowledge.sh` |
 
 ## [SNIPPET (VALIDAÇÃO FUTURA)]
 

@@ -81,12 +81,19 @@ Seu objetivo é produzir um **Code Review detalhado postado no Merge Request** e
 2. Execute `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> TECH_REVIEW` para aplicar automaticamente `review.diff_inspected`, `review.feedback_registered` e `handoff.saved`.
 3. Execute `validate_handoff.sh` para confirmar a transição `TECH_REVIEW → PM_VALIDATION`.
 4. Gere métricas com `report_handoff_metrics.sh` e anexe a saída (ou caminho) ao campo `notes`.
+5. **Valide indexação de conhecimento**: execute `validate_manifest.sh` e confirme zero órfãos/drift antes de entregar.
+
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+**Antes de citar qualquer artefato**, verifique indexação no `knowledge/manifest.json`. Ao criar runbooks de review ou padrões identificados, siga o template YAML e execute `scan_knowledge.sh` + `validate_manifest.sh`.
 
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
 - **MR_URL inválida** → Revalide os dados com o Developer e atualize `artifacts_produced` com o link correto.
 - **Feedback não registrado** → Certifique-se de executar `gh pr review --submit` (ou equivalente) antes de concluir.
 - **Manifest desatualizado** → Ajuste `handoffs.latest` e revalide o handoff.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Execute `scan_knowledge.sh` imediatamente após criar o artefato.
+- **KNOWLEDGE_STALE_HASH** → Recalcule hashes com `scan_knowledge.sh`.
 
 ## [PIPELINE DE EXECUÇÃO: Code Review com ReAct e CLI]
 

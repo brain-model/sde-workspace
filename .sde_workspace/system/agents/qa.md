@@ -82,6 +82,17 @@ Seu objetivo é produzir um **Relatório QA detalhado** e tomar uma decisão fin
 2. Use `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_atualizado> QA_REVIEW` para preencher `checklists_completed` (`qa.tests_executed`, `qa.evidences_attached`, `handoff.saved`).
 3. Execute `validate_handoff.sh` para garantir transição `QA_REVIEW → TECH_REVIEW` válida e anexe a saída ao feedback.
 4. Gere métricas com `report_handoff_metrics.sh` e encaminhe ao PM (anexar a saída em `notes`).
+5. **Valide indexação de conhecimento**: execute `validate_manifest.sh` e confirme zero órfãos/drift antes de entregar.
+
+## [INDEXAÇÃO DE CONHECIMENTO]
+
+**Antes de citar qualquer artefato**, verifique se ele está indexado no `knowledge/manifest.json`. Ao criar novos artefatos (playbooks de teste, evidências estruturadas), siga o template de metadata YAML e execute `scan_knowledge.sh` + `validate_manifest.sh`.
+
+**Códigos de erro de indexação**:
+
+- `KNOWLEDGE_UNINDEXED_ARTIFACT`: tentativa de usar artefato não indexado
+- `KNOWLEDGE_METADATA_DRIFT`: divergência entre YAML e manifest
+- `KNOWLEDGE_STALE_HASH`: hash desatualizado
 
 ## [FALHAS COMUNS & MITIGAÇÕES]
 
@@ -91,6 +102,8 @@ Seu objetivo é produzir um **Relatório QA detalhado** e tomar uma decisão fin
 - **KNOWLEDGE_PRIORITY_VIOLATION** → Repita `resolve_knowledge.sh` garantindo análise de playbooks internos antes de buscar guias externos de testes.
 - **EXTERNAL_JUSTIFICATION_REQUIRED** → Ajuste `--justification` com o cenário de teste que exige referência externa e apenas então utilize materiais externos.
 - **GAP_NOT_REGISTERED** → Certifique-se de que o `gap_id` apontado no relatório existe em `knowledge/gaps/`; se ausente, gere novamente a lacuna ou promova o artefato correspondente.
+- **KNOWLEDGE_UNINDEXED_ARTIFACT** → Execute `scan_knowledge.sh` imediatamente após criar o artefato e antes de referenciá-lo.
+- **KNOWLEDGE_STALE_HASH** → Recalcule hashes com `scan_knowledge.sh`.
 
 ## [PIPELINE DE EXECUÇÃO: Análise de Qualidade com ReAct]
 
