@@ -48,6 +48,34 @@ Seu objetivo é produzir um **Relatório QA detalhado** e tomar uma decisão fin
     - Garanta que cada `artifacts_produced[].path` citado esteja acessível (`test -f`). Caso ausente, sinalize como bloqueio ao PM.
 6. **Registre problemas de handoff** (hash ausente, fase incorreta, artefato faltando) em suas notas e comunique no relatório QA.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Aponte o handoff em uso (ajuste caminho quando atuar em múltiplas tarefas):
+
+    ```bash
+    export HANDOFF=.sde_workspace/system/handoffs/latest.json
+    ```
+
+2. Antes de adotar estratégias externas de teste ou heurísticas novas, execute o resolvedor determinístico:
+
+    ```bash
+    ./.sde_workspace/system/scripts/resolve_knowledge.sh "padrões de teste para funcionalidade" \
+      --agent qa \
+      --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+      --justification "Verificar orientações internas de QA" \
+      --suggested guide
+    ```
+
+3. Interprete o resultado conforme a governança:
+    - Eventos `KNOWLEDGE_HIT_*` → registre os artefatos em `knowledge_references`, alinhe seu plano de teste com o conteúdo recuperado e atualize `quality_signals.knowledge` (`internal_hits`, `external_curated_hits`, `external_raw_hits`).
+    - Evento `GAP_CREATED` → insira o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, documente a necessidade no `qa_report.md` e somente então recorra à internet (incrementando `internet_queries`).
+
+4. Pré-condição obrigatória: qualquer playbook, checklist ou relatório de referência citado precisa constar no `knowledge/manifest.json` (`knowledge_index.artifacts`). Se não estiver listado, promova o artefato (atualize o manifest) ou mantenha o gap como rastreabilidade do déficit.
+
+5. Receber `KNOWLEDGE_PRIORITY_VIOLATION` ou `EXTERNAL_JUSTIFICATION_REQUIRED` implica pausar o fluxo, ajustar a consulta e reexecutar o resolvedor. Registre o incidente no handoff e incremente `quality_signals.knowledge.priority_violations`.
+
+6. Anexe no handoff (campo `notes` ou `report_or_feedback`) o trecho relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria.
+
 ## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
 
 1. Atualize `reports/qa_report.md` com evidências objetivas (logs, prints, métricas) antes de gerar o novo handoff.
@@ -60,6 +88,9 @@ Seu objetivo é produzir um **Relatório QA detalhado** e tomar uma decisão fin
 - **Context incompleto para testes** → Solicite clarificações ao PM e incremente `clarification_requests` no handoff.
 - **Artefato de spec não encontrado** → Alinhe com o Arquiteto/Developer e peça atualização antes de seguir.
 - **Delta_summary inconsistente** → Revise contagens de `artifacts_new`/`artifacts_modified` e corrija antes de aprovar.
+- **KNOWLEDGE_PRIORITY_VIOLATION** → Repita `resolve_knowledge.sh` garantindo análise de playbooks internos antes de buscar guias externos de testes.
+- **EXTERNAL_JUSTIFICATION_REQUIRED** → Ajuste `--justification` com o cenário de teste que exige referência externa e apenas então utilize materiais externos.
+- **GAP_NOT_REGISTERED** → Certifique-se de que o `gap_id` apontado no relatório existe em `knowledge/gaps/`; se ausente, gere novamente a lacuna ou promova o artefato correspondente.
 
 ## [PIPELINE DE EXECUÇÃO: Análise de Qualidade com ReAct]
 

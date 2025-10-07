@@ -49,6 +49,34 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
    - Execute `jq -r '.artifacts_produced[].path' <handoff> | xargs -I {} test -f {}` para garantir que todo artefato referenciado exista antes de prosseguir.
 6. **Documente discrepâncias**: qualquer divergência (hash ausente, fase inesperada, artefato faltante) deve ser registrada no seu relatório com referência ao handoff_id.
 
+   ## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+   1. Defina a variável para o handoff vigente (ajuste se estiver trabalhando em outro arquivo):
+
+      ```bash
+      export HANDOFF=.sde_workspace/system/handoffs/latest.json
+      ```
+
+   2. Sempre que precisar de referências arquiteturais ou decisões anteriores, execute o resolvedor antes de recorrer à internet:
+
+      ```bash
+      ./.sde_workspace/system/scripts/resolve_knowledge.sh "padrão event sourcing" \
+        --agent architect \
+        --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+        --justification "Confirmar padrões internos para o desenho atual" \
+        --suggested spec
+      ```
+
+   3. Interprete o JSON retornado:
+      - Eventos `KNOWLEDGE_HIT_INTERNAL`, `KNOWLEDGE_HIT_EXTERNAL_CURATED` e `KNOWLEDGE_HIT_EXTERNAL_RAW` indicam sucesso em cada nível. Registre os caminhos obtidos em `knowledge_references` e atualize os contadores em `quality_signals.knowledge` (`internal_hits`, `external_curated_hits`, `external_raw_hits`).
+      - Evento `GAP_CREATED` gera automaticamente um arquivo em `knowledge/gaps/`. Vincule o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, registre a justificativa em `notes` e só então avance para fontes externas (incrementando `internet_queries`).
+
+   4. Pré-condição obrigatória: antes de citar qualquer artefato, confirme que ele está listado em `knowledge/manifest.json` (`knowledge_index.artifacts`). Se não estiver, promova o artefato (atualize o manifest) ou mantenha o gap aberto como referência.
+
+   5. Se detectar `KNOWLEDGE_PRIORITY_VIOLATION` ou precisar acessar internet sem justificativa registrada, interrompa o fluxo, ajuste a pesquisa e registre o incidente no handoff (campo `notes`) além de incrementar `quality_signals.knowledge.priority_violations`.
+
+   6. Adicione ao handoff (em `notes` ou `reports/`) o extrato relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria.
+
 ## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
 
 1. Ao finalizar o design, execute `./.sde_workspace/system/scripts/compute_artifact_hashes.sh` sobre os artefatos gerados e atualize o handoff.
@@ -61,6 +89,9 @@ Seu objetivo é produzir um **Documento de Especificação Técnica (`Documento 
 - **PHASE_DRIFT detectado** → Refaça o handoff garantindo `phase_current=DESIGN` e `phase_next=IMPLEMENTATION` antes de reenviar.
 - **Artefato referenciado inexistente** → Recrie ou ajuste `artifacts_produced` e execute `compute_artifact_hashes.sh`.
 - **Manifest não aponta para o handoff recém-emitido** → Atualize `handoffs.latest` no manifest e rode `validate_handoff.sh` novamente.
+- **KNOWLEDGE_PRIORITY_VIOLATION** → Revisite a consulta com `resolve_knowledge.sh`, assegure que fontes internas foram esgotadas antes de recorrer às demais e corrija os contadores de `quality_signals.knowledge`.
+- **EXTERNAL_JUSTIFICATION_REQUIRED** → Personalize `--justification` com o motivo específico da pesquisa externa, cite a fonte em `knowledge_references` e reaplique o script antes de prosseguir.
+- **GAP_NOT_REGISTERED** → Se citar lacunas, garanta que o arquivo correspondente exista em `knowledge/gaps/` e esteja listado em `knowledge_index.gaps`.
 
 ## [PIPELINE DE EXECUÇÃO: Design de Sistemas com Graph-of-Thought (GoT)]
 

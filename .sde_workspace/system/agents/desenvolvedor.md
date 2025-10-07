@@ -49,6 +49,34 @@ Seu objetivo é produzir uma **branch Git com um único commit semântico e um M
     - Garanta que `previous_handoff_id` referencia o último handoff processado; se `null`, confirme com o PM que se trata do primeiro ciclo.
 6. **Documente discrepâncias** no seu relatório/handoff de saída (ex: fase inesperada, artefato ausente, hash divergente) citando o `handoff_id`.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Defina a variável do handoff ativo (ajuste se estiver usando caminho diferenciado):
+
+    ```bash
+    export HANDOFF=.sde_workspace/system/handoffs/latest.json
+    ```
+
+2. Antes de utilizar referências externas ou implementar um padrão não documentado, execute o resolvedor determinístico:
+
+    ```bash
+    ./.sde_workspace/system/scripts/resolve_knowledge.sh "melhor prática para testes de contrato" \
+      --agent developer \
+      --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+      --justification "Confirmar padrão interno para implementação" \
+      --suggested guide
+    ```
+
+3. Trate o retorno JSON como requisito de governança:
+    - Eventos `KNOWLEDGE_HIT_*` → carregue os arquivos listados em `artifacts_used`, referencie-os em `knowledge_references` e atualize os contadores de `quality_signals.knowledge` conforme o nível (interno, externo curado, externo raw).
+    - Evento `GAP_CREATED` → utilize o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, mantenha a justificativa em `notes` e somente então recorra à internet (incrementando `internet_queries`).
+
+4. Pré-condição obrigatória: qualquer arquivo citado em `knowledge_references.internal` ou `artifacts_produced` deve constar em `knowledge/manifest.json` (`knowledge_index.artifacts`). Caso contrário, promova o artefato (atualize o manifest) ou mantenha o gap aberto como rastreabilidade oficial.
+
+5. Violações (`KNOWLEDGE_PRIORITY_VIOLATION`, `EXTERNAL_JUSTIFICATION_REQUIRED`) devem interromper o fluxo: ajuste a consulta, repita o script e registre o incidente. Atualize `quality_signals.knowledge.priority_violations` conforme necessário.
+
+6. Anexe às evidências (por exemplo, em `reports/IMPLEMENTATION/`) o extrato relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria.
+
 ## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
 
 1. Execute os testes necessários e gere evidências antes de atualizar `artifacts_produced`; use `compute_artifact_hashes.sh` para recalcular hashes.
@@ -61,6 +89,9 @@ Seu objetivo é produzir uma **branch Git com um único commit semântico e um M
 - **HASH_MISMATCH** → Reexecute `compute_artifact_hashes.sh` e revalide o handoff.
 - **MR sem referência no handoff** → Atualize `next_phase_objectives`/`pending_items` descrevendo a ação pendente e ajuste `artifacts_produced`.
 - **Manifest apontando para handoff antigo** → Atualize `manifest.json` e reexecute `validate_handoff.sh`.
+- **KNOWLEDGE_PRIORITY_VIOLATION** → Refaça `resolve_knowledge.sh` garantindo busca em fontes internas antes de externas e atualize os contadores de `quality_signals.knowledge`.
+- **EXTERNAL_JUSTIFICATION_REQUIRED** → Ajuste `--justification` com motivação concreta (ex.: referência ao requisito) e reprocesse o script antes de consumir material externo.
+- **GAP_NOT_REGISTERED** → Promova o artefato citado ao manifest ou aceite o gap criado (mantendo o `gap_id` em `knowledge_references.gaps`) antes de seguir com a implementação.
 
 ## [PIPELINE DE EXECUÇÃO: Ciclo de Desenvolvimento e Versionamento]
 

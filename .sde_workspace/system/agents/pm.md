@@ -52,6 +52,34 @@ Como guardião da máquina de estados, quaisquer transições de fase começam e
    - Mantenha `previous_handoff_id` encadeado. O PM é responsável por garantir que nenhum handoff seja perdido na sequência.
    - Assegure que todos os `artifacts_produced` declarados existam e que os hashes sejam recalculados (use `compute_artifact_hashes.sh` quando necessário) antes de emitir novo handoff.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Padronize a variável para o handoff que está sendo manipulado:
+
+   ```bash
+   export HANDOFF=.sde_workspace/system/handoffs/latest.json
+   ```
+
+2. Antes de definir transições de fase, políticas de governança ou consultar procedimentos externos, invoque o resolvedor determinístico para respeitar a hierarquia de conhecimento:
+
+   ```bash
+   ./.sde_workspace/system/scripts/resolve_knowledge.sh "governança de handoffs multi-agente" \
+     --agent pm \
+     --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+     --justification "Validar padrões internos antes de atualizar a máquina de estados" \
+     --suggested policy
+   ```
+
+3. Aplique o retorno como requisito operacional:
+   - Eventos `KNOWLEDGE_HIT_*` → registre `artifacts_used` em `knowledge_references`, atualize `quality_signals.knowledge` conforme o tipo de hit e garanta que os artefatos consultados embasem a decisão registrada em `delta_summary` ou `notes`.
+   - Evento `GAP_CREATED` → capture o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, mantenha justificativa no handoff e só então busque referências externas (incrementando `internet_queries`).
+
+4. Pré-condição obrigatória: qualquer política, spec ou runbook citado em seus handoffs deve estar listado em `knowledge/manifest.json` (`knowledge_index.artifacts`). Promova o artefato ou mantenha o gap aberto até regularização.
+
+5. Violações (`KNOWLEDGE_PRIORITY_VIOLATION`, `EXTERNAL_JUSTIFICATION_REQUIRED`) → interrompa a transição, ajuste a consulta e reexecute o resolvedor, registrando o incidente e incrementando `quality_signals.knowledge.priority_violations`.
+
+6. Arquive junto ao histórico do handoff o recorte pertinente de `.sde_workspace/system/logs/knowledge_resolution.log` (ex.: anexar em `notes` ou `reports/pm/`).
+
 ## [CHECKLIST DE SAÍDA E ARQUIVAMENTO]
 
 - Utilize `./.sde_workspace/system/scripts/apply_handoff_checklist.sh <handoff_em_trabalho> $(jq -r '.meta.phase_current' <handoff_em_trabalho>)` para preencher `checklists_completed` com `pm.initializing.scope_confirmed`, `pm.validation.metrics_recorded`, `manifest.updated` e `handoff.saved` conforme a fase em curso.
@@ -64,6 +92,9 @@ Como guardião da máquina de estados, quaisquer transições de fase começam e
 - **Manifest desatualizado** → Reapontar `handoffs.latest`, reexecutar o validador e registrar novo histórico.
 - **Delta ausente em versões >1** → Acione o agente anterior para completar `delta_summary` antes de autorizar a transição.
 - **Hashes inconsistentes** → Rodar `compute_artifact_hashes.sh` e reabrir o handoff até normalizar.
+- **KNOWLEDGE_PRIORITY_VIOLATION** → Bloqueie a transição, revise a consulta no `resolve_knowledge.sh` começando por fontes internas e só avance após nova execução válida.
+- **EXTERNAL_JUSTIFICATION_REQUIRED** → Exija justificativa específica no `--justification`, registre o racional em `notes` e reexecute o resolvedor antes de aprovar novo handoff.
+- **GAP_NOT_REGISTERED** → Verifique se o `gap_id` referenciado existe em `knowledge/gaps/` e no manifest; caso contrário, oriente o agente responsável a promover o artefato ou manter o gap recém-criado.
 
 ## [PIPELINE DE EXECUÇÃO: Máquina de Estados de Desenvolvimento]
 

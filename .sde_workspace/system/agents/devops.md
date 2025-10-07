@@ -45,6 +45,34 @@ Garantir que o repositório tenha: pipeline mínimo funcional, artefatos constru
     - Certifique-se de que cada arquivo referenciado em `artifacts_produced` está acessível.
 6. **Registre discrepâncias** (fase fora do intervalo, arquivos ausentes, justificativa nula) antes de alterar pipelines.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Prepare a variável para o handoff atual (ajuste caminho se estiver atuando em múltiplas threads):
+
+    ```bash
+    export HANDOFF=.sde_workspace/system/handoffs/latest.json
+    ```
+
+2. Antes de reutilizar scripts de pipeline, padrões de infraestrutura ou runbooks externos, execute o resolvedor determinístico:
+
+    ```bash
+    ./.sde_workspace/system/scripts/resolve_knowledge.sh "pipeline CI baseline" \
+      --agent devops \
+      --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+      --justification "Confirmar padrões internos de CI/CD" \
+      --suggested runbook
+    ```
+
+3. Utilize o JSON retornado como contrato de governança:
+    - Eventos `KNOWLEDGE_HIT_*` → consuma os caminhos listados em `artifacts_used`, registre-os em `knowledge_references` e atualize `quality_signals.knowledge` (`internal_hits`, `external_curated_hits`, `external_raw_hits`).
+    - Evento `GAP_CREATED` → capture o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, detalhe a justificativa no handoff e só então recorra à internet incrementando `internet_queries`.
+
+4. Pré-condição obrigatória: qualquer script, workflow ou runbook citado em `knowledge_references.internal` ou `artifacts_produced` deve constar em `knowledge/manifest.json` (`knowledge_index.artifacts`). Caso contrário, promova o artefato (atualize o manifest) ou mantenha o gap aberto até consolidação.
+
+5. Em caso de `KNOWLEDGE_PRIORITY_VIOLATION` ou alerta `EXTERNAL_JUSTIFICATION_REQUIRED`, interrompa o fluxo, ajuste a consulta, repita o resolvedor e registre o incidente incrementando `quality_signals.knowledge.priority_violations`.
+
+6. Anexe ao relatório ou `notes` o trecho relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria e rastreabilidade.
+
 ## [ENTRADAS]
 
 - `handoff.json` direcionado a devops (from_agent anterior valido)
@@ -147,6 +175,9 @@ Garantir que o repositório tenha: pipeline mínimo funcional, artefatos constru
 | Falta de rollback | Não planejado | Criar gap + recomendar tag estável |
 | Observabilidade difusa | Sem doc central | Criar `observability.md` baseline |
 | Segurança ignorada | Sem scanner | Recomendar dependabot / review action |
+| KNOWLEDGE_PRIORITY_VIOLATION | Tentativa de pular fontes internas | Reexecutar `resolve_knowledge.sh` iniciando em conteúdo interno e registrar justificativa das consultas externas |
+| EXTERNAL_JUSTIFICATION_REQUIRED | Justificativa padrão mantida ao usar fontes externas | Customizar `--justification`, anexar referência aos artefatos consultados e repetir a resolução |
+| GAP_NOT_REGISTERED | Gap mencionado sem arquivo correspondente | Utilize `--existing-gap` com id válido ou aceite o gap gerado, garantindo entrada em `knowledge/gaps/` e `knowledge_index.gaps` |
 
 ## [SNIPPET (VALIDAÇÃO FUTURA)]
 

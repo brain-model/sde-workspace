@@ -72,7 +72,20 @@ cat > handoff_ok.json <<EOF
   "next_phase_objectives": ["Implementar módulo"],
   "acceptance_criteria_next_phase": ["Build executa"],
   "checklists_completed": ["design.reviewed"],
-  "quality_signals": {"context_completeness_score": 0.9, "artifact_hash_mismatch": false, "open_questions": 0, "clarification_requests": 0},
+  "quality_signals": {
+    "context_completeness_score": 0.9,
+    "artifact_hash_mismatch": false,
+    "open_questions": 0,
+    "clarification_requests": 0,
+    "knowledge": {
+      "internal_hits": 2,
+      "external_curated_hits": 0,
+      "external_raw_hits": 0,
+      "internet_queries": 0,
+      "gaps_opened": 0,
+      "priority_violations": 0
+    }
+  },
   "agents_progress": {"architect": {"completed": true}, "developer": {"completed": false}, "qa": {"completed": false}, "reviewer": {"completed": false}, "pm": {"completed": false}, "documentation": {"completed": false}, "devops": {"completed": false}},
   "notes": []
 }
@@ -114,7 +127,20 @@ cat > handoff_bad.json <<EOF
   "next_phase_objectives": ["Implementar módulo"],
   "acceptance_criteria_next_phase": ["Build executa"],
   "checklists_completed": ["design.reviewed"],
-  "quality_signals": {"context_completeness_score": 0.95, "artifact_hash_mismatch": false, "open_questions": 0, "clarification_requests": 0},
+  "quality_signals": {
+    "context_completeness_score": 0.95,
+    "artifact_hash_mismatch": false,
+    "open_questions": 0,
+    "clarification_requests": 0,
+    "knowledge": {
+      "internal_hits": 1,
+      "external_curated_hits": 1,
+      "external_raw_hits": 0,
+      "internet_queries": 0,
+      "gaps_opened": 0,
+      "priority_violations": 0
+    }
+  },
   "agents_progress": {"architect": {"completed": true}, "developer": {"completed": false}, "qa": {"completed": false}, "reviewer": {"completed": false}, "pm": {"completed": false}, "documentation": {"completed": false}, "devops": {"completed": false}},
   "notes": []
 }

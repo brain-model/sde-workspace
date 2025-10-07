@@ -123,13 +123,32 @@
     "checklists_completed": { "type": "array", "items": { "type": "string" } },
     "quality_signals": {
       "type": "object",
-      "required": ["context_completeness_score", "artifact_hash_mismatch", "open_questions", "clarification_requests"],
+      "required": ["context_completeness_score", "artifact_hash_mismatch", "open_questions", "clarification_requests", "knowledge"],
       "properties": {
         "context_completeness_score": { "type": "number", "minimum": 0, "maximum": 1 },
         "artifact_hash_mismatch": { "type": "boolean" },
         "open_questions": { "type": "integer", "minimum": 0 },
         "clarification_requests": { "type": "integer", "minimum": 0 },
-        "knowledge_priority_violations": { "type": "integer", "minimum": 0 }
+        "knowledge": {
+          "type": "object",
+          "required": [
+            "internal_hits",
+            "external_curated_hits",
+            "external_raw_hits",
+            "internet_queries",
+            "gaps_opened",
+            "priority_violations"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "internal_hits": { "type": "integer", "minimum": 0 },
+            "external_curated_hits": { "type": "integer", "minimum": 0 },
+            "external_raw_hits": { "type": "integer", "minimum": 0 },
+            "internet_queries": { "type": "integer", "minimum": 0 },
+            "gaps_opened": { "type": "integer", "minimum": 0 },
+            "priority_violations": { "type": "integer", "minimum": 0 }
+          }
+        }
       },
       "additionalProperties": false
     },

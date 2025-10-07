@@ -4,15 +4,6 @@
   "title": "KnowledgeManifest",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "version",
-    "generatedAt",
-    "description",
-    "repositories",
-    "taxonomy",
-    "files",
-    "statistics"
-  ],
   "properties": {
     "version": {
       "type": "string",
@@ -154,6 +145,64 @@
         },
         "totalSize": { "type": "integer", "minimum": 0 }
       }
+    },
+    "knowledge_index": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifacts", "gaps", "stats"],
+      "properties": {
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "type", "tags", "authoritative"],
+            "properties": {
+              "path": { "type": "string" },
+              "type": { "type": "string" },
+              "tags": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              },
+              "authoritative": { "type": "boolean" },
+              "last_hash": { "type": "string" },
+              "last_review": {
+                "type": "string",
+                "oneOf": [
+                  { "format": "date" },
+                  { "maxLength": 0 }
+                ]
+              }
+            }
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "stats": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["internal", "external_curated", "external_raw"],
+          "properties": {
+            "internal": { "type": "integer", "minimum": 0 },
+            "external_curated": { "type": "integer", "minimum": 0 },
+            "external_raw": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
     }
-  }
+  },
+  "required": [
+    "version",
+    "generatedAt",
+    "description",
+    "repositories",
+    "taxonomy",
+    "files",
+    "statistics",
+    "knowledge_index"
+  ]
 }

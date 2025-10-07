@@ -54,5 +54,14 @@
       "needs-curation": 0
     },
     "totalSize": 0
+  },
+  "knowledge_index": {
+    "artifacts": [],
+    "gaps": [],
+    "stats": {
+      "internal": 0,
+      "external_curated": 0,
+      "external_raw": 0
+    }
   }
 }

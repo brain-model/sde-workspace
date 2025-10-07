@@ -1,0 +1,19 @@
+{
+  "gap_id": "GAP-2025-10-06T13:00:00Z",
+  "query": "descrição da busca que não retornou resultados",
+  "timestamp_utc": "2025-10-06T13:00:00Z",
+  "phase": "design",
+  "agent": "arquiteto",
+  "justification": "Contexto do porquê este gap é necessário",
+  "impact": "Alto",
+  "priority": "P1",
+  "suggested_artifact_type": "runbook",
+  "owner": "pm",
+  "status": "open",
+  "linked_decisions": [],
+  "attempts": {
+    "internal": 2,
+    "external_curated": 1,
+    "external_raw": 0
+  }
+}

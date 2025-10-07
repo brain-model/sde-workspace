@@ -47,6 +47,34 @@ Seu objetivo é produzir um **Code Review detalhado postado no Merge Request** e
    - Se `previous_handoff_id` não existir, sinalize ao PM para reconstruir o encadeamento.
 6. **Documente anomalias** de handoff (ex.: MR ausente, fase incorreta) antes de interagir com a CLI do provedor.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Defina o handoff ativo (ajuste caso esteja revisando múltiplos MRs):
+
+   ```bash
+   export HANDOFF=.sde_workspace/system/handoffs/latest.json
+   ```
+
+2. Antes de recorrer a guias externos de review ou padrões de arquitetura, execute o resolvedor determinístico:
+
+   ```bash
+   ./.sde_workspace/system/scripts/resolve_knowledge.sh "padrões de code review" \
+     --agent reviewer \
+     --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+     --justification "Checar precedentes internos antes de revisar o MR" \
+     --suggested checklist
+   ```
+
+3. Converta o retorno em ação governada:
+   - Eventos `KNOWLEDGE_HIT_*` → consulte os artefatos listados, registre-os em `knowledge_references` e atualize os contadores de `quality_signals.knowledge` correspondentes.
+   - Evento `GAP_CREATED` → associe o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, descreva a lacuna no feedback do MR e apenas então busque referências externas (incrementando `internet_queries`).
+
+4. Pré-condição: toda guideline ou checklist referenciada em comentários do MR precisa estar mapeada em `knowledge/manifest.json` (`knowledge_index.artifacts`). Promova o documento ou mantenha o gap aberto até regularização.
+
+5. Diante de `KNOWLEDGE_PRIORITY_VIOLATION` ou `EXTERNAL_JUSTIFICATION_REQUIRED`, suspenda a revisão, refine a consulta e reexecute o resolvedor. Registre o evento e incremente `quality_signals.knowledge.priority_violations`.
+
+6. Preserve para auditoria o excerto relevante de `.sde_workspace/system/logs/knowledge_resolution.log` (anexando em `notes` ou `artifacts_produced`).
+
 ## [CHECKLIST DE SAÍDA E EMISSÃO DE HANDOFF]
 
 1. Registre os comentários finais no MR e capture o link do review consolidado.

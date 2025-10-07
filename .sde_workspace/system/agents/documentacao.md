@@ -44,6 +44,34 @@ Produzir ou promover artefatos documentais normativos (runbooks, conceitos, deci
    - Teste a existência de cada arquivo listado em `artifacts_produced`.
 6. **Registre inconsistências** (fase fora do intervalo, delta ausente, hash inconsistente) no seu relatório ou em `notes` do handoff.
 
+## [RESOLUÇÃO DE CONHECIMENTO OBRIGATÓRIA]
+
+1. Sete o handoff de referência (ajuste se estiver promovendo múltiplos artefatos):
+
+   ```bash
+   export HANDOFF=.sde_workspace/system/handoffs/latest.json
+   ```
+
+2. Antes de promover qualquer documento ou consolidar notas, execute o resolvedor determinístico para localizar precedentes:
+
+   ```bash
+   ./.sde_workspace/system/scripts/resolve_knowledge.sh "runbook de implantação" \
+     --agent documentation \
+     --phase "$(jq -r '.meta.phase_current' "$HANDOFF")" \
+     --justification "Verificar se já existe documento equivalente" \
+     --suggested article
+   ```
+
+3. Trate o retorno como norma:
+   - Eventos `KNOWLEDGE_HIT_*` → aproveite os caminhos em `artifacts_used`, cite-os em `knowledge_references` e atualize `quality_signals.knowledge` conforme o nível de hit.
+   - Evento `GAP_CREATED` → utilize o `gap_id` em `knowledge_references.gaps`, incremente `quality_signals.knowledge.gaps_opened`, mantenha justificativa em `notes` e só então busque fontes externas (incrementando `internet_queries`).
+
+4. Pré-condição: qualquer artefato promovido ou referenciado deve constar no `knowledge/manifest.json` (`knowledge_index.artifacts`). Se não estiver, promova-o atualizando o manifest (incluindo metadados mínimos) ou mantenha o gap aberto até aprovação.
+
+5. Violações (`KNOWLEDGE_PRIORITY_VIOLATION`, `EXTERNAL_JUSTIFICATION_REQUIRED`) exigem ajuste imediato da consulta e reexecução; registre o incidente e incremente `quality_signals.knowledge.priority_violations`.
+
+6. Armazene no dossiê (ex.: `reports/documentation/` ou `notes`) o trecho relevante de `.sde_workspace/system/logs/knowledge_resolution.log` para auditoria.
+
 ## [ENTRADAS]
 
 - Documento de Spec consolidado (em `specs/draft` ou promovido)
@@ -114,6 +142,9 @@ Produzir ou promover artefatos documentais normativos (runbooks, conceitos, deci
 - **Hashes ausentes** → Execute `compute_artifact_hashes.sh` antes de atualizar o handoff.
 - **Documentos não indexados** → Atualize `knowledge/manifest.json` e confirme a entrada antes de finalizar.
 - **Tags redundantes** → Consulte `tags_registry.json` e reutilize tags existentes.
+- **KNOWLEDGE_PRIORITY_VIOLATION** → Refaça a consulta garantindo consumo de fontes internas antes de promover conteúdos externos para documentação.
+- **EXTERNAL_JUSTIFICATION_REQUIRED** → Atualize `--justification` com motivação explícita, referencie a fonte no handoff e repita `resolve_knowledge.sh` antes de publicar.
+- **GAP_NOT_REGISTERED** → Certifique-se de que o gap foi criado em `knowledge/gaps/` e listado no manifest; caso contrário, use `--existing-gap` com o ID correto ou promova o artefato faltante.
 
 ## [TRANSIÇÃO]
 
