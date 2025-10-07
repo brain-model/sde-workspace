@@ -5,105 +5,129 @@
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-## Visão Geral
+O Software Development Environment (SDE) Workspace é um ecossistema multiagente orientado a domínio que transforma requisitos de negócio em software pronto para produção. Ele organiza conhecimento institucional, automatiza governança de especificações e integra fluxos inteligentes com o GitHub Copilot.
 
-O SDE Workspace é um sistema autônomo multi-agente para desenvolvimento de software. Ele fornece um ambiente estruturado com agentes de IA especializados para transformar requisitos de negócio em código de alta qualidade através de um ciclo de desenvolvimento automatizado.
+## Por que o SDE Workspace importa
 
-## Instalação Rápida
+- **Fonte única da verdade**: Manifestos versionados para specs, conhecimento, prompts e workflows.
+- **Fluxos nativos de IA**: Chatmodes especializados (Arquiteto, Developer, QA, Reviewer, PM, Orchestrator) provisionados automaticamente.
+- **Operação confiável**: Scripts monitoram drift, validam manifestos, calculam hashes e geram relatórios de saúde semanais.
 
-Instale o SDE Workspace com um único comando:
+## Arquitetura em destaque
+
+```text
+.sde_workspace/
+├── system/                    # Núcleo normativo (specs, prompts, templates, scripts)
+│   ├── specs/                 # Specs com lifecycle (draft → archived)
+│   ├── agents/                # Prompts e capacidades dos agentes
+│   ├── guides/                # Guias de contribuição e fluxos
+│   ├── templates/             # Modelos de specs / knowledge / relatórios
+│   ├── backlog/               # Itens de trabalho estruturados
+│   ├── handoffs/              # Artefatos formais de handoff entre agentes
+│   ├── scripts/               # CLIs de automação (veja abaixo)
+│   └── schemas/               # JSON Schemas usados pelos validadores
+├── knowledge/                 # Base de conhecimento interna e externa
+│   ├── internal/              # Conceitos, runbooks, referências, notas
+│   ├── external/              # Normas, vendors, pesquisas, transcrições
+│   └── manifest.json          # Índice gerado automaticamente
+└── .github/
+    └── copilot-instructions.md / chatmodes/ (apenas edições Copilot)
+```
+
+### Ciclo de vida das especificações
+
+| Estado | Objetivo | Automação principal |
+|--------|----------|---------------------|
+| `draft` | Ideação inicial | Scaffold via templates |
+| `in-review` | Análise colaborativa | Checklists de handoff |
+| `active` | Norma vigente | Promoção no manifesto |
+| `deprecated` | Orientação substituída | Agendamento de arquivamento |
+| `archived` | Histórico congelado | Validação de integridade |
+
+## Fluxo guiado por agentes
+
+1. **Setup** detecta stack e configura a estrutura na primeira execução.
+2. **PM** orquestra prioridades e encaminha tarefas entre os agentes.
+3. **Arquiteto → Developer → QA → Reviewer** iteram handoffs validados.
+4. **Serviços de conhecimento** indexam decisões, runbooks e gaps reutilizáveis.
+
+## Pré-requisitos
+
+O instalador passa a verificar dependências obrigatórias antes do clone. Instale-as previamente para evitar interrupções:
+
+| Ferramenta | Uso | Documentação |
+|------------|-----|--------------|
+| `git` | Clonar o repositório | [git-scm.com/downloads](https://git-scm.com/downloads) |
+| `curl` *(ou `wget`)* | Bootstrap remoto | [curl.se/download.html](https://curl.se/download.html) |
+| `jq` | Processamento JSON nos scripts | [jqlang.github.io/jq/download](https://jqlang.github.io/jq/download/) |
+| `yq` | Parse de front-matter YAML | [github.com/mikefarah/yq](https://github.com/mikefarah/yq/#install) |
+| `sha256sum` | Hash de artefatos & validação de manifestos | [GNU coreutils](https://www.gnu.org/software/coreutils/coreutils.html#sha256sum-invocation) |
+
+Opcionais recomendados:
+
+- `yajsv` para validação JSON Schema ([github.com/neilpa/yajsv](https://github.com/neilpa/yajsv))
+- Em macOS, instale `coreutils` (`brew install coreutils`) para disponibilizar `sha256sum`
+
+Se algo estiver ausente, o `install.sh` encerra com mensagem explicativa e links oficiais.
+
+## Instalação rápida
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/brain-model/sde-workspace/master/boot.sh | bash
 ```
 
-Ou usando wget:
+Durante o processo escolha entre:
+
+1. `default-ptbr` – estrutura base em Português Brasil
+2. `default-enus` – estrutura base em Inglês
+3. `copilot-ptbr` – base + chatmodes do Copilot (pt-BR)
+4. `copilot-enus` – base + chatmodes do Copilot (en-US)
+
+As edições Copilot populam `.github/chatmodes/` e `.github/copilot-instructions.md` sem sobrescrever arquivos existentes.
+
+### Instalação manual
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/brain-model/sde-workspace/master/boot.sh | bash
-```
-
-### Opções de Instalação
-
-O instalador apresentará 4 opções de configuração:
-
-1. **default-ptbr** - Português Brasil (Versão padrão)
-2. **default-enus** - Inglês americano (Versão padrão)  
-3. **copilot-ptbr** - Português Brasil (Versão GitHub Copilot)
-4. **copilot-enus** - Inglês americano (Versão GitHub Copilot)
-
-**Qual a diferença?**
-
-- **Versões padrão**: Instalam apenas a estrutura central `.sde_workspace` com agentes, guias e templates
-- **Versões Copilot**: Incluem chatmodes adicionais do GitHub Copilot em `.github/chatmodes/` para assistência de IA aprimorada
-
-## O que é Instalado
-
-Após a instalação, você terá:
-
-```text
-.sde_workspace/
-├── system/
-│   ├── agents/         # Definições dos agentes de IA
-│   ├── guides/         # Guias de desenvolvimento
-│   └── templates/      # Templates de documentos
-└── .github/
-    └── copilot-instructions.md  # Configuração do Copilot
-```
-
-Para versões Copilot, você também terá:
-
-```text
-.github/
-└── chatmodes/
-    ├── architect.chatmode.md
-    ├── developer.chatmode.md
-    ├── qa.chatmode.md
-    └── reviewer.chatmode.md
-```
-
-## Requisitos do Sistema
-
-- Git
-- curl ou wget
-- Conexão com a internet
-
-O instalador instalará automaticamente dependências ausentes em sistemas suportados (Ubuntu/Debian, RHEL/CentOS, macOS).
-
-## Instalação Manual
-
-Se preferir instalar manualmente:
-
-```bash
-# Clone o repositório
 git clone https://github.com/brain-model/sde-workspace.git
 cd sde-workspace
-
-# Execute o instalador
 ./install.sh
 ```
 
-## Contribuindo
+O instalador realiza sparse checkout de `.sde_workspace/` para o flavour escolhido e mescla chatmodes somente quando necessário.
 
-Nós damos boas-vindas às contribuições da comunidade! Leia nosso [Guia de Contribuição](CONTRIBUTING.ptbr.md) para começar:
+## Scripts de automação
 
-- **Fluxo de Desenvolvimento**: Setup, padrões de código e procedimentos de teste
-- **Estratégia de Branches**: Como gerenciamos diferentes branches de idioma e funcionalidades
-- **Commits Semânticos**: Nossas convenções de mensagens de commit para versionamento automatizado
-- **Processo de Code Review**: Diretrizes para submissão e revisão de pull requests
+Todos os utilitários CLI ficam em `.sde_workspace/system/scripts/` e compartilham códigos de saída consistentes (0 sucesso / 8 dependência ausente). Destaques:
 
-## Changelog
+| Script | Finalidade | Dependências chave |
+|--------|------------|--------------------|
+| `scan_knowledge.sh` | Reconstroi `knowledge/manifest.json` com hashes & métricas | `jq`, `yq`, `sha256sum` |
+| `validate_manifest.sh` | Valida schema, tags, drift e órfãos | `jq`, `yajsv` (opcional) |
+| `report_knowledge_health.sh` | Relatório de saúde (md/json) | `jq` |
+| `report_knowledge_metrics.sh` | Calcula reuse ratio, violações de prioridade, gaps | `jq` |
+| `report_knowledge_weekly.sh` | Sumário semanal + gaps P1 abertos | `jq` |
+| `resolve_knowledge.sh` | Resolve conhecimento determinístico e cria gaps | `jq`, `grep` |
+| `compute_artifact_hashes.sh` | Atualiza hashes de artefatos de handoff | `jq`, `sha256sum` |
+| `validate_handoff.sh` | Validação completa de handoff | `jq`, `sha256sum`, `yajsv`* |
+| `apply_handoff_checklist.sh` | Completa checklists por fase | `jq` |
+| `archive_deprecated.sh` | Arquiva artefatos deprecated > 90 dias | `jq`, `date` |
 
-Veja [CHANGELOG.ptbr.md](CHANGELOG.ptbr.md) para um histórico detalhado de mudanças, novas funcionalidades e decisões arquiteturais.
+*`yajsv` habilita validação formal de schema; sem ele o script segue com aviso.
 
-## Suporte
+Cada script imprime mensagens `[tool:ERROR]` ao detectar dependências ausentes—corrija o ambiente e rode novamente.
 
-Para problemas e dúvidas:
+## Governança de conhecimento
 
-- Abra uma issue no [GitHub Issues](https://github.com/brain-model/sde-workspace/issues)
-- Consulte nossa documentação no diretório `.sde_workspace/system/guides/`
-- Revise o [Guia de Contribuição](CONTRIBUTING.ptbr.md) para questões de desenvolvimento
+- **Front-matter padronizado** garante metadata consistente em specs e documentos.
+- **Gestão de gaps** (`resolve_knowledge.sh`) eleva perguntas sem resposta para `.sde_workspace/knowledge/gaps/` com rastreabilidade.
+- **Relatórios periódicos** tornam visíveis indicadores de reutilização, drift e backlog crítico.
+
+## Contribuição & suporte
+
+- Leia o [Guia de Contribuição](CONTRIBUTING.ptbr.md) para workflow, commits semânticos e processo de revisão.
+- Acompanhe decisões arquiteturais e roadmap em [CHANGELOG.ptbr.md](CHANGELOG.ptbr.md).
+- Precisa de ajuda? Abra uma [issue](https://github.com/brain-model/sde-workspace/issues) e consulte os guias em `.sde_workspace/system/guides/`.
 
 ## Licença
 
-Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Distribuído sob licença MIT. Consulte o arquivo [LICENSE](LICENSE) para detalhes.

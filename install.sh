@@ -1,21 +1,5 @@
 #!/usr/bin/env bash
 
-# Saia imediatamente se um comando falhar.
-set -e
-# Trate variaveis nao definidas como um erro.
-set -u
-# Garante que pipelines falhem se algum comando falhar.
-set -o pipefail
-
-# --- CORES PARA SAÍDA ---
-COLOR_GREEN='\033[0;32m'
-COLOR_YELLOW='\033[0;33m'
-COLOR_RED='\033[0;31m'
-COLOR_NC='\033[0m' # No Color
-
-# --- FUNÇÕES AUXILIARES ---
-#!/usr/bin/env bash
-
 set -euo pipefail
 
 INFO()  { printf "\033[0;32m[INFO]\033[0m %s\n" "$1"; }
@@ -24,6 +8,64 @@ ERROR() { printf "\033[0;31m[ERROR]\033[0m %s\n" "$1" >&2; exit 1; }
 
 require_cmd() {
     command -v "$1" >/dev/null 2>&1 || ERROR "Missing dependency: $1"
+}
+
+declare -A DEP_DOCS=(
+    [git]="https://git-scm.com/downloads"
+    [curl]="https://curl.se/download.html"
+    [jq]="https://jqlang.github.io/jq/download/"
+    [yq]="https://github.com/mikefarah/yq/#install"
+    [sha256sum]="https://www.gnu.org/software/coreutils/coreutils.html#sha256sum-invocation"
+    [yajsv]="https://github.com/neilpa/yajsv"
+)
+
+SCRIPT_PREREQS=(jq yq sha256sum)
+OPTIONAL_PREREQS=(yajsv)
+
+print_prereq_hint() {
+    local binary="$1"
+    local url="${DEP_DOCS[$binary]:-}"
+    if [ -n "$url" ]; then
+        printf '  • %s: %s\n' "$binary" "$url"
+    else
+        printf '  • %s\n' "$binary"
+    fi
+}
+
+check_script_prereqs() {
+    local missing=()
+    for dep in "${SCRIPT_PREREQS[@]}"; do
+        if ! command -v "$dep" >/dev/null 2>&1; then
+            missing+=("$dep")
+        fi
+    done
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        WARN "Foram detectadas dependências obrigatórias ausentes para os scripts do SDE Workspace."
+        printf '\nInstale os pré-requisitos antes de continuar. Documentação oficial:\n'
+        for dep in "${missing[@]}"; do
+            print_prereq_hint "$dep"
+        done
+        if printf '%s\n' "${missing[@]}" | grep -q '^sha256sum$'; then
+            printf '\nDica: no macOS, instale coreutils para disponibilizar '\''sha256sum'\'' (brew install coreutils).\n'
+        fi
+        exit 2
+    fi
+
+    local optional_missing=()
+    for dep in "${OPTIONAL_PREREQS[@]}"; do
+        if ! command -v "$dep" >/dev/null 2>&1; then
+            optional_missing+=("$dep")
+        fi
+    done
+
+    if [ ${#optional_missing[@]} -gt 0 ]; then
+        WARN "Dependências opcionais não encontradas: ${optional_missing[*]}"
+        printf 'Elas habilitam validações extras. Consulte:\n'
+        for dep in "${optional_missing[@]}"; do
+            print_prereq_hint "$dep"
+        done
+    fi
 }
 
 choose_option() {
@@ -104,6 +146,7 @@ merge_dir_no_overwrite() {
 main() {
     require_cmd git
     require_cmd curl
+    check_script_prereqs
 
     INFO "sde-workspace installer"
 
