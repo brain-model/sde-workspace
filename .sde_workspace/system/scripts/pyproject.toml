@@ -1,0 +1,29 @@
+[project]
+name = "sde-scripts"
+version = "0.1.0"
+description = "Scripts utilitários para o fluxo de handoff do SDE."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Magalu SDE" },
+]
+dependencies = [
+  "google-genai",
+  "PyMuPDF",
+  "Pillow",
+  "moviepy",
+  "python-dotenv",
+]
+
+[project.scripts]
+transcribe-mp4 = "sde_scripts.transcribe_mp4:main"
+process-pdf = "sde_scripts.transcribe_pdf:main"
+run-shell-script = "sde_scripts.shell_orchestrator:main"
+shell-orchestrator = "sde_scripts.shell_orchestrator:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = true

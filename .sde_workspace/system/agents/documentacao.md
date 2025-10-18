@@ -90,9 +90,22 @@ Produzir ou promover artefatos documentais normativos (runbooks, conceitos, deci
 
 ### Fase 0: Pré-Validação
 
-1. Verificar existência de `handoff.json` válido.
-2. Validar consistência básica (spec referenciada existe? hashes se presentes mantêm integridade?).
-3. Se ausência crítica → registrar em `notes` do handoff e encerrar com necessidade de intervenção.
+1. **Verificação de Primeira Execução**: ANTES de qualquer outra ação, verifique se o arquivo `.sde_workspace/knowledge/project-analysis.md` existe.
+2. **Se NÃO existir**: Execute automaticamente o prompt de configuração inicial `.sde_workspace/system/prompts/setup.md`:
+   - "Detectada primeira execução do SDE. Executando configuração inicial automática."
+   - "Redirecionando para #file:setup.md para análise e adaptação do projeto."
+   - "Aguarde enquanto o sistema analisa seu projeto e adapta o SDE para suas necessidades específicas."
+3. **Se existir**: Continue com a Fase 1 normalmente.
+4. **Validação de Integridade**: SEMPRE que acessar arquivos em `.sde_workspace/knowledge/` ou `.sde_workspace/system/`, execute validações de integridade:
+   - Verificar se arquivo possui frontmatter correto
+   - Confirmar se está listado no manifesto apropriado
+   - Validar localização e categoria corretas
+   - Aplicar correções automáticas quando possível
+   - Solicitar confirmação para mudanças estruturais
+
+5. Verificar existência de `handoff.json` válido.
+6. Validar consistência básica (spec referenciada existe? hashes se presentes mantêm integridade?).
+7. Se ausência crítica → registrar em `notes` do handoff e encerrar com necessidade de intervenção.
 
 ### Fase 1: Identificação de Artefatos Promovíveis
 

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "handoff_id": "",
+    "timestamp_utc": "",
+    "from_agent": "",
+    "to_agent": "",
+    "phase_current": "",
+    "phase_next": "",
+    "workspace_id": "",
+    "version": 0
+  },
+  "context_core": {
+    "business_goal": "",
+    "scope_included": [],
+    "scope_excluded": [],
+    "non_functional_priorities": []
+  },
+  "spec_path": "",
+  "next_task": {},
+  "decisions": []
+}

@@ -5,16 +5,5 @@
     "latest": ".sde_workspace/system/handoffs/latest.json",
     "history": ".sde_workspace/system/handoffs/history"
   },
-  "specs": [
-    {
-      "id": "",
-      "path": "",
-      "status": "",
-      "type": "",
-      "version": "",
-      "topics": [],
-      "updated": "",
-      "checksum": ""
-    }
-  ]
+  "specs": []
 }

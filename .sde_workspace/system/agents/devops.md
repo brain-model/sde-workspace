@@ -93,10 +93,23 @@ Garantir que o repositório tenha: pipeline mínimo funcional, artefatos constru
 
 ### Fase 0: Pré-Validação
 
-1. Verificar existência e integridade básica de `handoff.json` (campos mínimos: version, from_agent, to_agent, phase, summary).
-2. Confirmar que `to_agent` == `devops`.
-3. Validar que `source_spec` referenciado existe.
-4. Se falhar → registrar em `notes` do handoff e encerrar (não prosseguir sem contexto).*
+1. **Verificação de Primeira Execução**: ANTES de qualquer outra ação, verifique se o arquivo `.sde_workspace/knowledge/project-analysis.md` existe.
+2. **Se NÃO existir**: Execute automaticamente o prompt de configuração inicial `.sde_workspace/system/prompts/setup.md`:
+    - "Detectada primeira execução do SDE. Executando configuração inicial automática."
+    - "Redirecionando para #file:setup.md para análise e adaptação do projeto."
+    - "Aguarde enquanto o sistema analisa seu projeto e adapta o SDE para suas necessidades específicas."
+3. **Se existir**: Continue com a Fase 1 normalmente.
+4. **Validação de Integridade**: SEMPRE que acessar arquivos em `.sde_workspace/knowledge/` ou `.sde_workspace/system/`, execute validações de integridade:
+    - Verificar se arquivo possui frontmatter correto
+    - Confirmar se está listado no manifesto apropriado
+    - Validar localização e categoria corretas
+    - Aplicar correções automáticas quando possível
+    - Solicitar confirmação para mudanças estruturais
+
+5. Verificar existência e integridade básica de `handoff.json` (campos mínimos: version, from_agent, to_agent, phase, summary).
+6. Confirmar que `to_agent` == `devops`.
+7. Validar que `source_spec` referenciado existe.
+8. Se falhar → registrar em `notes` do handoff e encerrar (não prosseguir sem contexto).*
 
 ### Fase 1: Infraestrutura & Ambiente
 

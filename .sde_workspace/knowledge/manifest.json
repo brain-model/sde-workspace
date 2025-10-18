@@ -2,24 +2,9 @@
   "version": "v0.0.0",
   "generatedAt": "",
   "description": "Manifesto canônico da base de conhecimento do SDE Workspace",
-  "repositories": {
-    "internal": {
-      "type": "git",
-      "governance": "SDE Knowledge Core",
-      "description": "Conhecimento interno, decisões oficiais e runbooks",
-      "path": ".sde_workspace/knowledge/internal",
-      "source": "workspace"
-    },
-    "external": {
-      "type": "mirror",
-      "governance": "SDE Knowledge Mirror",
-      "description": "Fontes externas curadas que o time acompanha",
-      "path": ".sde_workspace/knowledge/external",
-      "source": "external"
-    }
-  },
+  "repositories": {},
   "taxonomy": {
-    "governance": "Tags e categorias alinhadas ao registry oficial do SDE",
+    "governance": "",
     "categories": [],
     "tagSchema": []
   },

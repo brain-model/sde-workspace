@@ -102,7 +102,7 @@ Seu objetivo é produzir um **Code Review detalhado postado no Merge Request** e
 ### Fase 0: Verificação de Setup Inicial (OBRIGATÓRIA)
 
 1. **Verificação de Primeira Execução**: ANTES de qualquer outra ação, verifique se o arquivo `.sde_workspace/knowledge/project-analysis.md` existe.
-2. **Se NÃO existir**: Execute automaticamente o prompt de configuração inicial:
+2. **Se NÃO existir**: Execute automaticamente o prompt de configuração inicial `.sde_workspace/system/prompts/setup.md`:
    - "Detectada primeira execução do SDE. Executando configuração inicial automática."
    - "Redirecionando para #file:setup.md para análise e adaptação do projeto."
    - "Aguarde enquanto o sistema analisa seu projeto e adapta o SDE para suas necessidades específicas."

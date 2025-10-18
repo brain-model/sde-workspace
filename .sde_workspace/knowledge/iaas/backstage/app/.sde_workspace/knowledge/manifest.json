@@ -1,0 +1,834 @@
+{
+  "version": "v0.1.0",
+  "generatedAt": "2025-10-10T00:07:31Z",
+  "description": "Manifesto canônico da base de conhecimento do SDE Workspace",
+  "repositories": {
+    "internal": {
+      "type": "git",
+      "governance": "SDE Knowledge Core",
+      "description": "Conhecimento interno, decisões oficiais e runbooks",
+      "path": ".sde_workspace/knowledge/internal",
+      "source": "workspace"
+    },
+    "external": {
+      "type": "mirror",
+      "governance": "SDE Knowledge Mirror",
+      "description": "Fontes externas curadas que o time acompanha",
+      "path": ".sde_workspace/knowledge/external",
+      "source": "external"
+    }
+  },
+  "taxonomy": {
+    "governance": "Tags e categorias alinhadas ao registry oficial do SDE",
+    "categories": [],
+    "tagSchema": []
+  },
+  "files": [
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/issues/raw/issue-102253-tagging-api-v1-0-0.md",
+      "checksum": "sha256:6eb2b779a31371c59372acbb1621568bb07985b37b4bf8c1e6911445669df773",
+      "size": 2817,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "issue-102253-tagging-api-v1-0-0-raw",
+        "title": "issue-102253-tagging-api-v1-0-0",
+        "category": "issue",
+        "created": "2025-10-09T00:00:00Z",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "gmud",
+          "issue"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/issues/summary/issue-102253-tagging-api-v1-0-0-summary.md",
+      "checksum": "sha256:6ecdc64ca3436dabef3c8a7b59822c36987abfeb8f6cab1d42a78c14fee4e35a",
+      "size": 2679,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "issue-102253-tagging-api-v1-0-0-summary",
+        "title": "issue-102253-tagging-api-v1-0-0-summary",
+        "category": "summary",
+        "created": "2025-10-09T00:00:00Z",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "gmud",
+          "summary"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/raw/discovery-deploy-de-apps-2025-10-07-14-00-gmt-03-00-anotacoes-do-gemini.md",
+      "checksum": "sha256:a28f412fec0a3d2e4234aa82ca9a6b7776020cb6ec06596b30cf6c293b7ff291",
+      "size": 4320,
+      "lastModified": "2025-10-07T14:00:00-03:00",
+      "metadata": {
+        "id": "note-discovery-deploy-apps-2025-10-07",
+        "title": "discovery-deploy-de-apps-2025-10-07-14-00-gmt-03-00-anotacoes-do-gemini",
+        "category": "note",
+        "created": "2025-10-07T14:00:00-03:00",
+        "updated": "2025-10-07T14:00:00-03:00",
+        "source": "internal",
+        "tags": [
+          "notes"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/raw/kick-off-ini-prov-e-imp-de-apps-tribo-paas-2025-10-03-14-58-gmt-03-00-notes-by-gemini.md",
+      "checksum": "sha256:64e1e3cc1a11a23856421e684eea55c1da86eb7287fff85c08cda75ef834ccb0",
+      "size": 8067,
+      "lastModified": "2025-10-03T14:58:00-03:00",
+      "metadata": {
+        "id": "note-kickoff-ini-prov-imp-apps-2025-10-03",
+        "title": "kick-off-ini-prov-e-imp-de-apps-tribo-paas-2025-10-03-14-58-gmt-03-00-notes-by-gemini",
+        "category": "note",
+        "created": "2025-10-03T14:58:00-03:00",
+        "updated": "2025-10-03T14:58:00-03:00",
+        "source": "internal",
+        "tags": [
+          "notes"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/summary/ini-provisionamento-e-implantacao-de-aplicacoes-tribo-paas.md",
+      "checksum": "sha256:9864ed7df89bad3927ace7e55369ec9683b197b91e5cf2996e5cf6751c27b1de",
+      "size": 13870,
+      "lastModified": "2025-10-07T12:35:00Z",
+      "metadata": {
+        "id": "summary-ini-provisionamento-implantacao-aplicacoes",
+        "title": "ini-provisionamento-e-implantacao-de-aplicacoes-tribo-paas",
+        "category": "summary",
+        "created": "2025-10-07T12:35:00Z",
+        "updated": "2025-10-07T12:35:00Z",
+        "source": "internal",
+        "tags": [
+          "notes",
+          "summary"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/summary/jornada-provisionamento-e-implantacao-de-aplicacoes-plataforma-magma.md",
+      "checksum": "sha256:936acdefaf1466523e70ed60611516480c91b5e9be66019085a5ffbf1efb9b6d",
+      "size": 10151,
+      "lastModified": "2025-10-07T12:36:00Z",
+      "metadata": {
+        "id": "summary-jornada-provisionamento-implantacao-aplicacoes",
+        "title": "jornada-provisionamento-e-implantacao-de-aplicacoes-plataforma-magma",
+        "category": "summary",
+        "created": "2025-10-07T12:36:00Z",
+        "updated": "2025-10-07T12:36:00Z",
+        "source": "internal",
+        "tags": [
+          "notes",
+          "summary"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/backstage-app-repository.md",
+      "checksum": "sha256:76f7f3aad3e238186feee8ad5773571d3253874c702b3574b4a3ac4ca5c85b1b",
+      "size": 1331,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "repo-backstage-app-interno",
+        "title": "backstage-app-repository",
+        "category": "repository",
+        "created": "2025-10-09T00:00:00Z",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "repository",
+          "backstage",
+          "platform",
+          "internal"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/README.md",
+      "checksum": "sha256:7f8be09ac69014cefc653644e25decfe951857d5eb59d092eae4bd593dab3a1f",
+      "size": 843,
+      "lastModified": "2025-10-07T15:30:00Z",
+      "metadata": {
+        "id": "tooling-index",
+        "title": "README",
+        "category": "index",
+        "created": "2025-10-07T15:30:00Z",
+        "updated": "2025-10-07T15:30:00Z",
+        "source": "internal",
+        "tags": [
+          "tooling"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/hangar-templates-repository.md",
+      "checksum": "sha256:143fa33cd2d0bd6421879f96594796ad6b4afdf204ceafdbfbea0eb2e526ecda",
+      "size": 1152,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "repo-hangar-templates",
+        "title": "hangar-templates-repository",
+        "category": "repository",
+        "created": "2025-10-09T00:00:00Z",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "repository",
+          "backstage",
+          "legacy",
+          "templates"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/integracao/workflows/workflow-deploy-app-magalu-environment.md",
+      "checksum": "sha256:2dba6956e3d57b7e88dc99d4d8fb08dc75db23fc077abf0b2f3129c44e87eac9",
+      "size": 6057,
+      "lastModified": "2025-10-07T12:37:00Z",
+      "metadata": {
+        "id": "workflow-deploy-app-magalu-environment",
+        "title": "workflow-deploy-app-magalu-environment",
+        "category": "workflow",
+        "created": "2025-10-07T12:37:00Z",
+        "updated": "2025-10-07T12:37:00Z",
+        "source": "internal",
+        "tags": [
+          "workflow"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/recordings/raw/kick-off-ini-prov-e-imp-apps-2025-10-03-recording.md",
+      "checksum": "sha256:8064aea5fd1fda39f40a60465d8711f661b47e270cadc567b04724c1a7723b59",
+      "size": 525,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "recording-kickoff-provisionamento-implantacao-2025-10-03-raw",
+        "title": "kick-off-ini-prov-e-imp-apps-2025-10-03-recording",
+        "category": "recording",
+        "created": "2025-10-03T14:58:00-03:00",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "recording",
+          "meeting"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/recordings/summary/kick-off-ini-prov-e-imp-apps-2025-10-03-summary.md",
+      "checksum": "sha256:e60577b95844e20a87e9302a0f4717783370a54fc59eec5e7d113b9c90fd1986",
+      "size": 2203,
+      "lastModified": "2025-10-09T00:00:00Z",
+      "metadata": {
+        "id": "recording-kickoff-provisionamento-implantacao-2025-10-03-summary",
+        "title": "kick-off-ini-prov-e-imp-apps-2025-10-03-summary",
+        "category": "summary",
+        "created": "2025-10-09T00:00:00Z",
+        "updated": "2025-10-09T00:00:00Z",
+        "source": "internal",
+        "tags": [
+          "recording",
+          "summary"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/decisions-context/processed/to-be-provisioning-workflow-diagram.md",
+      "checksum": "sha256:a4556320c09905cc2c0fd8fb2296905c70650f5dff338477bc4c7ff7c07bdacf",
+      "size": 2864,
+      "lastModified": "2025-10-09T23:00:00Z",
+      "metadata": {
+        "id": "decision-context-to-be-workflow-diagram",
+        "title": "to-be-provisioning-workflow-diagram",
+        "category": "decision-context",
+        "created": "2025-10-09T23:00:00Z",
+        "updated": "2025-10-09T23:00:00Z",
+        "source": "internal",
+        "tags": [
+          "decision",
+          "workflow",
+          "diagram",
+          "architecture"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/decisions-context/processed/to-be-provisioning-workflow-narrative.md",
+      "checksum": "sha256:e6d48eb224e0c6bfbafa7733631b72d333af41b378a23cd0322304814bac9627",
+      "size": 2504,
+      "lastModified": "2025-10-09T23:10:00Z",
+      "metadata": {
+        "id": "decision-context-to-be-workflow-narrative",
+        "title": "to-be-provisioning-workflow-narrative",
+        "category": "decision-context",
+        "created": "2025-10-09T23:10:00Z",
+        "updated": "2025-10-09T23:10:00Z",
+        "source": "internal",
+        "tags": [
+          "decision",
+          "workflow",
+          "architecture"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/references/policies/transcriptions/gmud-padroes-boas-praticas.md",
+      "checksum": "sha256:e0879d067957704ec5e1b0daf37dc0aab4ec582a7f941ee8902d0ab2477e9d5d",
+      "size": 11682,
+      "lastModified": "2025-10-08T13:18:32+00:00",
+      "metadata": {
+        "id": "transcript-policy-gmud-padroes-boas-praticas",
+        "title": "gmud-padroes-boas-praticas",
+        "category": "reference",
+        "created": "2025-10-08T13:18:32+00:00",
+        "updated": "2025-10-08T13:18:32+00:00",
+        "source": "internal",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/references/policies/gmud-padroes-boas-praticas.md",
+      "checksum": "sha256:f1e600b4c985cd7042645063c387dc9686d91ae2af93654d38df8e2959ab014f",
+      "size": 1734,
+      "lastModified": "2025-10-07T12:41:00Z",
+      "metadata": {
+        "id": "policy-gmud-padroes-boas-praticas",
+        "title": "gmud-padroes-boas-praticas",
+        "category": "policy",
+        "created": "2025-10-07T12:41:00Z",
+        "updated": "2025-10-07T12:41:00Z",
+        "source": "internal",
+        "tags": [
+          "policy"
+        ]
+      }
+    },
+    {
+      "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/concepts/glossario-tribo-paas.md",
+      "checksum": "sha256:ec8b4dce806e10bc80e19c5ce4d12c845fc72089271f0d73db569c132cee4a29",
+      "size": 6241,
+      "lastModified": "2025-10-07T12:30:00Z",
+      "metadata": {
+        "id": "concept-glossario-tribo-paas",
+        "title": "glossario-tribo-paas",
+        "category": "concept",
+        "created": "2025-10-07T12:30:00Z",
+        "updated": "2025-10-07T12:30:00Z",
+        "source": "internal",
+        "tags": [
+          "concept"
+        ]
+      }
+    }
+  ],
+  "statistics": {
+    "totalFiles": 17,
+    "byCategory": {
+      "index": 1,
+      "repository": 2,
+      "policy": 1,
+      "note": 2,
+      "decision-context": 2,
+      "concept": 1,
+      "issue": 1,
+      "workflow": 1,
+      "reference": 1,
+      "recording": 1,
+      "summary": 4
+    },
+    "byStatus": {
+      "draft": 17
+    },
+    "totalSize": 79040
+  },
+  "knowledge_index": {
+    "artifacts": [
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/issues/raw/issue-102253-tagging-api-v1-0-0.md",
+        "type": "issue",
+        "tags": [
+          "gmud",
+          "issue"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:6eb2b779a31371c59372acbb1621568bb07985b37b4bf8c1e6911445669df773",
+        "size": 2817,
+        "created_utc": "2025-10-09T00:00:00Z",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/issues/summary/issue-102253-tagging-api-v1-0-0-summary.md",
+        "type": "summary",
+        "tags": [
+          "gmud",
+          "summary"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:6ecdc64ca3436dabef3c8a7b59822c36987abfeb8f6cab1d42a78c14fee4e35a",
+        "size": 2679,
+        "created_utc": "2025-10-09T00:00:00Z",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/raw/discovery-deploy-de-apps-2025-10-07-14-00-gmt-03-00-anotacoes-do-gemini.md",
+        "type": "note",
+        "tags": [
+          "notes"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:a28f412fec0a3d2e4234aa82ca9a6b7776020cb6ec06596b30cf6c293b7ff291",
+        "size": 4320,
+        "created_utc": "2025-10-07T14:00:00-03:00",
+        "updated_utc": "2025-10-07T14:00:00-03:00",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/raw/kick-off-ini-prov-e-imp-de-apps-tribo-paas-2025-10-03-14-58-gmt-03-00-notes-by-gemini.md",
+        "type": "note",
+        "tags": [
+          "notes"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:64e1e3cc1a11a23856421e684eea55c1da86eb7287fff85c08cda75ef834ccb0",
+        "size": 8067,
+        "created_utc": "2025-10-03T14:58:00-03:00",
+        "updated_utc": "2025-10-03T14:58:00-03:00",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/summary/ini-provisionamento-e-implantacao-de-aplicacoes-tribo-paas.md",
+        "type": "summary",
+        "tags": [
+          "notes",
+          "summary"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:9864ed7df89bad3927ace7e55369ec9683b197b91e5cf2996e5cf6751c27b1de",
+        "size": 13870,
+        "created_utc": "2025-10-07T12:35:00Z",
+        "updated_utc": "2025-10-07T12:35:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/notes/summary/jornada-provisionamento-e-implantacao-de-aplicacoes-plataforma-magma.md",
+        "type": "summary",
+        "tags": [
+          "notes",
+          "summary"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:936acdefaf1466523e70ed60611516480c91b5e9be66019085a5ffbf1efb9b6d",
+        "size": 10151,
+        "created_utc": "2025-10-07T12:36:00Z",
+        "updated_utc": "2025-10-07T12:36:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/backstage-app-repository.md",
+        "type": "repository",
+        "tags": [
+          "repository",
+          "backstage",
+          "platform",
+          "internal"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:76f7f3aad3e238186feee8ad5773571d3253874c702b3574b4a3ac4ca5c85b1b",
+        "size": 1331,
+        "created_utc": "2025-10-09T00:00:00Z",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/README.md",
+        "type": "index",
+        "tags": [
+          "tooling"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:7f8be09ac69014cefc653644e25decfe951857d5eb59d092eae4bd593dab3a1f",
+        "size": 843,
+        "created_utc": "2025-10-07T15:30:00Z",
+        "updated_utc": "2025-10-07T15:30:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/tooling/hangar-templates-repository.md",
+        "type": "repository",
+        "tags": [
+          "repository",
+          "backstage",
+          "legacy",
+          "templates"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:143fa33cd2d0bd6421879f96594796ad6b4afdf204ceafdbfbea0eb2e526ecda",
+        "size": 1152,
+        "created_utc": "2025-10-09T00:00:00Z",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/integracao/workflows/workflow-deploy-app-magalu-environment.md",
+        "type": "workflow",
+        "tags": [
+          "workflow"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:2dba6956e3d57b7e88dc99d4d8fb08dc75db23fc077abf0b2f3129c44e87eac9",
+        "size": 6057,
+        "created_utc": "2025-10-07T12:37:00Z",
+        "updated_utc": "2025-10-07T12:37:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/recordings/raw/kick-off-ini-prov-e-imp-apps-2025-10-03-recording.md",
+        "type": "recording",
+        "tags": [
+          "recording",
+          "meeting"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:8064aea5fd1fda39f40a60465d8711f661b47e270cadc567b04724c1a7723b59",
+        "size": 525,
+        "created_utc": "2025-10-03T14:58:00-03:00",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/recordings/summary/kick-off-ini-prov-e-imp-apps-2025-10-03-summary.md",
+        "type": "summary",
+        "tags": [
+          "recording",
+          "summary"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:e60577b95844e20a87e9302a0f4717783370a54fc59eec5e7d113b9c90fd1986",
+        "size": 2203,
+        "created_utc": "2025-10-09T00:00:00Z",
+        "updated_utc": "2025-10-09T00:00:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/decisions-context/processed/to-be-provisioning-workflow-diagram.md",
+        "type": "decision-context",
+        "tags": [
+          "decision",
+          "workflow",
+          "diagram",
+          "architecture"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:a4556320c09905cc2c0fd8fb2296905c70650f5dff338477bc4c7ff7c07bdacf",
+        "size": 2864,
+        "created_utc": "2025-10-09T23:00:00Z",
+        "updated_utc": "2025-10-09T23:00:00Z",
+        "created_by": "architect",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [],
+          "decisions": [
+            "DEC-T0003-001",
+            "DEC-T0003-002"
+          ]
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/decisions-context/processed/to-be-provisioning-workflow-narrative.md",
+        "type": "decision-context",
+        "tags": [
+          "decision",
+          "workflow",
+          "architecture"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:e6d48eb224e0c6bfbafa7733631b72d333af41b378a23cd0322304814bac9627",
+        "size": 2504,
+        "created_utc": "2025-10-09T23:10:00Z",
+        "updated_utc": "2025-10-09T23:10:00Z",
+        "created_by": "architect",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [],
+          "decisions": [
+            "DEC-T0003-001",
+            "DEC-T0003-002"
+          ]
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/references/policies/transcriptions/gmud-padroes-boas-praticas.md",
+        "type": "reference",
+        "tags": [
+          "policy"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:e0879d067957704ec5e1b0daf37dc0aab4ec582a7f941ee8902d0ab2477e9d5d",
+        "size": 11682,
+        "created_utc": "2025-10-08T13:18:32+00:00",
+        "updated_utc": "2025-10-08T13:18:32+00:00",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/references/policies/gmud-padroes-boas-praticas.md",
+        "type": "policy",
+        "tags": [
+          "policy"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:f1e600b4c985cd7042645063c387dc9686d91ae2af93654d38df8e2959ab014f",
+        "size": 1734,
+        "created_utc": "2025-10-07T12:41:00Z",
+        "updated_utc": "2025-10-07T12:41:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      },
+      {
+        "path": "/home/menezes.maicon/develop/luizalabas/magma/iaas/backstage/templates/.sde_workspace/knowledge/internal/concepts/glossario-tribo-paas.md",
+        "type": "concept",
+        "tags": [
+          "concept"
+        ],
+        "maturity": "draft",
+        "hash": "sha256:ec8b4dce806e10bc80e19c5ce4d12c845fc72089271f0d73db569c132cee4a29",
+        "size": 6241,
+        "created_utc": "2025-10-07T12:30:00Z",
+        "updated_utc": "2025-10-07T12:30:00Z",
+        "created_by": "pm",
+        "source_origin": "internal",
+        "authoritative": true,
+        "linked": {
+          "gaps": [
+            "GAP-2025-10-07T12:15:00Z"
+          ],
+          "decisions": []
+        },
+        "supersedes": "null",
+        "superseded_by": "null",
+        "archived_at": null,
+        "removed_at": null
+      }
+    ],
+    "gaps": [
+      "GAP-2025-10-07T12:15:00Z",
+      "GAP-2025-10-09204728",
+      "GAP-2025-10-09222839",
+      "GAP-2025-10-09224845"
+    ],
+    "stats": {
+      "internal": 17,
+      "external_curated": 0,
+      "external_raw": 0,
+      "maturity": {
+        "draft": 17,
+        "review": 0,
+        "stable": 0,
+        "deprecated": 0
+      },
+      "archived": 0
+    }
+  },
+  "metrics": {
+    "index_latency_avg": 0,
+    "orphan_artifacts": 0,
+    "drift_incidents": 0,
+    "hash_mismatch_rate": 0,
+    "maturity_distribution": {
+      "draft": 17,
+      "review": 0,
+      "stable": 0,
+      "deprecated": 0
+    },
+    "scan_runs": 15,
+    "last_scan_utc": "2025-10-10T00:07:31Z"
+  }
+}
